@@ -14,9 +14,8 @@ function App() {
   console.log(store);
   return (
     <Provider store={store}>
-       <div className="App">
-       <h1>ALOHa</h1>
-       {/* <Tempo></Tempo> */}
+       <div className="app">
+         
        <Menu></Menu>
        <Player></Player>
        <Drumset></Drumset>
