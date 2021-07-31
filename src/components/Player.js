@@ -2,19 +2,23 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 const Player=(props)=> {
+
+    const activeTrack= props.tracks[props.trackIndex]
     return (
         <div className="container player-container">
-            {props.track.map(track=>{
-                console.log(track);
+            {activeTrack.track.map((track, index)=>{
                 
-                return <div>1</div>
+                return <div className={`track track-${index}`} >
+                    {track.map(note=><div className="note">{note}</div>)}
+                </div>
             })}
         </div>
     )
 }
 
 const mapStateToProps=store=>({
-    track: store.state.track,
+    tracks: store.state.tracks,
+    trackIndex: store.state.trackIndex,
 })
 const PlayerConsumer = connect(mapStateToProps)(Player);
 

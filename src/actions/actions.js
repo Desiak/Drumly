@@ -5,6 +5,7 @@ export const CHANGE_SPEED="CHANGE_SPEED";
 export const ADD_NOTE="ADD_NOTE";
 export const REMOVE_NOTE="REMOVE_NOTE";
 export const EDIT_NOTE="EDIT_NOTE";
+export const SELECT_TRACK="SELECT_TRACK";
 
 // payload-ładunek -> to co wnosimy nowego do stanu
 // type jest obowiązkowy, payload opcjonalny.
@@ -30,4 +31,15 @@ export const incrementNumber=(value, direction="change")=>{
         updatedValue
     }
 }
+}
+
+export const trackSelect= (index)=>{
+
+    console.log("Track:", index);
+    return {
+        type:"SELECT_TRACK",
+        payload:{
+            index
+        }
+    }
 }

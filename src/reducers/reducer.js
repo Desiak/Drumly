@@ -1,31 +1,52 @@
-import { CHANGE_SPEED, CHANGE_VOLUME, ADD_NOTE} from "../actions/actions";
+import { CHANGE_SPEED, CHANGE_VOLUME, ADD_NOTE, SELECT_TRACK} from "../actions/actions";
 
 const INITIAL_STATE={
     speed:10,
     length:8,
     note:1/8,
     bars:1,
+    timeSignature:"4/4",
     drumset:"first",
-    track:[
+    tracks:[{
+        trackName:"example1",
+        track:[
+        [0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0],
+        [0,1,0,1,0,1,0,1],
+        [0,0,0,1,0,0,1,0],
         [0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0],
+        [1,0,0,0,1,0,0,0],
+        ]
+    },
+    {
+        trackName:"example2",
+        track:[
+        [0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0],
+        [1,1,1,1,1,1,1,1],
+        [0,0,1,0,0,1,0,0],
         [0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0,0],
-    ],
+        [1,0,0,1,1,0,0,0],
+        ]
+    }],
+    trackIndex:0,
 }
 
 const state= (state=INITIAL_STATE,action)=>{
-console.log("speed check")
+
     switch(action.type){
         case CHANGE_SPEED:
     
         // return [...state, action.payload];
-        console.log("INCREMENT: ", action.payload);
         return {...state, speed:action.payload.updatedValue};
+        break;
+        case SELECT_TRACK:
+
+        return {...state, trackIndex:action.payload.index}
         break;
         case CHANGE_VOLUME:
 
