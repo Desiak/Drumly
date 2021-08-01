@@ -1,12 +1,13 @@
 import { CHANGE_SPEED, CHANGE_VOLUME, ADD_NOTE, SELECT_TRACK} from "../actions/actions";
 
 const INITIAL_STATE={
-    speed:10,
+    speed:80,
     length:8,
     note:1/8,
     bars:1,
     timeSignature:"4/4",
     drumset:"first",
+    isPlaying:false,
     tracks:[{
         trackName:"example1",
         track:[
@@ -33,6 +34,24 @@ const INITIAL_STATE={
         [1,0,0,1,1,0,0,0],
         ]
     }],
+    beatMeasures:[
+        {
+            noteLength:1/8,
+            measure:[
+                "1","&", 
+                "2","&", 
+                "3","&", 
+                "4", "&"]
+        },
+        {
+            noteLength:1/16,
+            measure:[
+                "1","e","&","a",
+                "2","e","&","a", 
+                "3","e","&","a", 
+                "4","e","&","a",]
+        }
+    ],
     trackIndex:0,
 }
 

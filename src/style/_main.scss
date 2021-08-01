@@ -2,11 +2,11 @@
     margin:0;
     padding:0;
     box-sizing: border-box;
+    color:white;
 }
 body{
     min-width: 100vw;
     min-height: 100vh;
-    border:2px solid red;
     overflow: hidden;
 }
 #root{
@@ -17,9 +17,8 @@ body{
     display: grid;
     width: 100%;
     height: 100%;
-    grid-template-columns: minmax(auto, 300px) 1fr 1fr;
+    grid-template-columns: minmax(300px, 1fr) 2fr 2fr;
     grid-template-rows: 2fr 3fr;
 }
 .container{
-    border:2px solid green;
 }

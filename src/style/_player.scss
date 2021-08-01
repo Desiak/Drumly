@@ -1,8 +1,79 @@
 
 .player-container{
     grid-area: 1/2/2/4;
+    background-color: sandybrown;
+    // display: flex;
+    // flex-wrap: wrap;
+    // flex-direction: column;
+    // justify-content: space-evenly;
+    // position: relative;
+
+
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    grid-template-rows: 40px 1fr;
+    grid-template-areas: 
+        "empty beat-measure"
+        "tracks-labels beat"
+    ;
+    .wrapper{
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        justify-content: space-evenly;
+    }
+    .beat-measure-wrapper{
+        background-color: rgba(119, 92, 67, 0.25);
+        grid-area: beat-measure;
+        flex-direction: row;
+        align-items: center;
+        .beat-measure{
+            height: 1em;
+            text-align: center;
+            flex-basis: 8%;
+
+        }
+    }
+    .tracks-labels-wrapper{
+        background-color: rgba(119, 92, 67, 0.5);
+        grid-area: tracks-labels;
+        .track-label{
+            text-align: center;
+        }
+    }
+    .beat-wrapper{
+        background-color: rgba(119, 92, 67, 0.75);
+        grid-area: beat;
+       
+    }
+    
 }
 
 .track{
     display: flex;
+    // border: 2px solid brown;
+    justify-content: space-evenly;
+    .track-label{
+        min-width: 40px;
+        text-align: center;
+    }
+    .note{
+        background-color: rgba(255, 195, 142, 0.226);
+        flex-basis: 8%;
+        height: 20px;
+        margin: 0;
+        &.active{
+            background-color: rgb(255, 206, 163)
+        }
+    }
+}
+
+.progress-indicator{
+    width:30px;
+    height: 100%;
+    border:2px solid red;
+    position: absolute;
+    top:0;
+    left:0;
+    
 }

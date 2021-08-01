@@ -11,8 +11,8 @@ const TrackSelect=(props)=> {
     return (
         <div className="input beat-select-input">
             Selected track name: {props.tracks[props.trackIndex].trackName}
-            <div className="select">
-            <select onChange={(e)=>handleOptionSelect(e)}>
+            <div className="select-wrapper">
+            <select className="select-input" onChange={(e)=>handleOptionSelect(e)}>
                 {props.tracks.map((track,index)=><option value={index}>{track.trackName}</option>)}
             </select>
             </div>

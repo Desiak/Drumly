@@ -11,7 +11,6 @@ import store from "./store/store";
 
 function App() {
   
-  console.log(store);
   return (
     <Provider store={store}>
        <div className="app">
