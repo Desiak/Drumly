@@ -2,12 +2,14 @@ import React from 'react'
 import { connect } from 'react-redux';
 
 const Bars=(props)=> {
+    console.log("tracks: ", props.tracks);
+    console.log("track length:", props.tracks[props.trackIndex].track[0].length);
     return (
         <div className="input bars-input">
             Number of bars: {props.bars}
-            <p>Add new bar:</p>
+            <p>Add new bar: +</p>
             <p>Time signature: {props.timeSignature}</p>
-            <p>Shortest note length: {props.singleNoteValue}</p>
+            <p>Note length: 1/{props.tracks[props.trackIndex].track[0].length}</p>
         </div>
     )
 }
@@ -15,7 +17,9 @@ const Bars=(props)=> {
 const mapStateToProps=store=>({
     bars: store.state.bars,
     timeSignature:store.state.timeSignature,
-    singleNoteValue: store.state.note
+    // singleNoteValue: store.state.note,
+    tracks: store.state.tracks,
+    trackIndex: store.state.trackIndex,
 
 });
 

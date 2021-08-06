@@ -64,10 +64,13 @@ body {
   -ms-grid-row: 1;
   -ms-grid-column: 2;
   grid-area: beat-measure;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
+  -webkit-box-orient: unset;
+  -webkit-box-direction: unset;
+      -ms-flex-direction: unset;
+          flex-direction: unset;
+  -webkit-box-pack: unset;
+      -ms-flex-pack: unset;
+          justify-content: unset;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -75,9 +78,9 @@ body {
 
 .player-container .beat-measure-wrapper .beat-measure {
   height: 1em;
+  width: 30px;
+  margin: 0 10px;
   text-align: center;
-  -ms-flex-preferred-size: 8%;
-      flex-basis: 8%;
 }
 
 .player-container .tracks-labels-wrapper {
@@ -96,6 +99,38 @@ body {
   -ms-grid-row: 2;
   -ms-grid-column: 2;
   grid-area: beat;
+  -webkit-box-orient: unset;
+  -webkit-box-direction: unset;
+      -ms-flex-direction: unset;
+          flex-direction: unset;
+  -webkit-box-pack: unset;
+      -ms-flex-pack: unset;
+          justify-content: unset;
+}
+
+.player-container .bar {
+  border-right: 2px solid white;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+}
+
+.player-container .bar--measure {
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
 }
 
 .track {
@@ -108,16 +143,14 @@ body {
 }
 
 .track .track-label {
-  min-width: 40px;
   text-align: center;
 }
 
 .track .note {
   background-color: rgba(255, 195, 142, 0.226);
-  -ms-flex-preferred-size: 8%;
-      flex-basis: 8%;
   height: 20px;
-  margin: 0;
+  margin: 0 10px;
+  width: 30px;
 }
 
 .track .note.active {

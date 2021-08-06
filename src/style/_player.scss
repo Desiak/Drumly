@@ -25,12 +25,14 @@
     .beat-measure-wrapper{
         background-color: rgba(119, 92, 67, 0.25);
         grid-area: beat-measure;
-        flex-direction: row;
+        flex-direction: unset;
+        justify-content: unset;
         align-items: center;
         .beat-measure{
             height: 1em;
+            width:30px;
+            margin:0 10px;
             text-align: center;
-            flex-basis: 8%;
 
         }
     }
@@ -44,9 +46,21 @@
     .beat-wrapper{
         background-color: rgba(119, 92, 67, 0.75);
         grid-area: beat;
+        flex-direction: unset;
+        justify-content: unset;
        
     }
-    
+    .bar{
+        border-right:2px solid white;
+        height: 100%;
+        display: flex;
+        flex-grow: 1;
+        flex-direction: column;
+        justify-content: space-evenly;
+        &--measure{
+            flex-direction: row;
+        }
+    }
 }
 
 .track{
@@ -54,14 +68,13 @@
     // border: 2px solid brown;
     justify-content: space-evenly;
     .track-label{
-        min-width: 40px;
         text-align: center;
     }
     .note{
         background-color: rgba(255, 195, 142, 0.226);
-        flex-basis: 8%;
         height: 20px;
-        margin: 0;
+        margin: 0 10px;
+        width:30px;
         &.active{
             background-color: rgb(255, 206, 163)
         }
