@@ -6,6 +6,7 @@ export const ADD_NOTE="ADD_NOTE";
 export const REMOVE_NOTE="REMOVE_NOTE";
 export const EDIT_NOTE="EDIT_NOTE";
 export const SELECT_TRACK="SELECT_TRACK";
+export const PLAY_TOGGLE="PLAY_TOGGLE";
 
 // payload-ładunek -> to co wnosimy nowego do stanu
 // type jest obowiązkowy, payload opcjonalny.
@@ -41,5 +42,22 @@ export const trackSelect= (index)=>{
         payload:{
             index
         }
+    }
+}
+
+export const play=()=>{
+    console.log("start playin motha foka");
+    return {
+        type:"PLAY_TOGGLE",
+        payload:{}
+    }
+}
+
+
+export const clear=()=>{
+    console.log("clean it up!");
+    return {
+        type:"CLEAR",
+        payload:{}
     }
 }

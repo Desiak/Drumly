@@ -1,10 +1,10 @@
-import { CHANGE_SPEED, CHANGE_VOLUME, ADD_NOTE, SELECT_TRACK} from "../actions/actions";
+import { CHANGE_SPEED, CHANGE_VOLUME, ADD_NOTE, SELECT_TRACK, PLAY_TOGGLE} from "../actions/actions";
 
 const INITIAL_STATE={
     speed:80,
     length:8,
     // note:1/8,
-    bars:2,
+    numOfBars:4,
     timeSignature:"4/4",
     drumset:"first",
     isPlaying:false,
@@ -81,6 +81,9 @@ const state= (state=INITIAL_STATE,action)=>{
         case SELECT_TRACK:
 
         return {...state, trackIndex:action.payload.index}
+        break;
+        case PLAY_TOGGLE:
+        return {...state, isPlaying: !state.isPlaying}
         break;
         case CHANGE_VOLUME:
 

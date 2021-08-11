@@ -6,7 +6,7 @@ const Bars=(props)=> {
     console.log("track length:", props.tracks[props.trackIndex].track[0].length);
     return (
         <div className="input bars-input">
-            Number of bars: {props.bars}
+            Number of bars: {props.numOfBars}
             <p>Add new bar: +</p>
             <p>Time signature: {props.timeSignature}</p>
             <p>Note length: 1/{props.tracks[props.trackIndex].track[0].length}</p>
@@ -15,7 +15,7 @@ const Bars=(props)=> {
 }
 
 const mapStateToProps=store=>({
-    bars: store.state.bars,
+    numOfBars: store.state.numOfBars,
     timeSignature:store.state.timeSignature,
     // singleNoteValue: store.state.note,
     tracks: store.state.tracks,
