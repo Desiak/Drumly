@@ -1,7 +1,7 @@
-import { CHANGE_SPEED, CHANGE_VOLUME, ADD_NOTE, SELECT_TRACK, PLAY_TOGGLE} from "../actions/actions";
+import { CHANGE_TEMPO, CHANGE_VOLUME, ADD_NOTE, SELECT_TRACK, PLAY_TOGGLE, LOAD_TRACK, TOGGLE_NOTE} from "../actions/actions";
 
 const INITIAL_STATE={
-    speed:80,
+    tempo:80,
     length:8,
     // note:1/8,
     numOfBars:4,
@@ -48,7 +48,7 @@ const INITIAL_STATE={
         ]
     }
 ],
-  
+    customableTrack:[],
     beatMeasures:[
         {
             barLength:8,
@@ -73,10 +73,10 @@ const INITIAL_STATE={
 const state= (state=INITIAL_STATE,action)=>{
 
     switch(action.type){
-        case CHANGE_SPEED:
+        case CHANGE_TEMPO:
     
         // return [...state, action.payload];
-        return {...state, speed:action.payload.updatedValue};
+        return {...state, tempo:action.payload.updatedValue};
         break;
         case SELECT_TRACK:
 
@@ -84,6 +84,12 @@ const state= (state=INITIAL_STATE,action)=>{
         break;
         case PLAY_TOGGLE:
         return {...state, isPlaying: !state.isPlaying}
+        break;
+        case LOAD_TRACK:
+        return {...state, customableTrack:action.payload.updatedTrack}    
+        break;
+        case TOGGLE_NOTE:
+        return {...state, customableTrack:action.payload.updatedTrack}    
         break;
         case CHANGE_VOLUME:
 

@@ -21,7 +21,7 @@ const handleSpeedChange=(direction)=>{
 }
 
 const numberFromReduxStore=store=>({
-    numberValue:store.state.speed
+    numberValue:store.state.tempo
 });
 
 const connectActionsToProps={

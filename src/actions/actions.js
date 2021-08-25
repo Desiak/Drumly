@@ -1,12 +1,14 @@
 
 //types
 export const CHANGE_VOLUME="CHANGE_VOLUME";
-export const CHANGE_SPEED="CHANGE_SPEED";
+export const CHANGE_TEMPO="CHANGE_TEMPO";
 export const ADD_NOTE="ADD_NOTE";
 export const REMOVE_NOTE="REMOVE_NOTE";
 export const EDIT_NOTE="EDIT_NOTE";
 export const SELECT_TRACK="SELECT_TRACK";
 export const PLAY_TOGGLE="PLAY_TOGGLE";
+export const LOAD_TRACK="LOAD_TRACK";
+export const TOGGLE_NOTE="TOGGLE_NOTE";
 
 // payload-ładunek -> to co wnosimy nowego do stanu
 // type jest obowiązkowy, payload opcjonalny.
@@ -27,7 +29,7 @@ export const incrementNumber=(value, direction="change")=>{
 
     }
     return{
-    type:CHANGE_SPEED,
+    type:CHANGE_TEMPO,
     payload:{
         updatedValue
     }
@@ -59,5 +61,31 @@ export const clear=()=>{
     return {
         type:"CLEAR",
         payload:{}
+    }
+}
+
+export const loadCustomableTrack=(track, qty)=>{
+    
+    let updatedTrack=[];
+
+    for (let i = 0; i < qty; i++) {
+        updatedTrack.push(track.track);
+        
+    }
+    console.log("customable track loading!");
+    return {
+        type:"LOAD_TRACK",
+        payload:{
+            updatedTrack
+        }
+    }
+}
+export const toggleNoteActiveState=(updatedTrack)=>{
+
+    return {
+        type:"TOGGLE_NOTE",
+        payload:{
+            updatedTrack
+        }
     }
 }
