@@ -80,7 +80,7 @@ export const loadCustomableTrack=(track, qty)=>{
         }
     }
 }
-export const toggleNoteActiveState=(updatedTrack)=>{
+export const updateTrack=(updatedTrack)=>{
 
     return {
         type:"TOGGLE_NOTE",

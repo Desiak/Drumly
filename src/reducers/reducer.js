@@ -1,7 +1,7 @@
 import { CHANGE_TEMPO, CHANGE_VOLUME, ADD_NOTE, SELECT_TRACK, PLAY_TOGGLE, LOAD_TRACK, TOGGLE_NOTE} from "../actions/actions";
 
 const INITIAL_STATE={
-    tempo:80,
+    tempo:94,
     length:8,
     // note:1/8,
     numOfBars:4,
@@ -14,7 +14,7 @@ const INITIAL_STATE={
         [0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0],
         [0,1,0,1,0,1,0,1],
-        [0,0,0,1,0,0,1,0],
+        [0,0,1,0,0,0,1,0],
         [0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0,0],
@@ -91,14 +91,7 @@ const state= (state=INITIAL_STATE,action)=>{
         case TOGGLE_NOTE:
         return {...state, customableTrack:action.payload.updatedTrack}    
         break;
-        case CHANGE_VOLUME:
-
-        break;
-
-        case ADD_NOTE:
-
-        break;
-
+       
         default:
 
         console.log("co za akcja wariacie");

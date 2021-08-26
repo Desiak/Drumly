@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { play,clear } from "../actions/actions";
 const PlayerController=(props)=> {
    
+   
     return (
         <div className="input player-controller-input">
           Player Controller
@@ -19,7 +20,8 @@ const mapStateToProps=store=>({
 
 const mapDispatchToProps={
     play,
-    clear
+    clear,
+
 }
 const PlayerControllerConsumer = connect(mapStateToProps, mapDispatchToProps)(PlayerController);
 

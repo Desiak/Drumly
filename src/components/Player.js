@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useRef} from 'react'
 import { connect } from 'react-redux'
-import {loadCustomableTrack, toggleNoteActiveState} from "../actions/actions";
+import {loadCustomableTrack, updateTrack} from "../actions/actions";
 import _ from "lodash";
 
 const Player=(props)=> {
@@ -8,15 +8,18 @@ const Player=(props)=> {
     // BUTTON który ukrywa drumset i rozciąga player na całą wysokość
 
     const tracksLabels=["CR", "RD", "HH", "SN", "T-1", "T-2", "F-T", "K"];
+    const pathSelectors=["crash", "ride", "hihat", "snare", "tom1", "tom2", "floor", "kick"];
     const beatMeasures= props.beatMeasures;
     let barLength=props.tracks[props.trackIndex].track[0].length;
     let measureIndex= barLength===8?0:1;
 
     const [intervalId, setIntervalId]=useState(null);
+    const [scheduleInterval, setScheduleInterval]=useState(null);
     const [currentBarNumber, setCurrentBarNumber]=useState(0);
     const [measure, setMeasure]=useState(null);
     const [progressBarSpeed, setProgressBarSpeed]=useState(80);
     const [tracksToRender, setTracksToRender]=useState(null);
+
     
     //DOM
     const progressBar= useRef(null);
@@ -40,24 +43,24 @@ const Player=(props)=> {
             beatWrapper.current.style.transform=`translateX(-${(currentBarNumber)*100}%)`;
         }
 
-    const toggleNoteActiveState=(e)=>{
+    const editNote=(e)=>{
         const noteLocation=e.target.id.split("-");
         const barIndex=noteLocation[0];
-        const trackIndex= noteLocation[1];
+        const pathIndex= noteLocation[1];
         const noteIndex=noteLocation[2];
        
         let newTrack= _.cloneDeep(props.customableTrack);
 
         let modifiedBar=[...newTrack[barIndex]];
-        let modifiedPath=[...modifiedBar[trackIndex]];
+        let modifiedPath=[...modifiedBar[pathIndex]];
         let modifiedNote=modifiedPath[noteIndex]===0?1:0;
 
         modifiedPath.splice(noteIndex,1,modifiedNote);
-        modifiedBar.splice(trackIndex,1,modifiedPath);
+        modifiedBar.splice(pathIndex,1,modifiedPath);
         newTrack.splice(barIndex,1, modifiedBar);
         
         //update global state
-        props.toggleNoteActiveState(newTrack);
+        props.updateTrack(newTrack);
     }
     const updateTracks=()=>{
         let updatedTracks=props.customableTrack.map((bar,barIndex)=>{
@@ -69,7 +72,7 @@ const Player=(props)=> {
                             return (
                             <div 
                             className={`note ${note===1?"active":""}`} 
-                            onClick={(e)=>toggleNoteActiveState(e)} 
+                            onClick={(e)=>editNote(e)} 
                             id={`${barIndex}-${trackIndex}-${noteIndex}`}
                             key={`${barIndex}-${trackIndex}-${noteIndex}`}
                             >
@@ -85,30 +88,61 @@ const Player=(props)=> {
 
         setTracksToRender(updatedTracks)
     }
+    const scheduleSounds=(barInd=0, noteInd=0)=>{
 
+        const track=props.customableTrack;
+        // console.log("play note: ", barInd, noteInd, track);
+
+        track[barInd].forEach((path,i)=>{
+                path.forEach((note,index)=>{
+                    if(index===noteInd){
+                    if(note===1){
+                        console.log("sound: ", pathSelectors[i]);
+                        const sound = new Audio(`/assets/${pathSelectors[i]}.mp3`);
+                        sound.play();
+                    }
+                }
+                })
+            
+           
+        })
+    }
+
+ 
     useEffect(() => {
         if(progressBar){
-            let currentBar=0;
-            
+            let barIndex=0;
+            let noteIndex=0;
+
         if(props.isPlaying){
             //start playing
             setCurrentBarNumber(0);
             animateProgressBar();
+            scheduleSounds(noteIndex);
 
             setIntervalId(
                 setInterval(() => {
                 animateProgressBar();
-                handleBeatWrapperPos(currentBar);
-                currentBar=currentBar>=props.numOfBars-1?0:currentBar+1;
+                handleBeatWrapperPos(barIndex);
+                barIndex=barIndex>=props.numOfBars-1?0:barIndex+1;
 
-                setCurrentBarNumber(currentBar);
+                setCurrentBarNumber(barIndex);
 
-                }, progressBarSpeed*1000))
-            ;
+                }, progressBarSpeed*1000));
+
+            setScheduleInterval(
+                setInterval(() => {
+                    noteIndex=noteIndex>=barLength-1?0:noteIndex+1;
+                    scheduleSounds(barIndex, noteIndex);
+                }, (progressBarSpeed*1000)/barLength)
+            )
+            
         }
         else{
             //stop playing
             clearInterval(intervalId);
+            clearInterval(scheduleInterval);
+            setScheduleInterval(null);
             setIntervalId(null);
             progressBar.current.classList.remove("playing");
             beatWrapper.current.style.transform="unset";
@@ -201,7 +235,7 @@ const mapStateToProps=store=>({
 
 const mapDispatchToProps={
     loadCustomableTrack,
-    toggleNoteActiveState,
+    updateTrack,
 }
 const PlayerConsumer = connect(mapStateToProps, mapDispatchToProps)(Player);
 
