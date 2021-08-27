@@ -2,8 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux';
 
 const Bars=(props)=> {
-    console.log("tracks: ", props.tracks);
-    console.log("track length:", props.tracks[props.trackIndex].track[0].length);
+    
     return (
         <div className="input bars-input">
             Number of bars: {props.numOfBars}

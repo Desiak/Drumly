@@ -88,16 +88,13 @@ const Player=(props)=> {
 
         setTracksToRender(updatedTracks)
     }
-    const scheduleSounds=(barInd=0, noteInd=0)=>{
-
+    const scheduleSounds=(barInd=0, noteInd=0)=>{    
         const track=props.customableTrack;
-        // console.log("play note: ", barInd, noteInd, track);
-
         track[barInd].forEach((path,i)=>{
                 path.forEach((note,index)=>{
                     if(index===noteInd){
                     if(note===1){
-                        console.log("sound: ", pathSelectors[i]);
+                        // console.log("sound: ", pathSelectors[i], i, barInd);
                         const sound = new Audio(`/assets/${pathSelectors[i]}.mp3`);
                         sound.play();
                     }
@@ -116,15 +113,15 @@ const Player=(props)=> {
 
         if(props.isPlaying){
             //start playing
+            console.log(props.customableTrack);
             setCurrentBarNumber(0);
             animateProgressBar();
-            scheduleSounds(noteIndex);
+            scheduleSounds(0, noteIndex);
 
             setIntervalId(
                 setInterval(() => {
                 animateProgressBar();
                 handleBeatWrapperPos(barIndex);
-                barIndex=barIndex>=props.numOfBars-1?0:barIndex+1;
 
                 setCurrentBarNumber(barIndex);
 
@@ -133,7 +130,12 @@ const Player=(props)=> {
             setScheduleInterval(
                 setInterval(() => {
                     noteIndex=noteIndex>=barLength-1?0:noteIndex+1;
+                
                     scheduleSounds(barIndex, noteIndex);
+                    if(noteIndex===barLength-1){
+                        barIndex=barIndex>=props.numOfBars-1?0:barIndex+1;
+
+                    }
                 }, (progressBarSpeed*1000)/barLength)
             )
             

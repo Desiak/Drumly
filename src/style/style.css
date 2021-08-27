@@ -187,9 +187,8 @@ body {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
 }
 
 .player-container .bar--measure {
@@ -206,9 +205,8 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
 }
 
 .track .track-label {
@@ -258,6 +256,26 @@ body {
   border-radius: 4px;
   cursor: pointer;
   width: 100px;
+}
+
+.tempo-input .tempo-value {
+  font-size: 1.5em;
+  margin: 0 10px;
+}
+
+.tempo-input .tempo-info {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.tempo-input .slider-wrapper {
+  text-align: center;
+}
+
+.tempo-input .increment {
+  background-color: #af5633;
+  padding: 10px 15px;
+  margin: 0 10px;
 }
 
 .drumset-container {

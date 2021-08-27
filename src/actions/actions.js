@@ -14,10 +14,10 @@ export const TOGGLE_NOTE="TOGGLE_NOTE";
 // type jest obowiązkowy, payload opcjonalny.
 
 //actions 
-export const incrementNumber=(value, direction="change")=>{
+export const changeTempo=(value, direction="change")=>{
         
     let updatedValue;
-
+    console.log("value:", value, typeof value);
     if(direction==="+"){
         updatedValue=value+1;
     }
@@ -26,7 +26,7 @@ export const incrementNumber=(value, direction="change")=>{
     }
     else{
         //change event
-
+        updatedValue=Number(value)
     }
     return{
     type:CHANGE_TEMPO,
