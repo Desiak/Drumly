@@ -42,9 +42,34 @@
     .slider-wrapper{
         text-align: center;
     }
-    .increment{
+    .change-btn{
         background-color: rgb(175, 86, 51);
         padding:10px 15px;
+        margin: 0 10px;
+        cursor: pointer;
+
+    }
+}
+.bars-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    .bars-label{
+        margin-bottom: 20px;
+        flex-basis: 100%;
+    }
+    .change-btn{
+        background-color: rgb(175, 86, 51);
+        padding:10px 15px;
+        margin: 0 10px;
+        cursor: pointer;
+    }
+    .bars-info{
+        margin-top:20px;
+    }
+    .bars-value{
+        font-size: 1.5em;
         margin: 0 10px;
     }
 }

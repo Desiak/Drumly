@@ -9,6 +9,7 @@ export const SELECT_TRACK="SELECT_TRACK";
 export const PLAY_TOGGLE="PLAY_TOGGLE";
 export const LOAD_TRACK="LOAD_TRACK";
 export const TOGGLE_NOTE="TOGGLE_NOTE";
+export const CHANGE_BARS_NUMBER="CHANGE_BARS_NUMBER";
 
 // payload-ładunek -> to co wnosimy nowego do stanu
 // type jest obowiązkowy, payload opcjonalny.
@@ -86,6 +87,16 @@ export const updateTrack=(updatedTrack)=>{
         type:"TOGGLE_NOTE",
         payload:{
             updatedTrack
+        }
+    }
+}
+
+export const changeNumOfBars=(direction)=>{
+
+    return {
+        type:"CHANGE_BARS_NUMBER",
+        payload:{
+            direction
         }
     }
 }

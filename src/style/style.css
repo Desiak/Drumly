@@ -272,9 +272,46 @@ body {
   text-align: center;
 }
 
-.tempo-input .increment {
+.tempo-input .change-btn {
   background-color: #af5633;
   padding: 10px 15px;
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+.bars-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.bars-wrapper .bars-label {
+  margin-bottom: 20px;
+  -ms-flex-preferred-size: 100%;
+      flex-basis: 100%;
+}
+
+.bars-wrapper .change-btn {
+  background-color: #af5633;
+  padding: 10px 15px;
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+.bars-wrapper .bars-info {
+  margin-top: 20px;
+}
+
+.bars-wrapper .bars-value {
+  font-size: 1.5em;
   margin: 0 10px;
 }
 

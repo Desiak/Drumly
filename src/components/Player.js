@@ -105,7 +105,31 @@ const Player=(props)=> {
         })
     }
 
- 
+    const renderBars=(content)=>{
+        let barsToRender=[];
+        if(content==="beat"){
+            return
+        }else if(content==="measure"){
+            for(let i=0;i<props.numOfBars;i++){
+                barsToRender.push(<div className={`bar bar--measure bar-${i}`}>{beatMeasures[measureIndex].measure.map(measure=><div className="beat-measure">{measure}</div>)}</div>)
+            }
+        }
+        return barsToRender
+    }
+
+    const handleBarsNav=(direction)=>{
+
+        if(!props.isPlaying){
+        if(direction==="+"){
+            setCurrentBarNumber(currentBarNumber===props.numOfBars-1?0:currentBarNumber+1);
+        }
+        else{
+            currentBarNumber===0?setCurrentBarNumber(props.numOfBars-1):setCurrentBarNumber(currentBarNumber-1);
+            setCurrentBarNumber(currentBarNumber===0?props.numOfBars-1:currentBarNumber-1);
+        }
+    }else return;
+    }
+
     useEffect(() => {
         if(progressBar){
             let barIndex=0;
@@ -159,31 +183,6 @@ const Player=(props)=> {
 
     }, [currentBarNumber]);
 
-    const renderBars=(content)=>{
-        let barsToRender=[];
-        if(content==="beat"){
-            return
-        }else if(content==="measure"){
-            for(let i=0;i<props.numOfBars;i++){
-                barsToRender.push(<div className={`bar bar--measure bar-${i}`}>{beatMeasures[measureIndex].measure.map(measure=><div className="beat-measure">{measure}</div>)}</div>)
-            }
-        }
-        return barsToRender
-    }
-
-    const handleBarsNav=(direction)=>{
-
-        if(!props.isPlaying){
-        if(direction==="+"){
-            setCurrentBarNumber(currentBarNumber===props.numOfBars-1?0:currentBarNumber+1);
-        }
-        else{
-            currentBarNumber===0?setCurrentBarNumber(props.numOfBars-1):setCurrentBarNumber(currentBarNumber-1);
-            setCurrentBarNumber(currentBarNumber===0?props.numOfBars-1:currentBarNumber-1);
-        }
-    }else return;
-    }
-
     useEffect(() => {
         // setBeatBars(renderBars("beat"));
         setMeasure(renderBars("measure"));
@@ -194,10 +193,17 @@ const Player=(props)=> {
         setProgressBarSpeed((60/props.tempo*4));
 
     }, [props.tempo])
+
     useEffect(() => {
         props.loadCustomableTrack(props.tracks[props.trackIndex], props.numOfBars);
     }, [props.trackIndex]);
    
+    useEffect(() => {
+       //if last bar gets removed, step back to previous one
+       if(props.numOfBars===currentBarNumber){
+           setCurrentBarNumber(props.numOfBars-1);
+       }
+    }, [props.numOfBars])
 
     //mount
  
