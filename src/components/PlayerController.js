@@ -7,9 +7,7 @@ const PlayerController=(props)=> {
     return (
         <div className="input player-controller-input">
           Player Controller
-          <p>{props.isPlaying?`y`:`n`}</p>
-          <button onClick={()=>props.play()} className="controller-btn btn-play">Play</button>
-          <button className="controller-btn btn-clear">Clear</button>
+          <button onClick={()=>props.play()} className="controller-btn btn-play">{props.isPlaying?"PAUSE":"PLAY"}</button>
         </div>
     )
 }

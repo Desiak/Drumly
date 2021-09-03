@@ -19,7 +19,7 @@ const handleTempoChange=(e)=>{
             <p>TEMPO</p>
             <p class="tempo tempo-info">
             <span className="change-btn" onClick={()=>handleSpeedChange("-")}>-</span>
-            <span class="tempo-value"> {props.numberValue}</span>
+            <span class="tempo-value"> {props.numberValue} bpm</span>
             <span className="change-btn" onClick={()=>handleSpeedChange("+")}>+</span>
             </p>
            <p class="slider-wrapper">

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux';
 import {changeNumOfBars} from "../actions/actions"
 
@@ -8,6 +8,7 @@ const Bars=(props)=> {
         if(props.numOfBars===1 && direction==="-")return;
         props.changeNumOfBars(direction);
     }
+
 
     return (
         <div className="input bars-wrapper">
@@ -20,7 +21,7 @@ const Bars=(props)=> {
            
 
             <span className="bars-info">Time signature: {props.timeSignature}</span>
-            <span className="bars-info">Note length: 1/{props.tracks[props.trackIndex].track[0].length}</span>
+            <span className="bars-info">Note length: 1/{props.tracks[props.trackIndex].track[0][0].length}</span>
         </div>
     )
 }
@@ -30,6 +31,7 @@ const mapStateToProps=store=>({
     timeSignature:store.state.timeSignature,
     tracks: store.state.tracks,
     trackIndex: store.state.trackIndex,
+    customableTrack:store.state.customableTrack
 });
 
 const mapDispatchToProps={

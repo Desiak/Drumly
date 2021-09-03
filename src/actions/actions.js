@@ -67,13 +67,19 @@ export const clear=()=>{
 
 export const loadCustomableTrack=(track, qty)=>{
     
+    console.log("input ttack", track);
     let updatedTrack=[];
 
-    for (let i = 0; i < qty; i++) {
-        updatedTrack.push(track.track);
+    // for (let i = 0; i < qty; i++) {
+    //     updatedTrack.push(track.track);
         
-    }
-    console.log("customable track loading!");
+    // }
+
+    track.track.forEach(bar=>{
+        console.log("bar", bar);
+        updatedTrack.push(bar)
+    })
+    console.log("customable track loading!", updatedTrack);
     return {
         type:"LOAD_TRACK",
         payload:{

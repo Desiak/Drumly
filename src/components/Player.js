@@ -9,9 +9,14 @@ const Player=(props)=> {
 
     const tracksLabels=["CR", "RD", "HH", "SN", "T-1", "T-2", "F-T", "K"];
     const pathSelectors=["crash", "ride", "hihat", "snare", "tom1", "tom2", "floor", "kick"];
+    // const measureSelectors=[8,16,9,12,24];
+
+
     const beatMeasures= props.beatMeasures;
-    let barLength=props.tracks[props.trackIndex].track[0].length;
-    let measureIndex= barLength===8?0:1;
+    let barLength=props.tracks[props.trackIndex].track[0][0].length;
+    
+    // let measureIndex= measureSelectors.indexOf(barLength);
+    // console.log(barLength,measureIndex);
 
     const [intervalId, setIntervalId]=useState(null);
     const [scheduleInterval, setScheduleInterval]=useState(null);
@@ -19,7 +24,7 @@ const Player=(props)=> {
     const [measure, setMeasure]=useState(null);
     const [progressBarSpeed, setProgressBarSpeed]=useState(80);
     const [tracksToRender, setTracksToRender]=useState(null);
-
+    const [measureCount,setMeasureCount]=useState(props.beatMeasures[0]);
     
     //DOM
     const progressBar= useRef(null);
@@ -90,12 +95,14 @@ const Player=(props)=> {
     }
     const scheduleSounds=(barInd=0, noteInd=0)=>{    
         const track=props.customableTrack;
+        console.log("track test", track);
         track[barInd].forEach((path,i)=>{
                 path.forEach((note,index)=>{
                     if(index===noteInd){
                     if(note===1){
                         // console.log("sound: ", pathSelectors[i], i, barInd);
                         const sound = new Audio(`/assets/${pathSelectors[i]}.mp3`);
+                        sound.volume=0.1;
                         sound.play();
                     }
                 }
@@ -111,7 +118,7 @@ const Player=(props)=> {
             return
         }else if(content==="measure"){
             for(let i=0;i<props.numOfBars;i++){
-                barsToRender.push(<div className={`bar bar--measure bar-${i}`}>{beatMeasures[measureIndex].measure.map(measure=><div className="beat-measure">{measure}</div>)}</div>)
+                barsToRender.push(<div className={`bar bar--measure bar-${i}`}>{measureCount.count.map(step=><div className="beat-measure">{step}</div>)}</div>)
             }
         }
         return barsToRender
@@ -187,6 +194,7 @@ const Player=(props)=> {
         // setBeatBars(renderBars("beat"));
         setMeasure(renderBars("measure"));
         updateTracks();
+        console.log("changing track!00", props.customableTrack);
     }, [props.customableTrack]);
 
     useEffect(()=>{
@@ -196,6 +204,14 @@ const Player=(props)=> {
 
     useEffect(() => {
         props.loadCustomableTrack(props.tracks[props.trackIndex], props.numOfBars);
+        const currentMeasure=props.beatMeasures.find(measure=>{
+            const selectedTrack= props.tracks[props.trackIndex];
+
+            return measure.time===selectedTrack.time && measure.measure===selectedTrack.measure;
+        } );
+
+        console.log(currentMeasure);
+        setMeasureCount(currentMeasure);
     }, [props.trackIndex]);
    
     useEffect(() => {
@@ -206,7 +222,7 @@ const Player=(props)=> {
     }, [props.numOfBars])
 
     //mount
- 
+
     
     return (
         <div className="container player-container">
