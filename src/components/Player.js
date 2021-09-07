@@ -58,7 +58,7 @@ const Player=(props)=> {
 
         let modifiedBar=[...newTrack[barIndex]];
         let modifiedPath=[...modifiedBar[pathIndex]];
-        let modifiedNote=modifiedPath[noteIndex]===0?1:0;
+        let modifiedNote=modifiedPath[noteIndex]>=3?0:modifiedPath[noteIndex]+1;
 
         modifiedPath.splice(noteIndex,1,modifiedNote);
         modifiedBar.splice(pathIndex,1,modifiedPath);
@@ -74,9 +74,24 @@ const Player=(props)=> {
                 {bar.map((track,trackIndex)=>{
                     return <div className={`track track-${trackIndex}`} key={`${barIndex}-${trackIndex}`}>
                         {track.map((note,noteIndex)=>{
+                            let intensityClass="";
+                            switch (note) {
+                                case 1:
+                                    intensityClass="ghost-note"
+                                    break;
+                                case 2:
+                                    intensityClass="regular"
+                                    break;
+                                case 3:
+                                    intensityClass="accent"
+                                    break;
+                                default:
+                                
+                                    break;
+                            }
                             return (
                             <div 
-                            className={`note ${note===1?"active":""}`} 
+                            className={`note ${intensityClass}`} 
                             onClick={(e)=>editNote(e)} 
                             id={`${barIndex}-${trackIndex}-${noteIndex}`}
                             key={`${barIndex}-${trackIndex}-${noteIndex}`}
@@ -95,14 +110,27 @@ const Player=(props)=> {
     }
     const scheduleSounds=(barInd=0, noteInd=0)=>{    
         const track=props.customableTrack;
-        console.log("track test", track);
         track[barInd].forEach((path,i)=>{
                 path.forEach((note,index)=>{
                     if(index===noteInd){
-                    if(note===1){
-                        // console.log("sound: ", pathSelectors[i], i, barInd);
+                    if(note!==0){
                         const sound = new Audio(`/assets/${pathSelectors[i]}.mp3`);
-                        sound.volume=0.1;
+                        let volume;
+                        switch (note) {
+                            case 1:
+                                volume=0.05;
+                            break;
+                            case 2:
+                                volume=0.5;
+                            break;
+                            case 3:
+                                volume=1;
+
+                            break;
+                            default:
+                                break;
+                        }
+                        sound.volume=volume;
                         sound.play();
                     }
                 }
@@ -144,7 +172,6 @@ const Player=(props)=> {
 
         if(props.isPlaying){
             //start playing
-            console.log(props.customableTrack);
             setCurrentBarNumber(0);
             animateProgressBar();
             scheduleSounds(0, noteIndex);
@@ -194,7 +221,6 @@ const Player=(props)=> {
         // setBeatBars(renderBars("beat"));
         setMeasure(renderBars("measure"));
         updateTracks();
-        console.log("changing track!00", props.customableTrack);
     }, [props.customableTrack]);
 
     useEffect(()=>{
@@ -210,7 +236,6 @@ const Player=(props)=> {
             return measure.time===selectedTrack.time && measure.measure===selectedTrack.measure;
         } );
 
-        console.log(currentMeasure);
         setMeasureCount(currentMeasure);
     }, [props.trackIndex]);
    
