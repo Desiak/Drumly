@@ -29,6 +29,8 @@ const TrackSelect=(props)=> {
             <div className="list-wrapper">
             <ul className="tracks-list" ref={tracksList}> 
                 {props.tracks.map((track,index)=>{
+                    let keyValue=Math.floor(Math.random()*1000);
+                    console.log("key ", keyValue);
                     return (
                     <li key={Math.floor(Math.random()*1000)} className="list-element track" onClick={()=>props.trackSelect(index)}>
                         <div className="element-wrapper">

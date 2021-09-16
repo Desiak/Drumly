@@ -12,7 +12,7 @@ const INITIAL_STATE={
         {
             trackName:"test",
             time:"4/4",
-            measure:"8",
+            measure:"8th",
             track:[
             [[2,0,0,0,0,0,0,0],
             [0,2,0,0,0,0,0,0],
@@ -37,7 +37,7 @@ const INITIAL_STATE={
         {
             trackName:"4/4 8th notes triplets",
             time:"4/4",
-            measure:"8/3",
+            measure:"8th triplets",
             track:[
             [[0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0],
@@ -50,9 +50,24 @@ const INITIAL_STATE={
             ]
         },
         {
+            trackName:"3/4 8th notes",
+            time:"3/4",
+            measure:"8th",
+            track:[
+            [[0,0,0,0,0,0],
+            [0,0,0,0,0,0],
+            [0,0,2,0,0,2],
+            [0,0,0,2,0,0],
+            [0,0,0,0,0,0],
+            [0,0,0,0,0,0],
+            [0,0,0,0,0,0],
+            [2,0,0,0,0,0],]
+            ]
+        },
+        {
             trackName:"3/4 16th notes",
             time:"3/4",
-            measure:"16",
+            measure:"16th",
             track:[
                 [[0,0,0,0,0,0,0,0,0,0,0,0],
                 [0,0,0,0,0,0,0,0,0,0,0,0],
@@ -67,7 +82,7 @@ const INITIAL_STATE={
         {
         trackName:"4/4 8th notes linear",
         time:"4/4",
-        measure:"8",
+        measure:"8th",
 
         track:[
         [[0,0,0,0,0,0,0,0],
@@ -83,7 +98,7 @@ const INITIAL_STATE={
     {
         trackName:"4/4 8th notes",
         time:"4/4",
-        measure:"8",
+        measure:"8th",
 
         track:[
       [  [0,0,0,0,0,0,0,0],
@@ -99,7 +114,7 @@ const INITIAL_STATE={
     {
         trackName:"4/4 16th notes",
         time:"4/4",
-        measure:"16",
+        measure:"16th",
 
         track:[
       [  [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -115,7 +130,7 @@ const INITIAL_STATE={
     {
         trackName:"3/4 8th notes triplets",
         time:"3/4",
-        measure:"8/3",
+        measure:"8th triplets",
 
         track:[
         [[0,0,0,0,0,0,0,0,0],
@@ -131,7 +146,7 @@ const INITIAL_STATE={
     {
         trackName:"4/4 8th triplet notes",
         time:"4/4",
-        measure:"8/3",
+        measure:"8th triplets",
 
         track:[
         [
@@ -160,7 +175,7 @@ const INITIAL_STATE={
     beatMeasures:[
         {
             time:"4/4",
-            measure:"8",
+            measure:"8th",
             count:[
                 "1","&", 
                 "2","&", 
@@ -168,8 +183,16 @@ const INITIAL_STATE={
                 "4", "&"]
         },
         {
+            time:"3/4",
+            measure:"8th",
+            count:[
+                "1","&", 
+                "2","&", 
+                "3","&"]
+        },
+        {
             time:"4/4",
-            measure:"16",
+            measure:"16th",
             count:[
                 "1","e","&","a",
                 "2","e","&","a", 
@@ -178,16 +201,16 @@ const INITIAL_STATE={
         },
         {
             time:"3/4",
-            measure:"8/3",
+            measure:"8th triplets",
             count:[
-                "1", "trip", "let",
-                "2", "trip", "let",
-                "3", "trip", "let",
+                "1", "&", "let",
+                "2", "&", "let",
+                "3", "&", "let",
             ]
         },
         {
             time:"3/4",
-            measure:"16",
+            measure:"16th",
             count:[
                 "1","e","&","a",
                 "2","e","&","a", 
@@ -196,7 +219,7 @@ const INITIAL_STATE={
         },
         {            
             time:"4/4",
-            measure:"8/3",
+            measure:"8th triplets",
             count:[
                 "1", "trip", "let",
                 "2", "trip", "let",
@@ -206,7 +229,7 @@ const INITIAL_STATE={
         },
         {
             time:"4/4",
-            measure:"16/3",
+            measure:"16th triplets",
             count:[
                 "1", "trip", "let","&", "trip", "let",
                 "2", "trip", "let","&", "trip", "let",

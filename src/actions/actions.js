@@ -70,11 +70,6 @@ export const loadCustomableTrack=(track, qty)=>{
     console.log("input ttack", track);
     let updatedTrack=[];
 
-    // for (let i = 0; i < qty; i++) {
-    //     updatedTrack.push(track.track);
-        
-    // }
-
     track.track.forEach(bar=>{
         console.log("bar", bar);
         updatedTrack.push(bar)

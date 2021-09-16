@@ -3,8 +3,7 @@ import {connect} from "react-redux";
 import { changeTempo } from "../actions/actions";
 
 const Tempo=(props)=>{
-console.log("props: ", props);
-
+    
 const handleSpeedChange=(direction)=>{
     props.changeTempo(props.numberValue, direction);
 }
@@ -23,7 +22,7 @@ const handleTempoChange=(e)=>{
             <span className="change-btn" onClick={()=>handleSpeedChange("+")}>+</span>
             </p>
            <p class="slider-wrapper">
-           <input type="range" min="40" value={props.numberValue} max="150" step="1" id="tempo-slider" onChange={(e)=>handleTempoChange(e)}/>
+           <input type="range" min="40" value={props.numberValue} max="170" step="1" id="tempo-slider" onChange={(e)=>handleTempoChange(e)}/>
 
            </p>
         </div>

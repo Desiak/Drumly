@@ -9,14 +9,10 @@ const Player=(props)=> {
 
     const tracksLabels=["CR", "RD", "HH", "SN", "T-1", "T-2", "F-T", "K"];
     const pathSelectors=["crash", "ride", "hihat", "snare", "tom1", "tom2", "floor", "kick"];
-    // const measureSelectors=[8,16,9,12,24];
-
-
+    
     const beatMeasures= props.beatMeasures;
     let barLength=props.tracks[props.trackIndex].track[0][0].length;
     
-    // let measureIndex= measureSelectors.indexOf(barLength);
-    // console.log(barLength,measureIndex);
 
     const [intervalId, setIntervalId]=useState(null);
     const [scheduleInterval, setScheduleInterval]=useState(null);

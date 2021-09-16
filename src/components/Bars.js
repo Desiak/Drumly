@@ -1,15 +1,14 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { connect } from 'react-redux';
 import {changeNumOfBars} from "../actions/actions"
 
 const Bars=(props)=> {
-    
+
     const handleBarsNumerChange=(direction)=>{
         if(props.numOfBars===1 && direction==="-")return;
         props.changeNumOfBars(direction);
     }
-
-
+    
     return (
         <div className="input bars-wrapper">
             <p className="bars-label">BARS</p>
@@ -21,7 +20,7 @@ const Bars=(props)=> {
            
 
             <span className="bars-info">Time signature: {props.timeSignature}</span>
-            <span className="bars-info">Note length: 1/{props.tracks[props.trackIndex].track[0][0].length}</span>
+            <span className="bars-info">Note length: {props.tracks[props.trackIndex].measure}</span>
         </div>
     )
 }
