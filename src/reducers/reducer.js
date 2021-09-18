@@ -1,4 +1,4 @@
-import { CHANGE_TEMPO, CHANGE_VOLUME, ADD_NOTE, SELECT_TRACK, PLAY_TOGGLE, LOAD_TRACK, TOGGLE_NOTE, CHANGE_BARS_NUMBER} from "../actions/actions";
+import { CHANGE_TEMPO, CHANGE_VOLUME, ADD_NOTE, LOAD_DRUMPADS, SELECT_TRACK, PLAY_TOGGLE, LOAD_TRACK, TOGGLE_NOTE, CHANGE_BARS_NUMBER} from "../actions/actions";
 
 const INITIAL_STATE={
     tempo:94,
@@ -7,6 +7,7 @@ const INITIAL_STATE={
     numOfBars:3,
     timeSignature:"4/4",
     drumset:"first",
+    drumPads:[],
     isPlaying:false,
     tracks:[
         {
@@ -270,6 +271,13 @@ const state= (state=INITIAL_STATE,action)=>{
                 customableTrack:direction==="+"?[...state.customableTrack, state.tracks[state.trackIndex].track[0]]:state.customableTrack.slice(0,-1),
             }    
             break;
+        case LOAD_DRUMPADS:
+            console.log("load drumad", action.payload.drumpads)
+        return {
+            ...state,
+            drumPads:[...action.payload.drumpads]
+        }
+        break;
         default:
 
         console.log("co za akcja wariacie");

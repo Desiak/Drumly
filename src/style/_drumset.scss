@@ -1,16 +1,62 @@
 .drumset-container{
     grid-area: 2/2/3/4;
-    background-color: thistle;
+    background-color: rgb(54, 54, 54);
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
+    .drumset{
+        min-width:600px;
+        width:80%;
+        height: 100%;
+        position: relative;
+    }
     .drumset-pad{
-        flex-basis: 20%;
-        text-align: center;
-        background-color: rgba(102, 89, 102, 0.123);
-        height: 25%;
-        padding:10px;
-        margin:20px;
+        position: absolute;
+        transition: 0.3s;
+        cursor: url("../cursor-big.png"), url("../cursor.png"), pointer;
+        
+        &--hihat{
+            width:20%;
+            top:45%;
+            left:6%;
+        }
+        &--snare{
+            width:21%;
+            top:54%;
+            left:21%;
+        }
+        &--kick{
+            width:28%;
+            top: 65%;
+            left:38%;
+            cursor: url("../cursor-kick.png"), url("../cursor.png"), pointer;
+
+        }
+        &--tom-1{
+            width:15%;
+            top:32%;
+            left:35%;
+        }
+        &--tom-2{
+            width:18%;
+            top:32%;
+            left:52%;
+        }
+        &--floor-tom{
+            width:27%;
+            top:50%;
+            left:66%;
+        }
+        &--crash{
+            width:29%;
+            top:12%;
+            left:8%;
+        }
+        &--ride{
+            width:32%;
+            top:15%;
+            left:67%;
+        }
     }
 }

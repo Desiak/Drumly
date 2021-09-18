@@ -2,6 +2,8 @@ import React, {useEffect, useState, useRef} from 'react'
 import { connect } from 'react-redux'
 import {loadCustomableTrack, updateTrack} from "../actions/actions";
 import _ from "lodash";
+import {gsap} from "gsap";
+import { TimelineMax } from 'gsap/gsap-core';
 
 const Player=(props)=> {
 
@@ -112,16 +114,31 @@ const Player=(props)=> {
                     if(note!==0){
                         const sound = new Audio(`/assets/${pathSelectors[i]}.mp3`);
                         let volume;
+                        const padToAnimate=props.drumPads[i];
+                        const tl=gsap.timeline({autoAlpha:0, ease:"ease"});
+
+                        
+                        // .fromTo(props.drumPads[i], {opacity:0.3}, {opacity:1, duration:0.2, ease:"linear"})
+                        // // .to(props.drumPads[i], {opacity:1, duration:1})
+                        // .to(props.drumPads[i], {autoAlpha:0.3, duration:0.1, ease:"linear"})
+                        // const tl= gsap.timeline({duration:0.01, ease:"ease"});
+                        // tl
+                     
                         switch (note) {
                             case 1:
                                 volume=0.05;
+                                tl.to(padToAnimate, 0.08,{scale:1.1});
+                                tl.to(padToAnimate, 0.08,{scale:1});
                             break;
                             case 2:
                                 volume=0.5;
+                                tl.to(padToAnimate, 0.08,{scale:1.2});
+                                tl.to(padToAnimate, 0.08,{scale:1});
                             break;
                             case 3:
                                 volume=1;
-
+                                tl.to(padToAnimate, 0.08,{scale:1.4});
+                                tl.to(padToAnimate, 0.08,{scale:1});
                             break;
                             default:
                                 break;
@@ -276,6 +293,7 @@ const mapStateToProps=store=>({
     numOfBars:store.state.numOfBars,
     isPlaying:store.state.isPlaying,
     tempo:store.state.tempo,
+    drumPads:store.state.drumPads,
 });
 
 const mapDispatchToProps={

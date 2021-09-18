@@ -10,6 +10,7 @@ export const PLAY_TOGGLE="PLAY_TOGGLE";
 export const LOAD_TRACK="LOAD_TRACK";
 export const TOGGLE_NOTE="TOGGLE_NOTE";
 export const CHANGE_BARS_NUMBER="CHANGE_BARS_NUMBER";
+export const LOAD_DRUMPADS="LOAD_DRUMPADS";
 
 // payload-ładunek -> to co wnosimy nowego do stanu
 // type jest obowiązkowy, payload opcjonalny.
@@ -98,6 +99,15 @@ export const changeNumOfBars=(direction)=>{
         type:"CHANGE_BARS_NUMBER",
         payload:{
             direction
+        }
+    }
+}
+
+export const loadDrumPads=(drumpads)=>{
+    return {
+        type:"LOAD_DRUMPADS",
+        payload:{
+            drumpads
         }
     }
 }

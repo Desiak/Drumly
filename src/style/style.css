@@ -4,6 +4,7 @@
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   color: white;
+  font-family: 'Montserrat Alternates', sans-serif;
 }
 
 body {
@@ -241,7 +242,7 @@ body {
   -ms-grid-column: 1;
   -ms-grid-column-span: 1;
   grid-area: 1/1/3/2;
-  background-color: lightsalmon;
+  background-color: #464646;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -255,10 +256,11 @@ body {
 }
 
 .input {
-  background-color: rgba(143, 90, 69, 0.205);
+  background-color: rgba(43, 43, 43, 0.644);
   padding: 10px;
-  margin: 20px;
+  margin: 10px 20px;
   font-size: 1.2em;
+  border-radius: 15px;
 }
 
 .select-wrapper .select-input {
@@ -269,11 +271,20 @@ body {
   display: block;
   margin: 10px auto;
   padding: 5px 10px;
-  background-color: #af5633;
+  background-color: #3eff78;
+  color: #424242;
   border: none;
   border-radius: 4px;
+  -webkit-transition: 0.15s;
+  transition: 0.15s;
+  font-weight: bold;
   cursor: pointer;
   width: 100px;
+}
+
+.player-controller-input .controller-btn.playing {
+  background-color: #ff3d3d;
+  color: white;
 }
 
 .tempo-input .tempo-value {
@@ -291,10 +302,13 @@ body {
 }
 
 .tempo-input .change-btn {
-  background-color: #af5633;
-  padding: 10px 15px;
+  background-color: #3e72ff;
+  padding: 5px 15px;
   margin: 0 10px;
   cursor: pointer;
+  font-weight: bold;
+  font-size: 1.5em;
+  border-radius: 4px;
 }
 
 .bars-wrapper {
@@ -318,10 +332,13 @@ body {
 }
 
 .bars-wrapper .change-btn {
-  background-color: #af5633;
-  padding: 10px 15px;
+  background-color: #3e72ff;
+  padding: 5px 15px;
   margin: 0 10px;
   cursor: pointer;
+  font-weight: bold;
+  font-size: 1.5em;
+  border-radius: 4px;
 }
 
 .bars-wrapper .bars-info {
@@ -345,14 +362,15 @@ body {
 .beat-select-section .list-wrapper .list-element {
   padding: 10px;
   margin: 10px;
-  background-color: #d38465;
+  background-color: #3e72ff;
   -webkit-transition: 0.3s;
   transition: 0.3s;
   cursor: pointer;
+  border-radius: 4px;
 }
 
 .beat-select-section .list-wrapper .list-element:nth-child(even) {
-  background-color: #ce7653;
+  background-color: #1e4ac4;
 }
 
 .beat-select-section .list-wrapper .list-element:hover {
@@ -370,27 +388,80 @@ body {
   -ms-grid-column: 2;
   -ms-grid-column-span: 2;
   grid-area: 2/2/3/4;
-  background-color: thistle;
+  background-color: #363636;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
 }
 
+.drumset-container .drumset {
+  min-width: 600px;
+  width: 80%;
+  height: 100%;
+  position: relative;
+}
+
 .drumset-container .drumset-pad {
-  -ms-flex-preferred-size: 20%;
-      flex-basis: 20%;
-  text-align: center;
-  background-color: rgba(102, 89, 102, 0.123);
-  height: 25%;
-  padding: 10px;
-  margin: 20px;
+  position: absolute;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  cursor: url("../cursor-big.png"), url("../cursor.png"), pointer;
+}
+
+.drumset-container .drumset-pad--hihat {
+  width: 20%;
+  top: 45%;
+  left: 6%;
+}
+
+.drumset-container .drumset-pad--snare {
+  width: 21%;
+  top: 54%;
+  left: 21%;
+}
+
+.drumset-container .drumset-pad--kick {
+  width: 28%;
+  top: 65%;
+  left: 38%;
+  cursor: url("../cursor-kick.png"), url("../cursor.png"), pointer;
+}
+
+.drumset-container .drumset-pad--tom-1 {
+  width: 15%;
+  top: 32%;
+  left: 35%;
+}
+
+.drumset-container .drumset-pad--tom-2 {
+  width: 18%;
+  top: 32%;
+  left: 52%;
+}
+
+.drumset-container .drumset-pad--floor-tom {
+  width: 27%;
+  top: 50%;
+  left: 66%;
+}
+
+.drumset-container .drumset-pad--crash {
+  width: 29%;
+  top: 12%;
+  left: 8%;
+}
+
+.drumset-container .drumset-pad--ride {
+  width: 32%;
+  top: 15%;
+  left: 67%;
 }
 /*# sourceMappingURL=style.css.map */
