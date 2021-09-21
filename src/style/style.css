@@ -58,19 +58,8 @@ body {
   top: 0;
   left: 60px;
   z-index: 1;
-  opacity: 0;
   -webkit-transform: translateX(-100%);
           transform: translateX(-100%);
-}
-
-.player-container .progress-indicator.playing {
-  -webkit-transition: -webkit-transform 5s linear;
-  transition: -webkit-transform 5s linear;
-  transition: transform 5s linear;
-  transition: transform 5s linear, -webkit-transform 5s linear;
-  -webkit-transform: unset;
-          transform: unset;
-  opacity: 1;
 }
 
 .player-container .wrapper {
@@ -411,9 +400,13 @@ body {
 
 .drumset-container .drumset-pad {
   position: absolute;
-  -webkit-transition: 0.3s;
-  transition: 0.3s;
   cursor: url("../cursor-big.png"), url("../cursor.png"), pointer;
+  opacity: 0.5;
+}
+
+.drumset-container .drumset-pad:hover {
+  -webkit-filter: brightness(2);
+          filter: brightness(2);
 }
 
 .drumset-container .drumset-pad--hihat {

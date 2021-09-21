@@ -13,9 +13,11 @@
     }
     .drumset-pad{
         position: absolute;
-        transition: 0.3s;
         cursor: url("../cursor-big.png"), url("../cursor.png"), pointer;
-        
+        opacity:0.5;
+        &:hover{
+            filter: brightness(2);
+        }
         &--hihat{
             width:20%;
             top:45%;

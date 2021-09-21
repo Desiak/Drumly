@@ -15,13 +15,8 @@
         top:0;
         left:60px;
         z-index: 1;
-        opacity:0;
         transform: translateX(-100%);
-        &.playing{
-            transition: transform 5s linear;
-            transform: unset;
-            opacity:1;
-        }
+     
     }
 
     display: grid;

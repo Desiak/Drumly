@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import {loadCustomableTrack, updateTrack} from "../actions/actions";
 import _ from "lodash";
 import {gsap} from "gsap";
-import { TimelineMax } from 'gsap/gsap-core';
 
 const Player=(props)=> {
 
@@ -12,9 +11,8 @@ const Player=(props)=> {
     const tracksLabels=["CR", "RD", "HH", "SN", "T-1", "T-2", "F-T", "K"];
     const pathSelectors=["crash", "ride", "hihat", "snare", "tom1", "tom2", "floor", "kick"];
     
-    const beatMeasures= props.beatMeasures;
     let barLength=props.tracks[props.trackIndex].track[0][0].length;
-    
+
 
     const [intervalId, setIntervalId]=useState(null);
     const [scheduleInterval, setScheduleInterval]=useState(null);
@@ -23,24 +21,12 @@ const Player=(props)=> {
     const [progressBarSpeed, setProgressBarSpeed]=useState(80);
     const [tracksToRender, setTracksToRender]=useState(null);
     const [measureCount,setMeasureCount]=useState(props.beatMeasures[0]);
-    
+    const progressBarAnimation=useRef(null);
+
     //DOM
     const progressBar= useRef(null);
     const beatWrapper=useRef(null);
 
-   
-    const animateProgressBar=()=>{
-        // progressBar.current.style.width="100%";
-        progressBar.current.classList.remove("playing");
-        progressBar.current.style="";
-
-        setTimeout(() => {
-            progressBar.current.classList.add("playing");
-            progressBar.current.style.transition=`transform ${progressBarSpeed}s linear`
-
-        }, 100);
-
-    }
 
     const handleBeatWrapperPos=()=>{
             beatWrapper.current.style.transform=`translateX(-${(currentBarNumber)*100}%)`;
@@ -117,28 +103,22 @@ const Player=(props)=> {
                         const padToAnimate=props.drumPads[i];
                         const tl=gsap.timeline({autoAlpha:0, ease:"ease"});
 
-                        
-                        // .fromTo(props.drumPads[i], {opacity:0.3}, {opacity:1, duration:0.2, ease:"linear"})
-                        // // .to(props.drumPads[i], {opacity:1, duration:1})
-                        // .to(props.drumPads[i], {autoAlpha:0.3, duration:0.1, ease:"linear"})
-                        // const tl= gsap.timeline({duration:0.01, ease:"ease"});
-                        // tl
                      
                         switch (note) {
                             case 1:
                                 volume=0.05;
-                                tl.to(padToAnimate, 0.08,{scale:1.1});
-                                tl.to(padToAnimate, 0.08,{scale:1});
+                                tl.to(padToAnimate, 0.1,{opacity:0.6, scale:1.02});
+                                tl.to(padToAnimate, 0.1,{opacity:0.5, scale:1});
                             break;
                             case 2:
                                 volume=0.5;
-                                tl.to(padToAnimate, 0.08,{scale:1.2});
-                                tl.to(padToAnimate, 0.08,{scale:1});
+                                tl.to(padToAnimate, 0.1,{opacity:0.8, scale:1.05});
+                                tl.to(padToAnimate, 0.1,{opacity:0.5, scale:1});
                             break;
                             case 3:
                                 volume=1;
-                                tl.to(padToAnimate, 0.08,{scale:1.4});
-                                tl.to(padToAnimate, 0.08,{scale:1});
+                                tl.to(padToAnimate, 0.1,{opacity:1, scale:1.10});
+                                tl.to(padToAnimate, 0.1,{opacity:0.5, scale:1});
                             break;
                             default:
                                 break;
@@ -179,33 +159,28 @@ const Player=(props)=> {
     }
 
     useEffect(() => {
-        if(progressBar){
+        console.log("use effect load", progressBarAnimation)
+        if(progressBar && progressBarAnimation.current){
             let barIndex=0;
             let noteIndex=0;
-
         if(props.isPlaying){
             //start playing
             setCurrentBarNumber(0);
-            animateProgressBar();
+            progressBarAnimation.current.duration(progressBarSpeed);
+            progressBarAnimation.current.play();
             scheduleSounds(0, noteIndex);
-
             setIntervalId(
                 setInterval(() => {
-                animateProgressBar();
                 handleBeatWrapperPos(barIndex);
-
                 setCurrentBarNumber(barIndex);
-
                 }, progressBarSpeed*1000));
 
             setScheduleInterval(
                 setInterval(() => {
                     noteIndex=noteIndex>=barLength-1?0:noteIndex+1;
-                
                     scheduleSounds(barIndex, noteIndex);
                     if(noteIndex===barLength-1){
                         barIndex=barIndex>=props.numOfBars-1?0:barIndex+1;
-
                     }
                 }, (progressBarSpeed*1000)/barLength)
             )
@@ -217,9 +192,9 @@ const Player=(props)=> {
             clearInterval(scheduleInterval);
             setScheduleInterval(null);
             setIntervalId(null);
-            progressBar.current.classList.remove("playing");
             beatWrapper.current.style.transform="unset";
             setCurrentBarNumber(0);
+            progressBarAnimation.current.pause(0);
 
         }
     }
@@ -238,7 +213,6 @@ const Player=(props)=> {
 
     useEffect(()=>{
         setProgressBarSpeed((60/props.tempo*4));
-
     }, [props.tempo])
 
     useEffect(() => {
@@ -260,7 +234,10 @@ const Player=(props)=> {
     }, [props.numOfBars])
 
     //mount
-
+useEffect(() => {
+  console.log(progressBar.current);
+  progressBarAnimation.current=gsap.fromTo(progressBar.current, {x:"-100%"}, {x:"0%", ease:"linear", repeat:-1, paused:true});
+}, [])
     
     return (
         <div className="container player-container">
