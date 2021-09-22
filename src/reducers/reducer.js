@@ -204,9 +204,9 @@ const INITIAL_STATE={
             time:"3/4",
             measure:"8th triplets",
             count:[
-                "1", "&", "let",
-                "2", "&", "let",
-                "3", "&", "let",
+                "1", "trip", "let",
+                "2", "trip", "let",
+                "3", "trip", "let",
             ]
         },
         {

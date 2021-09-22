@@ -10,7 +10,7 @@
         height: 100%;
         background-color: rgba(255, 255, 255, 0.158);
         background-image: linear-gradient(to right, rgba(255, 255, 255, 0.1) 96%, rgba(255, 255, 255, 0.5));
-        border-right:1px solid white;
+        // border-right:1px solid white;
         position: absolute;
         top:0;
         left:60px;
@@ -90,16 +90,19 @@
         justify-content: unset;
         // transition: 1s;
         max-height: 40vh;
+        &.smooth{
+            transition: 0.5s ease-in-out;
+        }
         .bar{
             background-color: rgb(66, 66, 66);
         }
        
     }
     .bar{
-        border-right:2px solid white;
+        // border-right:2px solid white;
         height: 100%;
         width: 100%;
-
+        position: relative;
         display: flex;
         flex-grow: 1;
         flex-direction: column;
@@ -108,6 +111,16 @@
             flex-direction: row;
             align-items: center;
         }
+        .bar-index{
+            font-size: 2em;
+            position: absolute;
+            top:50%;
+            left:50%;
+            transform: translate(-50%,-50%);
+            font-size: 50vh;
+            opacity:0.02;
+            font-weight: bold;
+        }
     }
 }
 
@@ -115,6 +128,7 @@
     display: flex;
     // border: 2px solid brown;
     justify-content: space-around;
+    z-index: 1;
     .track-label{
         text-align: center;
     }

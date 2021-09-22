@@ -53,7 +53,6 @@ body {
   background-color: rgba(255, 255, 255, 0.158);
   background-image: -webkit-gradient(linear, left top, right top, color-stop(96%, rgba(255, 255, 255, 0.1)), to(rgba(255, 255, 255, 0.5)));
   background-image: linear-gradient(to right, rgba(255, 255, 255, 0.1) 96%, rgba(255, 255, 255, 0.5));
-  border-right: 1px solid white;
   position: absolute;
   top: 0;
   left: 60px;
@@ -159,14 +158,19 @@ body {
   max-height: 40vh;
 }
 
+.player-container .beat-wrapper.smooth {
+  -webkit-transition: 0.5s ease-in-out;
+  transition: 0.5s ease-in-out;
+}
+
 .player-container .beat-wrapper .bar {
   background-color: #424242;
 }
 
 .player-container .bar {
-  border-right: 2px solid white;
   height: 100%;
   width: 100%;
+  position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -191,12 +195,25 @@ body {
           align-items: center;
 }
 
+.player-container .bar .bar-index {
+  font-size: 2em;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  font-size: 50vh;
+  opacity: 0.02;
+  font-weight: bold;
+}
+
 .track {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-pack: distribute;
       justify-content: space-around;
+  z-index: 1;
 }
 
 .track .track-label {
@@ -292,7 +309,7 @@ body {
 
 .tempo-input .change-btn {
   background-color: #3e72ff;
-  padding: 5px 15px;
+  padding: 0px 10px;
   margin: 0 10px;
   cursor: pointer;
   font-weight: bold;
@@ -322,7 +339,7 @@ body {
 
 .bars-wrapper .change-btn {
   background-color: #3e72ff;
-  padding: 5px 15px;
+  padding: 0px 10px;
   margin: 0 10px;
   cursor: pointer;
   font-weight: bold;

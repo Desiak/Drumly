@@ -19,7 +19,7 @@ const Bars=(props)=> {
             </span>
            
 
-            <span className="bars-info">Time signature: {props.timeSignature}</span>
+            <span className="bars-info">Time signature: {props.tracks[props.trackIndex].time}</span>
             <span className="bars-info">Note length: {props.tracks[props.trackIndex].measure}</span>
         </div>
     )

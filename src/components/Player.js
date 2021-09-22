@@ -55,6 +55,7 @@ const Player=(props)=> {
         let updatedTracks=props.customableTrack.map((bar,barIndex)=>{
             return (
             <div className={`bar bar-${barIndex}`} key={barIndex}>
+                <p className="bar-index">{barIndex+1}</p>
                 {bar.map((track,trackIndex)=>{
                     return <div className={`track track-${trackIndex}`} key={`${barIndex}-${trackIndex}`}>
                         {track.map((note,noteIndex)=>{
@@ -254,7 +255,7 @@ useEffect(() => {
         <div className="tracks-labels-wrapper wrapper">
             {tracksLabels.map(label=><p className="track-label" >{label}</p>)}
         </div>
-        <div className="beat-wrapper wrapper" ref={beatWrapper}> 
+        <div className={`beat-wrapper wrapper ${props.isPlaying?"":"smooth"}`} ref={beatWrapper}> 
         {tracksToRender}
         </div>
         
