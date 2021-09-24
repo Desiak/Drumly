@@ -68,11 +68,18 @@
         align-items: center;
         z-index: 1;
         .beat-measure{
-            height: 1em;
             flex-grow: 1;
             max-width: 40px;
-            margin:0 10px;
+            // margin:0 10px;
             text-align: center;
+            flex-basis: 100%;
+            opacity:0.5;
+            font-size: 0.9em;
+            &.highlight{
+                font-size: 1.5em;
+                font-weight: bold;
+                opacity:1;
+            }
 
         }
     }
@@ -150,6 +157,7 @@
             background-color: rgb(255, 255, 255)
 
         }
+       
     }
 }
 

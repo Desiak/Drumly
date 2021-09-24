@@ -140,11 +140,13 @@ const Player=(props)=> {
             return
         }else if(content==="measure"){
             for(let i=0;i<props.numOfBars;i++){
-                barsToRender.push(<div className={`bar bar--measure bar-${i}`}>{measureCount.count.map(step=><div className="beat-measure">{step}</div>)}</div>)
+                barsToRender.push(<div className={`bar bar--measure bar-${i}`}>{measureCount.count.map(step=><div className={`beat-measure ${shouldHighlight(step)?"highlight":""}`}>{step}</div>)}</div>)
             }
         }
         return barsToRender
     }
+
+    const shouldHighlight=(step=> /^-?\d+$/.test(step)?true:false)
 
     const handleBarsNav=(direction)=>{
 

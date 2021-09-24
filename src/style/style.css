@@ -127,13 +127,21 @@ body {
 }
 
 .player-container .beat-measure-wrapper .beat-measure {
-  height: 1em;
   -webkit-box-flex: 1;
       -ms-flex-positive: 1;
           flex-grow: 1;
   max-width: 40px;
-  margin: 0 10px;
   text-align: center;
+  -ms-flex-preferred-size: 100%;
+      flex-basis: 100%;
+  opacity: 0.5;
+  font-size: 0.9em;
+}
+
+.player-container .beat-measure-wrapper .beat-measure.highlight {
+  font-size: 1.5em;
+  font-weight: bold;
+  opacity: 1;
 }
 
 .player-container .tracks-labels-wrapper {
