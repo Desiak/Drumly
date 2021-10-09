@@ -5,6 +5,10 @@
     color:white;
     font-family:'Montserrat Alternates', sans-serif;;
 }
+p{
+    pointer-events: none;
+    
+}
 body{
     min-width: 100vw;
     min-height: 100vh;

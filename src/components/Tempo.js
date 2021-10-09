@@ -16,15 +16,15 @@ const handleTempoChange=(e)=>{
     return (
         <div className="input tempo-input">
             <p>TEMPO</p>
-            <p class="tempo tempo-info">
+            <div class="tempo tempo-info">
             <span className="change-btn" onClick={()=>handleSpeedChange("-")}>-</span>
             <span class="tempo-value"> {props.numberValue} bpm</span>
             <span className="change-btn" onClick={()=>handleSpeedChange("+")}>+</span>
-            </p>
-           <p class="slider-wrapper">
+            </div>
+           <div class="slider-wrapper">
            <input type="range" min="40" value={props.numberValue} max="170" step="1" id="tempo-slider" onChange={(e)=>handleTempoChange(e)}/>
 
-           </p>
+           </div>
         </div>
     )
 }

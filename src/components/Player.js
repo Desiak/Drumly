@@ -1,6 +1,8 @@
 import React, {useEffect, useState, useRef} from 'react'
 import { connect } from 'react-redux'
 import {loadCustomableTrack, updateTrack} from "../actions/actions";
+import ChangeOrder from './ChangeOrder';
+import NumberBox from './NumberBox';
 import _ from "lodash";
 import {gsap} from "gsap";
 
@@ -13,20 +15,33 @@ const Player=(props)=> {
     
     let barLength=props.tracks[props.trackIndex].track[0][0].length;
 
+    const setTrackOrder=(unorderedTrack)=>{
+        const orderedTrack=unorderedTrack.map((bar, index)=>{
+            return {id: `${index}`,order:index, value:bar}
+        })
+        return orderedTrack;
+    }
 
     const [intervalId, setIntervalId]=useState(null);
     const [scheduleInterval, setScheduleInterval]=useState(null);
     const [currentBarNumber, setCurrentBarNumber]=useState(0);
+    const [selectedTrack, setSelectedTrack]=useState(props.customableTrack);
+    const [orderedTrack, setOrderedTrack]=useState(setTrackOrder(selectedTrack));
     const [measure, setMeasure]=useState(null);
     const [progressBarSpeed, setProgressBarSpeed]=useState(80);
     const [tracksToRender, setTracksToRender]=useState(null);
     const [measureCount,setMeasureCount]=useState(props.beatMeasures[0]);
     const progressBarAnimation=useRef(null);
-
+    const [draggedBoxId, setDraggedBoxId]=useState(null);
     //DOM
     const progressBar= useRef(null);
     const beatWrapper=useRef(null);
+    const changeOrderSection=useRef(null);
 
+    useEffect(() => {
+      updateBeat(orderedTrack);
+
+    }, [orderedTrack])
 
     const handleBeatWrapperPos=()=>{
             beatWrapper.current.style.transform=`translateX(-${(currentBarNumber)*100}%)`;
@@ -51,51 +66,99 @@ const Player=(props)=> {
         //update global state
         props.updateTrack(newTrack);
     }
-    const updateTracks=()=>{
-        let updatedTracks=props.customableTrack.map((bar,barIndex)=>{
-            return (
-            <div className={`bar bar-${barIndex}`} key={barIndex}>
-                <p className="bar-index">{barIndex+1}</p>
-                {bar.map((track,trackIndex)=>{
-                    return <div className={`track track-${trackIndex}`} key={`${barIndex}-${trackIndex}`}>
-                        {track.map((note,noteIndex)=>{
-                            let intensityClass="";
-                            switch (note) {
-                                case 1:
-                                    intensityClass="ghost-note"
-                                    break;
-                                case 2:
-                                    intensityClass="regular"
-                                    break;
-                                case 3:
-                                    intensityClass="accent"
-                                    break;
-                                default:
-                                
-                                    break;
-                            }
-                            return (
-                            <div 
-                            className={`note ${intensityClass}`} 
-                            onClick={(e)=>editNote(e)} 
-                            id={`${barIndex}-${trackIndex}-${noteIndex}`}
-                            key={`${barIndex}-${trackIndex}-${noteIndex}`}
-                            >
-                            
-                            </div>)
-                        })}
-                    </div>
-                })}
-            </div>
-            )
 
-        });
+    //old updating beat method
+    // const updateBeat=()=>{
+    //     let updatedTracks=props.customableTrack.map((bar,barIndex)=>{
+    //         return (
+    //         <div className={`bar bar-${barIndex}`} key={barIndex}>
+    //             <p className="bar-index">{barIndex+1}</p>
+    //             {bar.map((track,trackIndex)=>{
+    //                 return <div className={`track track-${trackIndex}`} key={`${barIndex}-${trackIndex}`}>
+    //                     {track.map((note,noteIndex)=>{
+    //                         let intensityClass="";
+    //                         switch (note) {
+    //                             case 1:
+    //                                 intensityClass="ghost-note"
+    //                                 break;
+    //                             case 2:
+    //                                 intensityClass="regular"
+    //                                 break;
+    //                             case 3:
+    //                                 intensityClass="accent"
+    //                                 break;
+    //                             default:
+                                
+    //                                 break;
+    //                         }
+    //                         return (
+    //                         <div 
+    //                         className={`note ${intensityClass}`} 
+    //                         onClick={(e)=>editNote(e)} 
+    //                         id={`${barIndex}-${trackIndex}-${noteIndex}`}
+    //                         key={`${barIndex}-${trackIndex}-${noteIndex}`}
+    //                         >
+                            
+    //                         </div>)
+    //                     })}
+    //                 </div>
+    //             })}
+    //         </div>
+    //         )
+
+    //     });
+
+    //     setTracksToRender(updatedTracks)
+    // }
+    const updateBeat=(changedBeat)=>{
+        let updatedTracks= changedBeat
+        .sort((a,b)=>a.order-b.order)
+        .map((bar, index)=>{
+                return (
+                <div className={`bar bar-${index}`} key={index}>
+                    <p className="bar-index">{index+1}</p>
+                    {bar.value.map((track,trackIndex)=>{
+                        return <div className={`track track-${trackIndex}`} key={`${index}-${trackIndex}`}>
+                            {track.map((note,noteIndex)=>{
+                                let intensityClass="";
+                                switch (note) {
+                                    case 1:
+                                        intensityClass="ghost-note"
+                                        break;
+                                    case 2:
+                                        intensityClass="regular"
+                                        break;
+                                    case 3:
+                                        intensityClass="accent"
+                                        break;
+                                    default:
+                                    
+                                        break;
+                                }
+                                return (
+                                <div 
+                                className={`note ${intensityClass}`} 
+                                onClick={(e)=>editNote(e)} 
+                                id={`${index}-${trackIndex}-${noteIndex}`}
+                                key={`${index}-${trackIndex}-${noteIndex}`}
+                                >
+                                
+                                </div>)
+                            })}
+                        </div>
+                    })}
+                </div>
+                )
+    
+            });
+       
+       
 
         setTracksToRender(updatedTracks)
     }
     const scheduleSounds=(barInd=0, noteInd=0)=>{    
-        const track=props.customableTrack;
-        track[barInd].forEach((path,i)=>{
+        const track=orderedTrack;
+        track[barInd].value.forEach((path,i)=>{
                 path.forEach((note,index)=>{
                     if(index===noteInd){
                     if(note!==0){
@@ -161,8 +224,31 @@ const Player=(props)=> {
     }else return;
     }
 
+    const handleDrag=(e)=>{
+        setDraggedBoxId(e.currentTarget.id);
+    }
+    const handleDrop=(e)=>{
+        const draggedBox=orderedTrack.find((box)=>box.id==draggedBoxId);
+        const dropBox=orderedTrack.find((box)=>box.id==e.currentTarget.id);
+        const prevDraggedBoxOrder=draggedBox.order;
+        const prevDropBoxOrder= dropBox.order;
+
+        const reorderedTrack=orderedTrack.map(bar=>{
+            if(bar.id==draggedBoxId){
+                bar.order=prevDropBoxOrder;
+            }
+            if(bar.id==e.currentTarget.id){
+                bar.order=prevDraggedBoxOrder
+            }
+            return bar
+        })
+        
+
+        setOrderedTrack(reorderedTrack);
+        updateBeat(reorderedTrack)
+
+    }
     useEffect(() => {
-        console.log("use effect load", progressBarAnimation)
         if(progressBar && progressBarAnimation.current){
             let barIndex=0;
             let noteIndex=0;
@@ -210,8 +296,11 @@ const Player=(props)=> {
 
     useEffect(() => {
         // setBeatBars(renderBars("beat"));
+        setSelectedTrack(props.customableTrack);
         setMeasure(renderBars("measure"));
-        updateTracks();
+        // updateBeat();
+        setOrderedTrack(setTrackOrder(props.customableTrack));
+        
     }, [props.customableTrack]);
 
     useEffect(()=>{
@@ -238,18 +327,21 @@ const Player=(props)=> {
 
     //mount
 useEffect(() => {
-  console.log(progressBar.current);
   progressBarAnimation.current=gsap.fromTo(progressBar.current, {x:"-100%"}, {x:"0%", ease:"linear", repeat:-1, paused:true});
 }, [])
     
+
     return (
         <div className="container player-container">
+        <ChangeOrder innerRef={changeOrderSection} orderedTrack={orderedTrack} handleDrag={handleDrag} handleDrop={handleDrop}/>
         <div className="progress-indicator" ref={progressBar}></div>
         <div className="bar-number-wrapper wrapper">
             <button className="arrow arrow-prev" onClick={()=>handleBarsNav("-")}>&#8249;</button>
+            <button className="button reorganise-section-reveal" onClick={()=>{changeOrderSection.current.classList.toggle("hidden")}}>Change Bars Order</button>
+
             <span className="bar-number">Bar {currentBarNumber+1} of {props.numOfBars}</span>
             <button className="arrow arrow-next" onClick={()=>handleBarsNav("+")}>&#8250;</button>
-
+           
         </div>
         <div className="beat-measure-wrapper wrapper">
             {measure}

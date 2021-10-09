@@ -3,7 +3,7 @@
     grid-area: 1/2/2/4;
     background-color: rgb(90, 90, 90);
     position: relative;
-    overflow:hidden;
+    z-index: 1;
     .progress-indicator{
        
         width:100%;
@@ -41,7 +41,23 @@
         align-items: center;
         background-color: rgb(70, 70, 70);
         z-index: 1;
+        position: relative;
+        .background{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: rgb(70, 70, 70);
+            z-index: -1;
 
+        }
+        .reorganise-section-reveal{
+            margin-left:50px;
+            background-color: rgb(41, 41, 41);
+            border:none;
+            padding:5px 20px;
+            cursor:pointer;
+        }
+      
         span{
             margin:0 30px;
         }
@@ -63,8 +79,6 @@
     .beat-measure-wrapper{
         background-color: rgb(53, 53, 53);
         grid-area: beat-measure;
-        // flex-direction: unset;
-        // justify-content: unset;
         align-items: center;
         z-index: 1;
         .beat-measure{
@@ -127,6 +141,54 @@
             font-size: 50vh;
             opacity:0.02;
             font-weight: bold;
+        }
+    }
+    .change-order-section{
+        position: absolute;
+        width:100%;
+        height: 120px;
+        background-color: gray;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        transition: 0.3s;
+        opacity:0.9;
+        bottom:0;
+        &.hidden{
+            transform: translateY(100%);
+        }
+        .bars-order-list{
+            flex-basis: 100%;
+            display: flex;
+            height: 100%;
+            justify-content: space-evenly;
+            padding: 0 50px;
+            align-items: center;
+            .bar-number{
+                flex-basis: 1;
+                flex-grow: 1;
+                height: 60%;
+                border-radius: 6px;
+                // border:4px solid rgb(59, 59, 59); 
+                list-style: none;
+                margin: 0 10px;
+                max-width: 200px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: rgb(59, 59, 59);
+                cursor: pointer;
+                transition: 0.15s;
+                &:hover{
+                    transform: scale(1.05);
+                }
+                .number{
+                    font-size: 200%;
+                    font-weight: bold;
+                    color: gray
+                }
+            }
         }
     }
 }

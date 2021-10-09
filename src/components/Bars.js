@@ -19,8 +19,8 @@ const Bars=(props)=> {
             </span>
            
 
-            <span className="bars-info">Time signature: {props.tracks[props.trackIndex].time}</span>
-            <span className="bars-info">Note length: {props.tracks[props.trackIndex].measure}</span>
+            <span className="bars-info">Time signature: <span class="info-big">{props.tracks[props.trackIndex].time}</span></span>
+            <span className="bars-info">Note length: <span class="info-big">{props.tracks[props.trackIndex].measure}</span></span>
         </div>
     )
 }
