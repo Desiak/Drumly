@@ -8,9 +8,10 @@ export const EDIT_NOTE="EDIT_NOTE";
 export const SELECT_TRACK="SELECT_TRACK";
 export const PLAY_TOGGLE="PLAY_TOGGLE";
 export const LOAD_TRACK="LOAD_TRACK";
-export const TOGGLE_NOTE="TOGGLE_NOTE";
+export const UPDATE_TRACK="UPDATE_TRACK";
 export const CHANGE_BARS_NUMBER="CHANGE_BARS_NUMBER";
 export const LOAD_DRUMPADS="LOAD_DRUMPADS";
+export const CHANGE_BAR="CHANGE_BAR";
 
 // payload-ładunek -> to co wnosimy nowego do stanu
 // type jest obowiązkowy, payload opcjonalny.
@@ -73,7 +74,9 @@ export const loadCustomableTrack=(track, qty)=>{
 
     track.track.forEach(bar=>{
         console.log("bar", bar);
-        updatedTrack.push(bar)
+        // updatedTrack.push(bar)
+        updatedTrack.push({value:bar, id:Math.floor(Math.random()*1000)})
+
     })
     console.log("customable track loading!", updatedTrack);
     return {
@@ -84,9 +87,9 @@ export const loadCustomableTrack=(track, qty)=>{
     }
 }
 export const updateTrack=(updatedTrack)=>{
-
+    console.log("updated track in actions ", updatedTrack)
     return {
-        type:"TOGGLE_NOTE",
+        type:"UPDATE_TRACK",
         payload:{
             updatedTrack
         }
@@ -110,4 +113,7 @@ export const loadDrumPads=(drumpads)=>{
             drumpads
         }
     }
+}
+export const handleBarMod=()=>{
+
 }

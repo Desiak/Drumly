@@ -2,22 +2,16 @@ import React, {useEffect, useState, useRef} from 'react'
 import { connect } from 'react-redux'
 import {loadCustomableTrack, updateTrack} from "../actions/actions";
 import ChangeOrder from './ChangeOrder';
-import NumberBox from './NumberBox';
 import _ from "lodash";
 import {gsap} from "gsap";
 
 const Player=(props)=> {
-
-    // BUTTON który ukrywa drumset i rozciąga player na całą wysokość
-
     const tracksLabels=["CR", "RD", "HH", "SN", "T-1", "T-2", "F-T", "K"];
     const pathSelectors=["crash", "ride", "hihat", "snare", "tom1", "tom2", "floor", "kick"];
-    
     let barLength=props.tracks[props.trackIndex].track[0][0].length;
-
     const setTrackOrder=(unorderedTrack)=>{
         const orderedTrack=unorderedTrack.map((bar, index)=>{
-            return {id: `${index}`,order:index, value:bar}
+            return {id: `${bar.id}`,order:index, value:bar.value}
         })
         return orderedTrack;
     }
@@ -25,8 +19,7 @@ const Player=(props)=> {
     const [intervalId, setIntervalId]=useState(null);
     const [scheduleInterval, setScheduleInterval]=useState(null);
     const [currentBarNumber, setCurrentBarNumber]=useState(0);
-    const [selectedTrack, setSelectedTrack]=useState(props.customableTrack);
-    const [orderedTrack, setOrderedTrack]=useState(setTrackOrder(selectedTrack));
+    const [orderedTrack, setOrderedTrack]=useState(setTrackOrder(props.customableTrack));
     const [measure, setMeasure]=useState(null);
     const [progressBarSpeed, setProgressBarSpeed]=useState(80);
     const [tracksToRender, setTracksToRender]=useState(null);
@@ -39,8 +32,7 @@ const Player=(props)=> {
     const changeOrderSection=useRef(null);
 
     useEffect(() => {
-      updateBeat(orderedTrack);
-
+      updateBeat(orderedTrack, "effect");
     }, [orderedTrack])
 
     const handleBeatWrapperPos=()=>{
@@ -54,62 +46,18 @@ const Player=(props)=> {
         const noteIndex=noteLocation[2];
        
         let newTrack= _.cloneDeep(props.customableTrack);
-
-        let modifiedBar=[...newTrack[barIndex]];
-        let modifiedPath=[...modifiedBar[pathIndex]];
+        let modifiedBar=newTrack[barIndex];
+        let modifiedPath=[...modifiedBar.value[pathIndex]];
         let modifiedNote=modifiedPath[noteIndex]>=3?0:modifiedPath[noteIndex]+1;
 
         modifiedPath.splice(noteIndex,1,modifiedNote);
-        modifiedBar.splice(pathIndex,1,modifiedPath);
+        modifiedBar.value.splice(pathIndex,1,modifiedPath);
         newTrack.splice(barIndex,1, modifiedBar);
         
-        //update global state
+        // update global state
         props.updateTrack(newTrack);
     }
 
-    //old updating beat method
-    // const updateBeat=()=>{
-    //     let updatedTracks=props.customableTrack.map((bar,barIndex)=>{
-    //         return (
-    //         <div className={`bar bar-${barIndex}`} key={barIndex}>
-    //             <p className="bar-index">{barIndex+1}</p>
-    //             {bar.map((track,trackIndex)=>{
-    //                 return <div className={`track track-${trackIndex}`} key={`${barIndex}-${trackIndex}`}>
-    //                     {track.map((note,noteIndex)=>{
-    //                         let intensityClass="";
-    //                         switch (note) {
-    //                             case 1:
-    //                                 intensityClass="ghost-note"
-    //                                 break;
-    //                             case 2:
-    //                                 intensityClass="regular"
-    //                                 break;
-    //                             case 3:
-    //                                 intensityClass="accent"
-    //                                 break;
-    //                             default:
-                                
-    //                                 break;
-    //                         }
-    //                         return (
-    //                         <div 
-    //                         className={`note ${intensityClass}`} 
-    //                         onClick={(e)=>editNote(e)} 
-    //                         id={`${barIndex}-${trackIndex}-${noteIndex}`}
-    //                         key={`${barIndex}-${trackIndex}-${noteIndex}`}
-    //                         >
-                            
-    //                         </div>)
-    //                     })}
-    //                 </div>
-    //             })}
-    //         </div>
-    //         )
-
-    //     });
-
-    //     setTracksToRender(updatedTracks)
-    // }
     const updateBeat=(changedBeat)=>{
         let updatedTracks= changedBeat
         .sort((a,b)=>a.order-b.order)
@@ -211,16 +159,19 @@ const Player=(props)=> {
 
     const shouldHighlight=(step=> /^-?\d+$/.test(step)?true:false)
 
-    const handleBarsNav=(direction)=>{
-
+    const navToBar=(dest)=>{
         if(!props.isPlaying){
-        if(direction==="+"){
+        if(typeof dest!=="number"){
+            if(dest==="+"){
             setCurrentBarNumber(currentBarNumber===props.numOfBars-1?0:currentBarNumber+1);
         }
-        else{
+            else{
             currentBarNumber===0?setCurrentBarNumber(props.numOfBars-1):setCurrentBarNumber(currentBarNumber-1);
             setCurrentBarNumber(currentBarNumber===0?props.numOfBars-1:currentBarNumber-1);
         }
+    }else {
+        setCurrentBarNumber(dest)
+    }
     }else return;
     }
 
@@ -242,10 +193,9 @@ const Player=(props)=> {
             }
             return bar
         })
-        
-
         setOrderedTrack(reorderedTrack);
-        updateBeat(reorderedTrack)
+        updateBeat(reorderedTrack, "drop");
+        props.updateTrack(reorderedTrack);
 
     }
     useEffect(() => {
@@ -295,12 +245,8 @@ const Player=(props)=> {
     }, [currentBarNumber]);
 
     useEffect(() => {
-        // setBeatBars(renderBars("beat"));
-        setSelectedTrack(props.customableTrack);
         setMeasure(renderBars("measure"));
-        // updateBeat();
         setOrderedTrack(setTrackOrder(props.customableTrack));
-        
     }, [props.customableTrack]);
 
     useEffect(()=>{
@@ -310,12 +256,13 @@ const Player=(props)=> {
     useEffect(() => {
         props.loadCustomableTrack(props.tracks[props.trackIndex], props.numOfBars);
         const currentMeasure=props.beatMeasures.find(measure=>{
-            const selectedTrack= props.tracks[props.trackIndex];
+            const customTrack= props.tracks[props.trackIndex];
 
-            return measure.time===selectedTrack.time && measure.measure===selectedTrack.measure;
+            return measure.time===customTrack.time && measure.measure===customTrack.measure;
         } );
 
         setMeasureCount(currentMeasure);
+        setCurrentBarNumber(0);
     }, [props.trackIndex]);
    
     useEffect(() => {
@@ -333,14 +280,20 @@ useEffect(() => {
 
     return (
         <div className="container player-container">
-        <ChangeOrder innerRef={changeOrderSection} orderedTrack={orderedTrack} handleDrag={handleDrag} handleDrop={handleDrop}/>
+        <ChangeOrder 
+        innerRef={changeOrderSection} 
+        orderedTrack={orderedTrack} 
+        handleDrag={handleDrag} 
+        handleDrop={handleDrop} 
+        navToBar={navToBar} 
+        activeBarIndex={currentBarNumber}/>
         <div className="progress-indicator" ref={progressBar}></div>
         <div className="bar-number-wrapper wrapper">
-            <button className="arrow arrow-prev" onClick={()=>handleBarsNav("-")}>&#8249;</button>
+            <button className="arrow arrow-prev" onClick={()=>navToBar("-")}>&#8249;</button>
             <button className="button reorganise-section-reveal" onClick={()=>{changeOrderSection.current.classList.toggle("hidden")}}>Change Bars Order</button>
 
             <span className="bar-number">Bar {currentBarNumber+1} of {props.numOfBars}</span>
-            <button className="arrow arrow-next" onClick={()=>handleBarsNav("+")}>&#8250;</button>
+            <button className="arrow arrow-next" onClick={()=>navToBar("+")}>&#8250;</button>
            
         </div>
         <div className="beat-measure-wrapper wrapper">
