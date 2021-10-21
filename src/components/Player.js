@@ -206,6 +206,9 @@ const Player=(props)=> {
                 setInterval(() => {
                 handleBeatWrapperPos(barIndex);
                 setCurrentBarNumber(barIndex);
+                progressBarAnimation.current.time(0);
+                progressBarAnimation.current.play();
+
                 }, progressBarSpeed*1000));
 
             setScheduleInterval(
@@ -268,7 +271,7 @@ const Player=(props)=> {
 
     //mount
 useEffect(() => {
-  progressBarAnimation.current=gsap.fromTo(progressBar.current, {x:"-100%"}, {x:"0%", ease:"linear", repeat:-1, paused:true});
+  progressBarAnimation.current=gsap.fromTo(progressBar.current, {x:"-100%"}, {x:"0%", ease:"linear", repeat:1, paused:true});
 }, [])
     
 
