@@ -145,16 +145,10 @@ const Player=(props)=> {
         })
     }
 
-    const renderBars=(content)=>{
-        let barsToRender=[];
-        if(content==="beat"){
-            return
-        }else if(content==="measure"){
-            for(let i=0;i<props.numOfBars;i++){
-                barsToRender.push(<div className={`bar bar--measure bar-${i}`}>{measureCount.count.map(step=><div className={`beat-measure ${shouldHighlight(step)?"highlight":""}`}>{step}</div>)}</div>)
-            }
-        }
-        return barsToRender
+    const renderMeasureContent=()=>{
+        let measure=[];
+        measure.push(<div className={`bar bar--measure`}>{measureCount.count.map(step=><div className={`beat-measure ${shouldHighlight(step)?"highlight":""}`}>{step}</div>)}</div>)
+        return measure
     }
 
     const shouldHighlight=(step=> /^-?\d+$/.test(step)?true:false)
@@ -245,7 +239,7 @@ const Player=(props)=> {
     }, [currentBarNumber]);
 
     useEffect(() => {
-        setMeasure(renderBars("measure"));
+        setMeasure(renderMeasureContent());
         setOrderedTrack(setTrackOrder(props.customableTrack));
     }, [props.customableTrack]);
 
