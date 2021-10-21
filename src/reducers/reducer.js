@@ -1,4 +1,4 @@
-import { CHANGE_TEMPO, CHANGE_VOLUME, ADD_NOTE, LOAD_DRUMPADS, SELECT_TRACK, PLAY_TOGGLE, LOAD_TRACK, TOGGLE_NOTE, CHANGE_BARS_NUMBER} from "../actions/actions";
+import { CHANGE_TEMPO, CHANGE_VOLUME, ADD_NOTE, LOAD_DRUMPADS, SELECT_TRACK, PLAY_TOGGLE, LOAD_TRACK, UPDATE_TRACK, CHANGE_BARS_NUMBER} from "../actions/actions";
 
 const INITIAL_STATE={
     tempo:94,
@@ -42,12 +42,39 @@ const INITIAL_STATE={
             track:[
             [[0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0],
-            [2,0,2,2,0,2,2,0,2,2,0,2],
+            [2,0,1,2,0,1,2,0,1,2,0,1],
             [0,0,0,2,0,0,0,0,0,2,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0,0,0,0],
             [2,0,0,0,0,0,2,0,0,0,0,0],]
+            ]
+        },
+        {
+            trackName:"halftime shuffle",
+            time:"4/4",
+            measure:"8th triplets",
+            track:[
+            [
+            [0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0],
+            [2,0,1,2,0,1,2,0,1,2,0,1],
+            [0,0,0,3,0,0,0,0,3,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0],
+            [2,0,0,0,0,2,2,0,0,0,0,2],
+            ],
+            [
+            [0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0],
+            [2,0,1,2,0,1,2,0,1,2,0,1],
+            [0,0,0,0,0,0,3,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0,0,0,0],
+            [2,0,0,2,0,0,0,0,0,0,0,2],
+            ]
             ]
         },
         {
@@ -260,11 +287,12 @@ const state= (state=INITIAL_STATE,action)=>{
         case LOAD_TRACK:
         return {...state, customableTrack:action.payload.updatedTrack}    
         break;
-        case TOGGLE_NOTE:
-        return {...state, customableTrack:action.payload.updatedTrack}    
+        case UPDATE_TRACK:
+        return {...state, customableTrack:action.payload.updatedTrack, numOfBars:action.payload.updatedTrack.length}    
         break;
         case CHANGE_BARS_NUMBER:
             const direction=action.payload.direction;
+            console.log(state.tracks[state.trackIndex].track[0]);
             return {
                 ...state, 
                 numOfBars:direction==="+"?state.numOfBars+1:state.numOfBars-1,
