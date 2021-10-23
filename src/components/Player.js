@@ -285,14 +285,7 @@ useEffect(() => {
         navToBar={navToBar} 
         activeBarIndex={currentBarNumber}/>
         <div className="progress-indicator" ref={progressBar}></div>
-        <div className="bar-number-wrapper wrapper">
-            <button className="arrow arrow-prev" onClick={()=>navToBar("-")}>&#8249;</button>
-            <button className="button reorganise-section-reveal" onClick={()=>{changeOrderSection.current.classList.toggle("hidden")}}>Change Bars Order</button>
-
-            <span className="bar-number">Bar {currentBarNumber+1} of {props.numOfBars}</span>
-            <button className="arrow arrow-next" onClick={()=>navToBar("+")}>&#8250;</button>
-           
-        </div>
+        
         <div className="beat-measure-wrapper wrapper">
             {measure}
         </div>
