@@ -46,16 +46,18 @@ function NumberBox({bar,handleDrag, handleDrop, navToBar, activeBarIndex, barInd
         onClick={()=>navToBar(bar.order)}
         >
         <p className="number">{bar.id}</p>
-        <div className="copy-bar box-btn" onClick={(e)=>{
+        <div className="copy-bar box-btn" title="copy this bar" onClick={(e)=>{
             handleBarState(barIndex, "multiply")
-        }}>+</div>
-         <div className="remove-bar box-btn" onClick={(e)=>{
+        }}><i class="fas fa-plus-square"></i></div>
+         <div className="remove-bar box-btn" title="remove this bar" onClick={(e)=>{
             e.stopPropagation();
             handleBarState(barIndex, "remove")
-        }}>-</div>
-         <div className="clear-bar box-btn" onClick={(e)=>{
+        }}><i class="fas fa-trash-alt"></i>
+        </div>
+         <div className="clear-bar box-btn" title="clear this bar" onClick={(e)=>{
             handleBarState(barIndex, "clear")
-        }}>clear</div>
+        }}><i class="fas fa-eraser"></i></div>
+        <img className="drag-icon" src="./assets/imgs/drag-icon.png"  title="drag to new position" alt="drag icon"></img>
         </li>
     )
 }

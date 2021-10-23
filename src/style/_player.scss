@@ -172,57 +172,92 @@
                 height: 100%;
                 list-style: none;
                 margin: 0 4px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
+                // display: flex;
+                // justify-content: center;
+                // align-items: center;
                 background-color: rgb(59, 59, 59);
                 cursor: pointer;
                 transition: 0.15s;
                 position: relative;
                 &:hover{
-                    box-shadow: inset 0px 0px 12px lighten($primary-color, 10%);
+                    // box-shadow: inset 0px 0px 12px lighten($primary-color, 10%);
                     .box-btn{
                         opacity:1;
                         pointer-events: all;
                     }
+                    .drag-icon{
+                        opacity:1;
+                        animation: dragIcon 2s ease-in-out infinite;
+
+                    }
+                 
                 }
                .box-btn{
                 position: absolute;
                 padding:5px 10px;
-                font-size: 200%;
-                transition: background-color 0.15s;
+                font-size: 160%;
+                transition: 0.3s;
                 opacity:0;
                 pointer-events: none;
-                &:hover{
-                    background-color: $primary-color;
-                }
+              
+                
                }
                 .copy-bar{
                     top:0;
-                    right:0;    
-                }
+                    right:0; 
+                    &:hover{
+                        .fas{
+                            color: $success-color;
+                        }
+                    }
+                   }
                 .remove-bar{
                     top:0;
                     left:0;
+                    &:hover{
+                        .fas{
+                            color: $alert-color;
+                        }
+                    }
                 }
                 .clear-bar{
                     bottom:0;
                     left:0;
+                    &:hover{
+                        .fas{
+                            color: $primary-color;
+                        }
+                    }
+                }
+                .drag-icon{
+                    position: absolute;
+                    height:40%;
+                    max-width: 30%;
+                    bottom: 4%;
+                    right:2%;                    
+                    transition: opacity 0.3s;
+                    opacity:0;
+                    object-fit: contain;
                 }
                 .number{
                     font-size: 200%;
                     font-weight: bold;
                     transition:0.15s;
+                    position: absolute;
                     color: rgba(255, 255, 255, 0.411);
+                    top:50%;
+                    left:50%;
+                    transform: translate(-50%,-50%);
+
                 }
                 &.active{
                
                     .number{
-                        transform: scale(1.2);
+                        font-size: 250%;
                         color:white;
                     }
                     &:hover{
-                        box-shadow: inset 0px 0px 12px white !important;
+                        // box-shadow: inset 0px 0px 12px white !important;
                     }
                 }
             }
@@ -268,3 +303,17 @@
     }
 }
 
+@keyframes dragIcon {
+    0%{
+        transform: translate(0%,0%);
+    }
+    25%{
+        transform: translate(8%,0%);
+    }
+    75%{
+        transform: translate(-8%,0%);
+    }
+    100%{
+        transform: translate(0%,0%);
+    }
+}
