@@ -12,7 +12,6 @@ function NumberBox({bar,handleDrag, handleDrop, navToBar, activeBarIndex, barInd
         emptyBar=barValue.map(path=>{
            return path.map(note=>0);
         });
-        console.log(emptyBar);
         return emptyBar;
     }
 

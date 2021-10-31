@@ -29,8 +29,8 @@ body {
   height: 100%;
   -ms-grid-columns: minmax(300px, 1fr) 2fr 2fr;
       grid-template-columns: minmax(300px, 1fr) 2fr 2fr;
-  -ms-grid-rows: 45vh 55vh;
-      grid-template-rows: 45vh 55vh;
+  -ms-grid-rows: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
 }
 
 .player-container {
@@ -46,8 +46,8 @@ body {
   display: grid;
   -ms-grid-columns: 60px 1fr;
       grid-template-columns: 60px 1fr;
-  -ms-grid-rows: 50px 1fr 100px;
-      grid-template-rows: 50px 1fr 100px;
+  -ms-grid-rows: 50px 1fr 120px;
+      grid-template-rows: 50px 1fr 120px;
       grid-template-areas: "empty beat-measure" "tracks-labels beat" "beat-order beat-order";
 }
 
@@ -182,15 +182,18 @@ body {
       -ms-flex-pack: unset;
           justify-content: unset;
   max-height: 40vh;
-}
-
-.player-container .beat-wrapper.smooth {
-  -webkit-transition: 0.5s ease-in-out;
-  transition: 0.5s ease-in-out;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 .player-container .beat-wrapper .bar {
   background-color: #424242;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
 }
 
 .player-container .bar {
@@ -228,7 +231,7 @@ body {
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
-  font-size: 50vh;
+  font-size: 40vh;
   opacity: 0.02;
   font-weight: bold;
 }
@@ -277,7 +280,8 @@ body {
 .player-container .change-order-section .bars-order-list .bar-box {
   -ms-flex-preferred-size: 100%;
       flex-basis: 100%;
-  height: 100%;
+  height: 80%;
+  border-radius: 4px;
   list-style: none;
   margin: 0 4px;
   background-color: #3b3b3b;
@@ -398,6 +402,7 @@ body {
           flex-grow: 1;
   max-width: 60px;
   border-radius: 2px;
+  cursor: pointer;
 }
 
 .track .note.ghost-note {

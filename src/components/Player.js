@@ -11,7 +11,7 @@ const Player=(props)=> {
     let barLength=props.tracks[props.trackIndex].track[0][0].length;
     const setTrackOrder=(unorderedTrack)=>{
         const orderedTrack=unorderedTrack.map((bar, index)=>{
-            return {id: `${bar.id}`,order:index, value:bar.value}
+            return {id: `${bar.id}`,order:index, value:bar.value, isActive:index===currentBarNumber?true:false}
         })
         return orderedTrack;
     }
@@ -35,8 +35,47 @@ const Player=(props)=> {
       updateBeat(orderedTrack, "effect");
     }, [orderedTrack])
 
-    const handleBeatWrapperPos=()=>{
-            beatWrapper.current.style.transform=`translateX(-${(currentBarNumber)*100}%)`;
+    useEffect(() => {
+       handleBarsPosition();
+    }, [tracksToRender])
+
+   
+    const handleBarsPosition=()=>{  
+        //     beatWrapper.current.style.transform=`translateX(-${(currentBarNumber)*100}%)`;
+        // setOrderedTrack(setTrackOrder(props.customableTrack));
+
+        const previousIndex= currentBarNumber>0?currentBarNumber-1:orderedTrack.length-1;
+        const nextIndex= currentBarNumber<orderedTrack.length-1? currentBarNumber+1:0;
+        const barsNodes=beatWrapper.current.childNodes;
+
+        if(barsNodes.length===0)return;
+        let animDuration=props.isPlaying?0:0.5;
+        if(barsNodes.length===1){
+            gsap.to(barsNodes[0], {x:"0%", opacity:1, duration:animDuration});
+
+        }else if (barsNodes.length===2){
+           
+            gsap.to(barsNodes[0], {x:currentBarNumber===0?"0%":"-100%", opacity:currentBarNumber===0?1:0, duration:animDuration});
+            gsap.to(barsNodes[1], {x:currentBarNumber===0?"100%":"0%", opacity:currentBarNumber===0?0:1, duration:animDuration});
+        }
+        else{
+        barsNodes.forEach((bar,index)=>{
+            switch (index) {
+                case previousIndex:
+                    gsap.to(bar, {x:"-100%", opacity:0, duration:animDuration});
+                break;
+                case currentBarNumber:
+                    gsap.to(bar, {x:"0%", opacity:1, duration:animDuration});
+                break;
+                case nextIndex:
+                    gsap.to(bar, {x:"100%", opacity:0, duration:animDuration});
+                break;
+                default:
+                    gsap.to(bar, {x:"0%", opacity:0, duration:animDuration})
+                    break;
+            }
+        })
+        }
         }
 
     const editNote=(e)=>{
@@ -204,7 +243,7 @@ const Player=(props)=> {
             scheduleSounds(0, noteIndex);
             setIntervalId(
                 setInterval(() => {
-                handleBeatWrapperPos(barIndex);
+                handleBarsPosition(barIndex);
                 setCurrentBarNumber(barIndex);
                 progressBarAnimation.current.time(0);
                 progressBarAnimation.current.play();
@@ -237,8 +276,7 @@ const Player=(props)=> {
     }, [props.isPlaying])
 
     useEffect(() => {
-        handleBeatWrapperPos();
-
+        handleBarsPosition();
     }, [currentBarNumber]);
 
     useEffect(() => {
