@@ -20,11 +20,12 @@ function NumberBox({bar,handleDrag, handleDrop, navToBar, activeBarIndex, barInd
         let updatedBarsState= _.cloneDeep(customableTrack);
         switch (action) {
             case "multiply":
+                if(updatedBarsState.length>=8)return
                 updatedBarsState.splice(ind+1,0,{id: Math.floor(Math.random()*1000),value:_.cloneDeep(updatedBarsState[ind].value)});
                 break;
             case "remove":
+                if(updatedBarsState.length<=1)return
                 updatedBarsState.splice(ind,1);
-
                 break;
             case "clear":
                 updatedBarsState[ind].value=clearBarValue(updatedBarsState[ind].value);
