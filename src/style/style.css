@@ -188,6 +188,14 @@ body {
   display: block;
 }
 
+.player-container .beat-wrapper.smooth .bar {
+  pointer-events: none;
+}
+
+.player-container .beat-wrapper.smooth .bar.active {
+  pointer-events: all;
+}
+
 .player-container .beat-wrapper .bar {
   background-color: #424242;
   position: absolute;
@@ -546,7 +554,6 @@ body {
 }
 
 .bars-wrapper .bars-label {
-  margin-bottom: 20px;
   -ms-flex-preferred-size: 100%;
       flex-basis: 100%;
 }
