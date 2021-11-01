@@ -395,6 +395,13 @@ body {
   cursor: pointer;
 }
 
+.player-container.playing .change-order-section .bars-order-list .bar-box.active {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  pointer-events: none;
+}
+
 .track {
   display: -webkit-box;
   display: -ms-flexbox;

@@ -316,7 +316,7 @@ useEffect(() => {
     
 
     return (
-        <div className="container player-container">
+        <div className={`container player-container ${props.isPlaying?"playing":"paused"}`}>
         <ChangeOrder 
         innerRef={changeOrderSection} 
         orderedTrack={orderedTrack} 

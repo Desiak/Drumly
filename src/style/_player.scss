@@ -290,6 +290,18 @@
             cursor: pointer;
         }
     }
+    &.playing{
+        .change-order-section{
+            .bars-order-list{
+                .bar-box{
+                    &.active{
+                        flex-grow: 1;
+                        pointer-events: none;
+                    }
+                }
+            }
+        }
+    }
 }
 
 .track{
