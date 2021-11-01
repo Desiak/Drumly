@@ -41,9 +41,6 @@ const Player=(props)=> {
 
    
     const handleBarsPosition=()=>{  
-        //     beatWrapper.current.style.transform=`translateX(-${(currentBarNumber)*100}%)`;
-        // setOrderedTrack(setTrackOrder(props.customableTrack));
-
         const previousIndex= currentBarNumber>0?currentBarNumber-1:orderedTrack.length-1;
         const nextIndex= currentBarNumber<orderedTrack.length-1? currentBarNumber+1:0;
         const barsNodes=beatWrapper.current.childNodes;
@@ -54,7 +51,6 @@ const Player=(props)=> {
             gsap.to(barsNodes[0], {x:"0%", opacity:1, duration:animDuration});
 
         }else if (barsNodes.length===2){
-           
             gsap.to(barsNodes[0], {x:currentBarNumber===0?"0%":"-100%", opacity:currentBarNumber===0?1:0, duration:animDuration});
             gsap.to(barsNodes[1], {x:currentBarNumber===0?"100%":"0%", opacity:currentBarNumber===0?0:1, duration:animDuration});
         }
@@ -102,7 +98,7 @@ const Player=(props)=> {
         .sort((a,b)=>a.order-b.order)
         .map((bar, index)=>{
                 return (
-                <div className={`bar bar-${index}`} key={index}>
+                <div className={`bar bar-${index} ${index===currentBarNumber?"active":""}`} key={index}>
                     <p className="bar-index">{index+1}</p>
                     {bar.value.map((track,trackIndex)=>{
                         return <div className={`track track-${trackIndex}`} key={`${index}-${trackIndex}`}>
