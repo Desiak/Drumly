@@ -45,7 +45,7 @@ function NumberBox({bar,handleDrag, handleDrop, navToBar, activeBarIndex, barInd
         onDrop={handleDrop}
         onClick={()=>navToBar(bar.order)}
         >
-        <p className="number">{bar.id}</p>
+        <p className="number">{barIndex+1}</p>
         <div className="copy-bar box-btn" title="copy this bar" onClick={(e)=>{
             handleBarState(barIndex, "multiply")
         }}><i class="fas fa-plus-square"></i></div>

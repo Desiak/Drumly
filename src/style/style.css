@@ -286,8 +286,9 @@ body {
 }
 
 .player-container .change-order-section .bars-order-list .bar-box {
-  -ms-flex-preferred-size: 100%;
-      flex-basis: 100%;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
   height: 80%;
   border-radius: 4px;
   list-style: none;
@@ -297,17 +298,6 @@ body {
   -webkit-transition: 0.15s;
   transition: 0.15s;
   position: relative;
-}
-
-.player-container .change-order-section .bars-order-list .bar-box:hover .box-btn {
-  opacity: 1;
-  pointer-events: all;
-}
-
-.player-container .change-order-section .bars-order-list .bar-box:hover .drag-icon {
-  opacity: 1;
-  -webkit-animation: dragIcon 2s ease-in-out infinite;
-          animation: dragIcon 2s ease-in-out infinite;
 }
 
 .player-container .change-order-section .bars-order-list .bar-box .box-btn {
@@ -373,9 +363,26 @@ body {
           transform: translate(-50%, -50%);
 }
 
+.player-container .change-order-section .bars-order-list .bar-box.active {
+  -webkit-box-flex: 4;
+      -ms-flex-positive: 4;
+          flex-grow: 4;
+}
+
 .player-container .change-order-section .bars-order-list .bar-box.active .number {
   font-size: 250%;
   color: white;
+}
+
+.player-container .change-order-section .bars-order-list .bar-box.active:hover .box-btn {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.player-container .change-order-section .bars-order-list .bar-box.active:hover .drag-icon {
+  opacity: 1;
+  -webkit-animation: dragIcon 2s ease-in-out infinite;
+          animation: dragIcon 2s ease-in-out infinite;
 }
 
 .player-container .change-order-section .arrow {
@@ -649,50 +656,50 @@ body {
 
 .drumset-container .drumset-pad--hihat {
   width: 20%;
-  top: 45%;
+  top: 40%;
   left: 6%;
 }
 
 .drumset-container .drumset-pad--snare {
   width: 21%;
-  top: 54%;
+  top: 49%;
   left: 21%;
 }
 
 .drumset-container .drumset-pad--kick {
   width: 28%;
-  top: 65%;
+  top: 60%;
   left: 38%;
   cursor: url("../cursor-kick.png"), url("../cursor.png"), pointer;
 }
 
 .drumset-container .drumset-pad--tom-1 {
   width: 15%;
-  top: 32%;
+  top: 27%;
   left: 35%;
 }
 
 .drumset-container .drumset-pad--tom-2 {
   width: 18%;
-  top: 32%;
+  top: 27%;
   left: 52%;
 }
 
 .drumset-container .drumset-pad--floor-tom {
   width: 27%;
-  top: 50%;
+  top: 45%;
   left: 66%;
 }
 
 .drumset-container .drumset-pad--crash {
   width: 29%;
-  top: 12%;
+  top: 7%;
   left: 8%;
 }
 
 .drumset-container .drumset-pad--ride {
   width: 32%;
-  top: 15%;
+  top: 10%;
   left: 67%;
 }
 /*# sourceMappingURL=style.css.map */

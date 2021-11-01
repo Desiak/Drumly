@@ -51,8 +51,14 @@ const Player=(props)=> {
             gsap.to(barsNodes[0], {x:"0%", opacity:1, duration:animDuration});
 
         }else if (barsNodes.length===2){
-            gsap.to(barsNodes[0], {x:currentBarNumber===0?"0%":"-100%", opacity:currentBarNumber===0?1:0, duration:animDuration});
-            gsap.to(barsNodes[1], {x:currentBarNumber===0?"100%":"0%", opacity:currentBarNumber===0?0:1, duration:animDuration});
+            if(currentBarNumber===0){
+                gsap.to(barsNodes[0], {x:"0%", opacity:1, duration:animDuration, pointerEvents:"all"});
+                gsap.to(barsNodes[1], {x:"100%", opacity:0, duration:animDuration, pointerEvents:"none"});
+            }
+            else{
+                gsap.to(barsNodes[0], {x:"-100%", opacity:0, duration:animDuration, pointerEvents:"none"});
+                gsap.to(barsNodes[1], {x:"0%", opacity:1, duration:animDuration, pointerEvents:"all"});
+            }
         }
         else{
         barsNodes.forEach((bar,index)=>{
@@ -61,13 +67,13 @@ const Player=(props)=> {
                     gsap.to(bar, {x:"-100%", opacity:0, duration:animDuration});
                 break;
                 case currentBarNumber:
-                    gsap.to(bar, {x:"0%", opacity:1, duration:animDuration});
+                    gsap.to(bar, {x:"0%", opacity:1, duration:animDuration, pointerEvents:"all"});
                 break;
                 case nextIndex:
                     gsap.to(bar, {x:"100%", opacity:0, duration:animDuration});
                 break;
                 default:
-                    gsap.to(bar, {x:"0%", opacity:0, duration:animDuration})
+                    gsap.to(bar, {x:"0%", opacity:0, duration:animDuration, pointerEvents:"none"})
                     break;
             }
         })
@@ -98,7 +104,7 @@ const Player=(props)=> {
         .sort((a,b)=>a.order-b.order)
         .map((bar, index)=>{
                 return (
-                <div className={`bar bar-${index} ${index===currentBarNumber?"active":""}`} key={index}>
+                <div className={`bar bar-${index}`} key={index}>
                     <p className="bar-index">{index+1}</p>
                     {bar.value.map((track,trackIndex)=>{
                         return <div className={`track track-${trackIndex}`} key={`${index}-${trackIndex}`}>

@@ -189,7 +189,7 @@
             // padding: 0 50px;
             align-items: center;
             .bar-box{
-                flex-basis: 100%;
+                flex-grow: 1;
                 height: 80%;
                 border-radius: 4px;;
                 list-style: none;
@@ -201,19 +201,7 @@
                 cursor: pointer;
                 transition: 0.15s;
                 position: relative;
-                &:hover{
-                    // box-shadow: inset 0px 0px 12px lighten($primary-color, 10%);
-                    .box-btn{
-                        opacity:1;
-                        pointer-events: all;
-                    }
-                    .drag-icon{
-                        opacity:1;
-                        animation: dragIcon 2s ease-in-out infinite;
-
-                    }
-                 
-                }
+                
                .box-btn{
                 position: absolute;
                 padding:5px 10px;
@@ -273,13 +261,22 @@
 
                 }
                 &.active{
-               
+                    flex-grow: 4;
                     .number{
                         font-size: 250%;
                         color:white;
                     }
-                    &:hover{
-                        // box-shadow: inset 0px 0px 12px white !important;
+                        &:hover{
+                            // box-shadow: inset 0px 0px 12px lighten($primary-color, 10%);
+                            .box-btn{
+                                opacity:1;
+                                pointer-events: all;
+                            }
+                            .drag-icon{
+                                opacity:1;
+                                animation: dragIcon 2s ease-in-out infinite;
+            
+                        }
                     }
                 }
             }
