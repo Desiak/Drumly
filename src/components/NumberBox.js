@@ -39,7 +39,7 @@ function NumberBox({bar,handleDrag, handleDrop, navToBar, activeBarIndex, barInd
         <li 
         className={`bar-box ${activeBarIndex===barIndex?"active":""}`} 
         id={bar.id} 
-        draggable={true} 
+        // draggable={true} 
         onDragOver={(ev) => ev.preventDefault()} 
         onDragStart={handleDrag} 
         onDrop={handleDrop}

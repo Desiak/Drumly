@@ -15,6 +15,7 @@
         position: absolute;
         cursor: url("../cursor-big.png"), url("../cursor.png"), pointer;
         opacity:0.5;
+        user-select: none;
         &:hover{
             filter: brightness(2);
         }

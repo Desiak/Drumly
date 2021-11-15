@@ -90,6 +90,7 @@
             flex-basis: 100%;
             opacity:0.5;
             font-size: 0.9em;
+            user-select: none;
             &.highlight{
                 font-size: 1.5em;
                 font-weight: bold;
@@ -104,6 +105,7 @@
         z-index: 1;
         .track-label{
             text-align: center;
+            user-select: none;
         }
     }
     .beat-wrapper{
@@ -163,6 +165,7 @@
             font-size: 40vh;
             opacity:0.02;
             font-weight: bold;
+            user-select: none;
         }
     }
     .change-order-section{
@@ -180,23 +183,26 @@
         z-index: 5;
         .bars-order-list{
             flex-basis: 92%;
-            display: flex;
+            // display: flex;
             height: 100%;
-            justify-content: space-evenly;
-            // padding: 0 50px;
-            align-items: center;
+            // justify-content: space-evenly;
+            // // padding: 0 50px;
+            // align-items: center;
+            position: relative;
+            overflow:hidden;
             .bar-box{
-                flex-grow: 1;
+                width:24%;
                 height: 80%;
-                max-width: 30%;
+                top:10%;
+                position: absolute;
                 border-radius: 4px;
                 list-style: none;
                 margin: 0 4px;
 
                 background-color: rgb(59, 59, 59);
                 cursor: pointer;
-                transition: 0.15s;
-                position: relative;
+                transition: 0s;
+                position: absolute;
                 
                .box-btn{
                 position: absolute;
@@ -244,6 +250,8 @@
                     transition: opacity 0.3s;
                     opacity:0;
                     object-fit: contain;
+                    pointer-events: none;
+                    user-select: none;
                 }
                 .number{
                     font-size: 200%;
@@ -254,10 +262,11 @@
                     top:50%;
                     left:50%;
                     transform: translate(-50%,-50%);
-
+                    user-select: none;
+                    pointer-events: none;
                 }
                 &.active{
-                    flex-grow: 4;
+                    // flex-grow: 4;
                     .number{
                         font-size: 250%;
                         color:white;
@@ -275,6 +284,12 @@
                         }
                     }
                 }
+                &.dragged{
+                    border:2px solid white;
+                    opacity:0.5;
+                    z-index: 100;
+                    pointer-events: none;
+                }
             }
         }
         .arrow{
@@ -284,6 +299,7 @@
             background-color: rgb(43, 43, 43);
             font-size: 30px;
             cursor: pointer;
+            user-select: none;
         }
     }
     &.playing{
