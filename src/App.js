@@ -14,7 +14,9 @@ function App() {
   return (
     <Provider store={store}>
        <div className="app">
-         
+         <div class="rotate-device-info">
+           <p class="rotate-txt">Rotate device!</p>
+         </div>
        <Menu></Menu>
        <Player></Player>
        <Drumset></Drumset>

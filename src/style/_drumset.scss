@@ -1,15 +1,22 @@
 .drumset-container{
-    grid-area: 2/2/3/4;
+    grid-area: d;
     background-color: rgb(54, 54, 54);
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     .drumset{
-        min-width:600px;
+        // min-width:600px;
         width:80%;
         height: 100%;
         position: relative;
+        @media (max-width:1200px){
+            height: 60%;
+            width: 100%;
+        }
+        @media (max-width:768px){
+            display: none;
+        }
     }
     .drumset-pad{
         position: absolute;
