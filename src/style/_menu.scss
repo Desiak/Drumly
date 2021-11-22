@@ -134,3 +134,17 @@ border-radius: 4px;
     }
     
 }
+.drumset-input{
+    .drumset-select{
+       
+        outline: none;
+        margin-left:20px;
+        font-size: 1em;
+        background:none;
+        border:none;
+        font-weight: bold;
+        .drumset-option{
+            background-color: rgb(70, 70, 70);
+        }
+    }
+}

@@ -147,11 +147,13 @@ const Player=(props)=> {
     }
     const scheduleSounds=(barInd=0, noteInd=0)=>{    
         const track=orderedTrack;
+        console.log(props.drumset)
         track[barInd].value.forEach((path,i)=>{
                 path.forEach((note,index)=>{
                     if(index===noteInd){
                     if(note!==0){
-                        const sound = new Audio(`./assets/${pathSelectors[i]}.mp3`);
+                        const sound = new Audio(`./assets/${props.drumset}/${pathSelectors[i]}.mp3`);
+                        console.log(sound)
                         const volume=note===1?0.05:note===2?0.5:1;
                         const padToAnimate=props.drumPads[i];
                         const tl=gsap.timeline({autoAlpha:0, ease:"ease"});
@@ -348,6 +350,7 @@ const mapStateToProps=store=>({
     isPlaying:store.state.isPlaying,
     tempo:store.state.tempo,
     drumPads:store.state.drumPads,
+    drumset: store.state.drumset,
 });
 
 const mapDispatchToProps={

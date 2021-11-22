@@ -1,4 +1,4 @@
-import { CHANGE_TEMPO, LOAD_DRUMPADS, SELECT_TRACK, PLAY_TOGGLE, LOAD_TRACK, UPDATE_TRACK, CHANGE_BARS_NUMBER} from "../actions/actions";
+import { CHANGE_TEMPO, LOAD_DRUMPADS, SELECT_TRACK, PLAY_TOGGLE, LOAD_TRACK, UPDATE_TRACK, CHANGE_BARS_NUMBER, CHANGE_DRUMSET} from "../actions/actions";
 
 const INITIAL_STATE={
     tempo:94,
@@ -6,7 +6,7 @@ const INITIAL_STATE={
     // note:1/8,
     numOfBars:3,
     timeSignature:"4/4",
-    drumset:"first",
+    drumset:"acoustic-1",
     drumPads:[],
     isPlaying:false,
     tracks:[
@@ -437,6 +437,12 @@ const state= (state=INITIAL_STATE,action)=>{
         return {
             ...state,
             drumPads:[...action.payload.drumpads]
+        }
+        break;
+        case CHANGE_DRUMSET:
+        return {
+            ...state,
+            drumset:action.payload.drumset
         }
         break;
         default:

@@ -710,6 +710,19 @@ p {
   border: 2px solid white;
 }
 
+.drumset-input .drumset-select {
+  outline: none;
+  margin-left: 20px;
+  font-size: 1em;
+  background: none;
+  border: none;
+  font-weight: bold;
+}
+
+.drumset-input .drumset-select .drumset-option {
+  background-color: #464646;
+}
+
 .drumset-container {
   -ms-grid-row: 2;
   -ms-grid-column: 2;
