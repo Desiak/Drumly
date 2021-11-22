@@ -151,7 +151,7 @@ const Player=(props)=> {
                 path.forEach((note,index)=>{
                     if(index===noteInd){
                     if(note!==0){
-                        const sound = new Audio(`/assets/${pathSelectors[i]}.mp3`);
+                        const sound = new Audio(`./assets/${pathSelectors[i]}.mp3`);
                         let volume;
                         const padToAnimate=props.drumPads[i];
                         const tl=gsap.timeline({autoAlpha:0, ease:"ease"});
