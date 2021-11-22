@@ -6,7 +6,7 @@ const Drumset=(props)=> {
     const drumset= useRef(null);
 
     const playSound=(clickedPad)=>{
-        const sound = new Audio(`/assets/${clickedPad}.mp3`);
+        const sound = new Audio(`/assets/${props.drumset}/${clickedPad}.mp3`);
         sound.play();
     }
 
