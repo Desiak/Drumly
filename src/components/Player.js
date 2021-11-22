@@ -144,17 +144,37 @@ const Player=(props)=> {
        
 
         setTracksToRender(updatedTracks)
+    };
+
+    const getSound= async (url, volume)=>{
+
+        const source= props.audioContext.createBufferSource();
+        const gainNode= props.audioContext.createGain();
+        const audioBuffer= await fetch(url)
+        .then(res=>res.arrayBuffer())
+        .then(arrayBuffer=>props.audioContext.decodeAudioData(arrayBuffer));
+
+        source.buffer=audioBuffer;
+        gainNode.gain.setValueAtTime(volume, props.audioContext.currentTime)
+        source.connect(gainNode).connect(props.audioContext.destination);
+
+        source.start();
     }
     const scheduleSounds=(barInd=0, noteInd=0)=>{    
         const track=orderedTrack;
-        console.log(props.drumset)
         track[barInd].value.forEach((path,i)=>{
                 path.forEach((note,index)=>{
                     if(index===noteInd){
                     if(note!==0){
-                        const sound = new Audio(`./assets/${props.drumset}/${pathSelectors[i]}.mp3`);
-                        console.log(sound)
-                        const volume=note===1?0.05:note===2?0.5:1;
+                        const url = `./assets/${props.drumset}/${pathSelectors[i]}.mp3`;
+                    
+                        if(props.audioContext.state==="suspended"){
+                            props.audioContext.resume();
+                        }
+
+                        const volume=note===1?0.05:note===2?0.5:1.5;
+                        getSound(url, volume);
+
                         const padToAnimate=props.drumPads[i];
                         const tl=gsap.timeline({autoAlpha:0, ease:"ease"});
                         
@@ -176,9 +196,7 @@ const Player=(props)=> {
                                     break;
                             }
                         }
-                      
-                        sound.volume=volume;
-                        sound.play();
+                  
                     }
                 }
                 })
@@ -351,6 +369,7 @@ const mapStateToProps=store=>({
     tempo:store.state.tempo,
     drumPads:store.state.drumPads,
     drumset: store.state.drumset,
+    audioContext: store.state.audioContext
 });
 
 const mapDispatchToProps={

@@ -9,6 +9,7 @@ const INITIAL_STATE={
     drumset:"acoustic-1",
     drumPads:[],
     isPlaying:false,
+    audioContext: new AudioContext(),
     tracks:[
         {
             trackName:"test",
