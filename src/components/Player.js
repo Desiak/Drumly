@@ -146,7 +146,7 @@ const Player=(props)=> {
         setTracksToRender(updatedTracks)
     };
 
-    const getSound= async (url, volume)=>{
+    const playSound= async (url, volume)=>{
 
         const source= props.audioContext.createBufferSource();
         const gainNode= props.audioContext.createGain();
@@ -173,7 +173,7 @@ const Player=(props)=> {
                         }
 
                         const volume=note===1?0.05:note===2?0.5:1.5;
-                        getSound(url, volume);
+                        playSound(url, volume);
 
                         const padToAnimate=props.drumPads[i];
                         const tl=gsap.timeline({autoAlpha:0, ease:"ease"});
