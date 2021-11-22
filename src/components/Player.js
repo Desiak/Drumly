@@ -16,7 +16,6 @@ const Player=(props)=> {
         return orderedTrack;
     }
 
-    const [intervalId, setIntervalId]=useState(null);
     const [scheduleInterval, setScheduleInterval]=useState(null);
     const [currentBarNumber, setCurrentBarNumber]=useState(0);
     const [orderedTrack, setOrderedTrack]=useState(setTrackOrder(props.customableTrack));
@@ -253,27 +252,31 @@ const Player=(props)=> {
 
     }
     useEffect(() => {
-        if(progressBar && progressBarAnimation.current){
+        const isFirefox = !(window.mozInnerScreenX == null);
+    
+        if(!progressBarAnimation.current){
+            progressBarAnimation.current=gsap.fromTo(progressBar.current, {x:"-100%"}, {x:"0%", ease:"linear", paused:true});
+        }
+        if(progressBar){
             let barIndex=0;
             let noteIndex=0;
         if(props.isPlaying){
             //start playing
             setCurrentBarNumber(0);
-            progressBarAnimation.current.duration(progressBarSpeed);
+            progressBarAnimation.current.duration(isFirefox?progressBarSpeed*1.05:progressBarSpeed);
             progressBarAnimation.current.play();
             scheduleSounds(0, noteIndex);
-            setIntervalId(
-                setInterval(() => {
-                handleBarsPosition(barIndex);
-                setCurrentBarNumber(barIndex);
-                progressBarAnimation.current.time(0);
-                progressBarAnimation.current.play();
-
-                }, progressBarSpeed*1000));
 
             setScheduleInterval(
                 setInterval(() => {
                     noteIndex=noteIndex>=barLength-1?0:noteIndex+1;
+                    if(noteIndex===0){
+                        //rerun progress bar animation
+                        handleBarsPosition(barIndex);
+                        setCurrentBarNumber(barIndex);
+                        progressBarAnimation.current.time(0);
+                        progressBarAnimation.current.play();
+                    }
                     scheduleSounds(barIndex, noteIndex);
                     if(noteIndex===barLength-1){
                         barIndex=barIndex>=props.numOfBars-1?0:barIndex+1;
@@ -284,10 +287,8 @@ const Player=(props)=> {
         }
         else{
             //stop playing
-            clearInterval(intervalId);
             clearInterval(scheduleInterval);
             setScheduleInterval(null);
-            setIntervalId(null);
             beatWrapper.current.style.transform="unset";
             setCurrentBarNumber(0);
             progressBarAnimation.current.pause(0);
@@ -327,12 +328,6 @@ const Player=(props)=> {
            setCurrentBarNumber(props.numOfBars-1);
        }
     }, [props.numOfBars])
-
-    //mount
-useEffect(() => {
-  progressBarAnimation.current=gsap.fromTo(progressBar.current, {x:"-100%"}, {x:"0%", ease:"linear", repeat:1, paused:true});
-}, [])
-    
 
     return (
         <div className={`container player-container ${props.isPlaying?"playing":"paused"}`}>
