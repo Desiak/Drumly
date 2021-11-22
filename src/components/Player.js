@@ -152,30 +152,29 @@ const Player=(props)=> {
                     if(index===noteInd){
                     if(note!==0){
                         const sound = new Audio(`./assets/${pathSelectors[i]}.mp3`);
-                        let volume;
+                        const volume=note===1?0.05:note===2?0.5:1;
                         const padToAnimate=props.drumPads[i];
                         const tl=gsap.timeline({autoAlpha:0, ease:"ease"});
-
-                     
-                        switch (note) {
-                            case 1:
-                                volume=0.05;
-                                tl.to(padToAnimate, 0.1,{opacity:0.6, scale:1.02});
-                                tl.to(padToAnimate, 0.1,{opacity:0.5, scale:1});
-                            break;
-                            case 2:
-                                volume=0.5;
-                                tl.to(padToAnimate, 0.1,{opacity:0.8, scale:1.05});
-                                tl.to(padToAnimate, 0.1,{opacity:0.5, scale:1});
-                            break;
-                            case 3:
-                                volume=1;
-                                tl.to(padToAnimate, 0.1,{opacity:1, scale:1.10});
-                                tl.to(padToAnimate, 0.1,{opacity:0.5, scale:1});
-                            break;
-                            default:
+                        
+                        if(window.innerWidth>768){
+                            switch (note) {
+                                case 1:
+                                    tl.to(padToAnimate, 0.1,{opacity:0.6, scale:1.02});
+                                    tl.to(padToAnimate, 0.1,{opacity:0.5, scale:1});
                                 break;
+                                case 2:
+                                    tl.to(padToAnimate, 0.1,{opacity:0.8, scale:1.05});
+                                    tl.to(padToAnimate, 0.1,{opacity:0.5, scale:1});
+                                break;
+                                case 3:
+                                    tl.to(padToAnimate, 0.1,{opacity:1, scale:1.10});
+                                    tl.to(padToAnimate, 0.1,{opacity:0.5, scale:1});
+                                break;
+                                default:
+                                    break;
+                            }
                         }
+                      
                         sound.volume=volume;
                         sound.play();
                     }

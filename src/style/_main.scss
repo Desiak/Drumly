@@ -5,19 +5,49 @@
     color:white;
     font-family:'Montserrat Alternates', sans-serif;;
 }
-p{
-    pointer-events: none;
-    
-}
-body{
-    min-width: 100vw;
-    min-height: 100vh;
-    overflow: hidden;
 
+// html{
+   
+//     @media (max-width:1200px) and (orientation:landscape) {
+//         overflow-y: scroll;
+//         overflow-x: hidden;
+//     }
+
+//     @media (max-width:992px) {
+//         overflow-y: scroll;
+//         overflow-x: hidden;
+//     }
+
+   
+// }
+
+body{
+    max-width: 100vw;
+    min-height: 100vh;
+    overflow:hidden;
+}
+
+html, body{
+    max-width: 100vw;
+    min-height: 100vh;
+    overflow:hidden;
+    @media (max-width:1200px) and (orientation:landscape) {
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
+    @media (max-width:992px)  {
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
+   
 }
 #root{
     width:100vw;
     height: 100vh;
+}
+p{
+    pointer-events: none;
+    
 }
 .app{
     display: grid;
@@ -50,16 +80,32 @@ body{
         "m d"
         ; 
     }
-    @media (max-width:768px) {
+    @media (max-width:992px) and (orientation: landscape) {
+        // grid-template-columns: minmax(340px, 1fr) 4fr;
+        grid-template-rows: 100vh 100vh;
+        // grid-template-areas: 
+        // "p p"
+        // "m m"
+        // ; 
+    }
+    @media (max-width:768px) and (orientation: portrait) {
         // grid-template-columns: minmax(340px, 1fr) 4fr;
         grid-template-rows: 4fr 3fr;
         grid-template-areas: 
         "p p"
         "m m"
         ; 
-     
     }
-    @media (max-width: 576px){
+    @media (max-width:768px) and (orientation: landscape) {
+        // grid-template-columns: minmax(340px, 1fr) 4fr;
+        border:2px solid white;
+
+        grid-template-areas: 
+        "p p"
+        "m m"
+        ; 
+    }
+    @media (max-width: 576px) and (orientation: portrait){
         .rotate-device-info{
             display: flex;
         }

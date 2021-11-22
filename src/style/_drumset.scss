@@ -10,17 +10,19 @@
         width:80%;
         height: 100%;
         position: relative;
+        min-height: 300px;
+
         @media (max-width:1200px){
             height: 60%;
             width: 100%;
         }
-        @media (max-width:768px){
+        @media (max-width:768px) {
             display: none;
         }
     }
     .drumset-pad{
         position: absolute;
-        cursor: url("../cursor-big.png"), url("../cursor.png"), pointer;
+        cursor: url("../cursor-big.png"), pointer;
         opacity:0.5;
         &:hover{
             filter: brightness(2);
