@@ -123,8 +123,8 @@ p {
   display: grid;
   -ms-grid-columns: 60px 1fr;
       grid-template-columns: 60px 1fr;
-  -ms-grid-rows: 50px 1fr 120px;
-      grid-template-rows: 50px 1fr 120px;
+  -ms-grid-rows: 50px 4fr clamp(10vh, 120px, 25vh);
+      grid-template-rows: 50px 4fr clamp(10vh, 120px, 25vh);
       grid-template-areas: "empty beat-measure" "tracks-labels beat" "beat-order beat-order";
 }
 

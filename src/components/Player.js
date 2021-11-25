@@ -16,7 +16,8 @@ const Player=(props)=> {
         return orderedTrack;
     }
 
-    const [scheduleInterval, setScheduleInterval]=useState(null);
+    let scheduleInterval;
+    let currentTime=0;
     const [currentBarNumber, setCurrentBarNumber]=useState(0);
     const [orderedTrack, setOrderedTrack]=useState(setTrackOrder(props.customableTrack));
     const [measure, setMeasure]=useState(null);
@@ -25,19 +26,11 @@ const Player=(props)=> {
     const [measureCount,setMeasureCount]=useState(props.beatMeasures[0]);
     const progressBarAnimation=useRef(null);
     const [draggedBoxId, setDraggedBoxId]=useState(null);
+    // const [currentTime, setCurrentTime]=useState(0);
     //DOM
     const progressBar= useRef(null);
     const beatWrapper=useRef(null);
     const changeOrderSection=useRef(null);
-
-    useEffect(() => {
-      updateBeat(orderedTrack, "effect");
-    }, [orderedTrack])
-
-    useEffect(() => {
-       handleBarsPosition();
-    }, [tracksToRender])
-
    
     const handleBarsPosition=()=>{  
         const previousIndex= currentBarNumber>0?currentBarNumber-1:orderedTrack.length-1;
@@ -145,7 +138,7 @@ const Player=(props)=> {
         setTracksToRender(updatedTracks)
     };
 
-    const playSound= async (url, volume)=>{
+    const playSound= async (url, volume, time)=>{
 
         const source= props.audioContext.createBufferSource();
         const gainNode= props.audioContext.createGain();
@@ -157,10 +150,16 @@ const Player=(props)=> {
         gainNode.gain.setValueAtTime(volume, props.audioContext.currentTime)
         source.connect(gainNode).connect(props.audioContext.destination);
 
-        source.start();
+        source.start(time);
     }
     const scheduleSounds=(barInd=0, noteInd=0)=>{    
         const track=orderedTrack;
+
+
+        currentTime=currentTime===0?props.audioContext.currentTime:currentTime+(progressBarSpeed)/barLength;
+
+
+        
         track[barInd].value.forEach((path,i)=>{
                 path.forEach((note,index)=>{
                     if(index===noteInd){
@@ -169,10 +168,9 @@ const Player=(props)=> {
                     
                         if(props.audioContext.state==="suspended"){
                             props.audioContext.resume();
-                        }
-
+                        } 
                         const volume=note===1?0.05:note===2?0.5:1.5;
-                        playSound(url, volume);
+                        playSound(url, volume, currentTime);
 
                         const padToAnimate=props.drumPads[i];
                         const tl=gsap.timeline({autoAlpha:0, ease:"ease"});
@@ -203,6 +201,8 @@ const Player=(props)=> {
            
         })
     }
+
+
 
     const renderMeasureContent=()=>{
         let measure=[];
@@ -251,8 +251,53 @@ const Player=(props)=> {
         props.updateTrack(reorderedTrack);
 
     }
-    useEffect(() => {
+  
+
+    const restartProgressBar=(barIndex)=>{
+        handleBarsPosition(barIndex);
+        setCurrentBarNumber(barIndex);
+        progressBarAnimation.current.time(0);
+        progressBarAnimation.current.play();
+    }
+    const startPlaying=(noteInd,barInd)=>{
         const isFirefox = !(window.mozInnerScreenX == null);
+
+        setCurrentBarNumber(0);
+            progressBarAnimation.current.duration(isFirefox?progressBarSpeed*1.05:progressBarSpeed);
+            progressBarAnimation.current.play();
+
+            scheduleSounds(0, noteInd);
+
+                scheduleInterval= setInterval(() => {
+                    noteInd=noteInd>=barLength-1?0:noteInd+1;
+                    if(noteInd===0){
+                        restartProgressBar(barInd);
+                    }
+                    scheduleSounds(barInd, noteInd);
+                    
+                    if(noteInd===barLength-1){
+                        barInd=barInd>=props.numOfBars-1?0:barInd+1;
+                    }
+                }, (progressBarSpeed*1000)/barLength)
+
+    }
+    const stopPlaying=()=>{
+        clearInterval(scheduleInterval);
+            beatWrapper.current.style.transform="unset";
+            setCurrentBarNumber(0);
+            progressBarAnimation.current.pause(0);
+    }
+
+
+    useEffect(() => {
+        updateBeat(orderedTrack, "effect");
+      }, [orderedTrack])
+  
+      useEffect(() => {
+         handleBarsPosition();
+      }, [tracksToRender])
+
+    useEffect(() => {
     
         if(!progressBarAnimation.current){
             progressBarAnimation.current=gsap.fromTo(progressBar.current, {x:"-100%"}, {x:"0%", ease:"linear", paused:true});
@@ -261,39 +306,14 @@ const Player=(props)=> {
             let barIndex=0;
             let noteIndex=0;
         if(props.isPlaying){
-            //start playing
-            setCurrentBarNumber(0);
-            progressBarAnimation.current.duration(isFirefox?progressBarSpeed*1.05:progressBarSpeed);
-            progressBarAnimation.current.play();
-            scheduleSounds(0, noteIndex);
-
-            setScheduleInterval(
-                setInterval(() => {
-                    noteIndex=noteIndex>=barLength-1?0:noteIndex+1;
-                    if(noteIndex===0){
-                        //rerun progress bar animation
-                        handleBarsPosition(barIndex);
-                        setCurrentBarNumber(barIndex);
-                        progressBarAnimation.current.time(0);
-                        progressBarAnimation.current.play();
-                    }
-                    scheduleSounds(barIndex, noteIndex);
-                    if(noteIndex===barLength-1){
-                        barIndex=barIndex>=props.numOfBars-1?0:barIndex+1;
-                    }
-                }, (progressBarSpeed*1000)/barLength)
-            )
-            
+            startPlaying(noteIndex,barIndex);
         }
         else{
-            //stop playing
-            clearInterval(scheduleInterval);
-            setScheduleInterval(null);
-            beatWrapper.current.style.transform="unset";
-            setCurrentBarNumber(0);
-            progressBarAnimation.current.pause(0);
-
+            stopPlaying();
         }
+    }
+    return ()=>{
+        clearInterval(scheduleInterval);
     }
     }, [props.isPlaying])
 
