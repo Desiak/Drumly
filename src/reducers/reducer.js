@@ -244,7 +244,7 @@ const INITIAL_STATE={
         ]
     },
     {
-        trackName:"16th triples",
+        trackName:"16th triplets",
         time:"4/4",
         measure:"16th triplets",
 
@@ -263,7 +263,7 @@ const INITIAL_STATE={
         
     },
     {
-        trackName:"16th triples chop",
+        trackName:"16th triplets chop",
         time:"4/4",
         measure:"16th triplets",
 

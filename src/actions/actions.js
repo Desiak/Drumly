@@ -74,8 +74,6 @@ export const loadCustomableTrack=(track, qty)=>{
     let updatedTrack=[];
 
     track.track.forEach(bar=>{
-        console.log("bar", bar);
-        // updatedTrack.push(bar)
         updatedTrack.push({value:bar, id:Math.floor(Math.random()*1000)})
 
     })
@@ -88,7 +86,6 @@ export const loadCustomableTrack=(track, qty)=>{
     }
 }
 export const updateTrack=(updatedTrack)=>{
-    console.log("updated track in actions ", updatedTrack)
     return {
         type:"UPDATE_TRACK",
         payload:{

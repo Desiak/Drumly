@@ -478,6 +478,10 @@ p {
   pointer-events: none;
 }
 
+.player-container.playing .note {
+  pointer-events: none;
+}
+
 .track {
   display: -webkit-box;
   display: -ms-flexbox;

@@ -5,6 +5,7 @@
     position: relative;
     width: 100%;
     z-index: 1;
+   
     .progress-indicator{
        
         width:100%;
@@ -294,6 +295,10 @@
                     }
                 }
             }
+        }
+
+        .note{
+            pointer-events: none;
         }
     }
 }
