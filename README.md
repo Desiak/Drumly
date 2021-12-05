@@ -1,3 +1,2 @@
-More advanced version of my previous drumming app: https://desiak.github.io/Drooma/
-
+More advanced version of my previous drumming app: https://github.com/Desiak/Drooma
 React, Redux, Sass, GSAP
