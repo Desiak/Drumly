@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 
 const Bars=({tracks, trackIndex})=> {
 
-    console.log("selected track in bars: ", tracks[trackIndex])
     return (
         <div className="input bars-wrapper">
             <p className="bars-label">TRACK INFO</p>

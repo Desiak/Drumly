@@ -25,20 +25,24 @@ const Player=(props)=> {
     const [tracksToRender, setTracksToRender]=useState(null);
     const [measureCount,setMeasureCount]=useState(props.beatMeasures[0]);
     const progressBarAnimation=useRef(null);
-    const [draggedBoxId, setDraggedBoxId]=useState(null);
-    const [dragStartPosX, setDragStartPosX]=useState(null);
-    const [isMouseDown, setIsMouseDown]=useState(null);
+    const [isMouseDown, setIsMouseDown]= useState(false);
+    const [count, setCount]= useState(0);
+
+    const [draggedBox, setDraggedBox]=useState(null);
+    // const [dragStartPosX, setDragStartPosX]=useState(null);
+
+
+    // const [isMouseDown, setIsMouseDown]=useState(null);
     //DOM
     const progressBar= useRef(null);
     const beatWrapper=useRef(null);
     const changeOrderSection=useRef(null);
     const barBoxesList=useRef(null);
-    const draggedElem=useRef(null);
+    // const draggedElem=useRef(null);
+    // const draggedBoxId=useRef(null);
 
     useEffect(() => {
       updateBeat(orderedTrack, "effect");
-      console.log(changeOrderSection.current);
-      console.log(barBoxesList);
       barBoxesList.current.childNodes.forEach((barBox,index)=>{
           gsap.set(barBox, {x:`${index*105}%`})
       })
@@ -154,6 +158,7 @@ const Player=(props)=> {
 
         setTracksToRender(updatedTracks)
     }
+
     const scheduleSounds=(barInd=0, noteInd=0)=>{    
         const track=orderedTrack;
         track[barInd].value.forEach((path,i)=>{
@@ -219,30 +224,6 @@ const Player=(props)=> {
     }else return;
     }
  
-    const handleDrag=(e)=>{
-        setDraggedBoxId(e.currentTarget.id);
-        console.log("drag!")
-    }
-    const handleDrop=(e)=>{
-        const draggedBox=orderedTrack.find((box)=>box.id==draggedBoxId);
-        const dropBox=orderedTrack.find((box)=>box.id==e.currentTarget.id);
-        const prevDraggedBoxOrder=draggedBox.order;
-        const prevDropBoxOrder= dropBox.order;
-
-        const reorderedTrack=orderedTrack.map(bar=>{
-            if(bar.id==draggedBoxId){
-                bar.order=prevDropBoxOrder;
-            }
-            if(bar.id==e.currentTarget.id){
-                bar.order=prevDraggedBoxOrder
-            }
-            return bar
-        })
-        setOrderedTrack(reorderedTrack);
-        updateBeat(reorderedTrack, "drop");
-        props.updateTrack(reorderedTrack);
-
-    }
     useEffect(() => {
         if(progressBar && progressBarAnimation.current){
             let barIndex=0;
@@ -319,61 +300,86 @@ const Player=(props)=> {
        }
     }, [props.numOfBars])
 
-useEffect(() => {   
-   if(isMouseDown) window.addEventListener("mousemove", handleDragElem);
-   console.log("initial pos:", dragStartPosX);
-   let timeoutId=setTimeout(() => {
-    if(isMouseDown){
-        draggedElem.current.classList.add("dragged");
-    }
-}, 100);
-   return ()=>{
-       window.removeEventListener("mousemove", handleDragElem)
-        clearTimeout(timeoutId);
 
-    };
-   
-}, [isMouseDown]);
-const handleDropElem=(e)=>{
-
-    console.log("handle drop: ", e.target);
-    if(e.target.classList.contains("bar-box")){}
-    else{
-        console.log("return to initial pos", dragStartPosX);
-        draggedElem.current.style.transform=dragStartPosX
-    }
-}
-const handleDragElem=(e)=>{
-    if(draggedElem.current){
-        if(draggedElem.current.classList.contains("bar-box")){
-    //   draggedElem.current.style.transform=`translateX(${e.clientX-dragStartPosX}px)`
-    gsap.to(draggedElem.current,0, {x:`${e.clientX-barBoxesList.current.getBoundingClientRect().x- draggedElem.current.getBoundingClientRect().width/2}px`})
-        }
-      }
-}
     //mount
 useEffect(() => {
   progressBarAnimation.current=gsap.fromTo(progressBar.current, {x:"-100%"}, {x:"0%", ease:"linear", repeat:1, paused:true});
-  
-
-  window.addEventListener("mousedown", (e)=>{
-      if(e.target.classList.contains("bar-box")){
-        draggedElem.current=e.target;      
-        console.log("dragged elem: ", draggedElem.current.style.transform)
-        setDragStartPosX(e.target.style.transform);
-        setIsMouseDown(true);
-      }
-  })
-  window.addEventListener("mouseup", (e)=>{
-    
-    setIsMouseDown(false);
-    if(draggedElem.current) {
-        draggedElem.current.classList.remove("dragged")
-        handleDropElem(e);
-  }
-
-})
 }, [])
+
+
+
+useEffect(() => {
+    const handleDragElem=(e)=>{
+        const transformXValue= e.clientX-barBoxesList.current.getBoundingClientRect().x- draggedBox.getBoundingClientRect().width/2
+        gsap.to(draggedBox,0, {x:`${transformXValue}px`})
+    }
+    const handleMouseMove=(e)=>{
+        if(draggedBox&&isMouseDown){
+            draggedBox.classList.add("dragged");
+            handleDragElem(e);
+        }
+    }
+
+    const handleMouseDown=(e)=>{
+        setIsMouseDown(true);
+        if(e.target.classList.contains("bar-box")){
+            setDraggedBox(e.target);
+            e.target.classList.add("dragged");                
+        }
+    }
+    const handleMouseUp=(e)=>{
+        setIsMouseDown(false);
+
+        if(draggedBox){
+            draggedBox.classList.remove("dragged");
+            setDraggedBox(null);
+            if(e.target.classList.contains("bar-box")){
+                switchBoxes(e.target, draggedBox);
+            }
+            else{
+                barBoxesList.current.childNodes.forEach((barBox,index)=>{
+                    gsap.to(barBox ,0.3, {x:`${orderedTrack[index].order*105}%`})
+                })   
+            }
+        }
+       
+    }
+
+    const switchBoxes=(dropBox, dragBox)=>{
+        const boxDrag=orderedTrack.find((box)=>box.id==dragBox.id);
+        const boxDrop=orderedTrack.find((box)=>box.id==dropBox.id);
+        const draggedBoxOrder=boxDrag.order;
+        const dropBoxOrder= boxDrop.order;
+        
+        boxDrag.order=dropBoxOrder;
+        boxDrop.order=draggedBoxOrder;
+
+        barBoxesList.current.childNodes.forEach((barBox,index)=>{
+            gsap.to(barBox ,0.3, {x:`${orderedTrack[index].order*105}%`})
+        })
+
+        setTimeout(() => {
+            const newOrder=orderedTrack.sort((a,b)=>a.order-b.order);
+            navToBar(boxDrag.order);
+            setOrderedTrack(newOrder);
+            updateBeat(newOrder);
+            props.updateTrack(newOrder);
+           
+        }, 330);
+      
+    }
+
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousedown", handleMouseDown)
+    window.addEventListener("mouseup", handleMouseUp)
+
+    return ()=>{
+        window.removeEventListener("mousemove", handleMouseMove);
+        window.removeEventListener("mousedown", handleMouseDown)
+        window.removeEventListener("mouseup", handleMouseUp)
+    }
+}, [isMouseDown, draggedBox])
+
 
     return (
         <div className={`container player-container ${props.isPlaying?"playing":"paused"}`}>
@@ -381,8 +387,6 @@ useEffect(() => {
         listRef={barBoxesList} 
         innerRef={changeOrderSection} 
         orderedTrack={orderedTrack} 
-        handleDrag={handleDrag} 
-        handleDrop={handleDrop} 
         navToBar={navToBar} 
         activeBarIndex={currentBarNumber}/>
         <div className="progress-indicator" ref={progressBar}></div>

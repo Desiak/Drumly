@@ -1,11 +1,12 @@
-import React from 'react';
+import React, {useRef, useEffect} from 'react';
 import { connect } from 'react-redux';
 import {handleBarMod, updateTrack} from "../actions/actions"
 import _ from "lodash";
 
 
-function NumberBox({bar,handleDrag, handleDrop, navToBar, activeBarIndex, barIndex, customableTrack, updateTrack}) {
+function NumberBox({bar, navToBar, activeBarIndex, barIndex, customableTrack, updateTrack}) {
    
+    const thisBox=useRef(null);
 
     const clearBarValue=(barValue)=>{
         let emptyBar
@@ -35,17 +36,15 @@ function NumberBox({bar,handleDrag, handleDrop, navToBar, activeBarIndex, barInd
         }
         updateTrack(updatedBarsState)
     }
+
     return (
         <li 
         className={`bar-box ${activeBarIndex===barIndex?"active":""}`} 
         id={bar.id} 
-        // draggable={true} 
-        onDragOver={(ev) => ev.preventDefault()} 
-        onDragStart={handleDrag} 
-        onDrop={handleDrop}
-        onClick={()=>navToBar(bar.order)}
+        onMouseDown={()=>navToBar(bar.order)}
+        ref={thisBox}
         >
-        <p className="number">{barIndex+1}</p>
+        <p className="number" draggable={false}>{barIndex+1}</p>
         <div className="copy-bar box-btn" title="copy this bar" onClick={(e)=>{
             handleBarState(barIndex, "multiply")
         }}><i class="fas fa-plus-square"></i></div>

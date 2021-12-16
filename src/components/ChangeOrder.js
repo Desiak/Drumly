@@ -1,6 +1,6 @@
 import React from 'react'
 import NumberBox from './NumberBox'
-export default function ChangeOrder({innerRef,orderedTrack, handleDrag, handleDrop, navToBar, activeBarIndex, listRef}) {
+export default function ChangeOrder({innerRef,orderedTrack, navToBar, activeBarIndex, listRef}) {
     return (
         <div className="change-order-section" ref={innerRef}>
                 <button className="arrow arrow-prev" onClick={()=>navToBar("-")}>&#8249;</button>
@@ -10,11 +10,10 @@ export default function ChangeOrder({innerRef,orderedTrack, handleDrag, handleDr
                 .map((bar,index)=>{
                 return <NumberBox 
                 bar={bar} 
-                handleDrag={handleDrag} 
-                handleDrop={handleDrop} 
                 navToBar={navToBar} 
                 activeBarIndex={activeBarIndex} 
-                barIndex={index}/>
+                barIndex={index}
+                key={index}/>
                 })}
                 </ul>
                 <button className="arrow arrow-next" onClick={()=>navToBar("+")}>&#8250;</button>
