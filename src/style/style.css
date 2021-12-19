@@ -4,17 +4,36 @@
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   color: white;
-  font-family: 'Montserrat Alternates', sans-serif;
-}
-
-p {
-  pointer-events: none;
+  font-family: "Montserrat Alternates", sans-serif;
 }
 
 body {
-  min-width: 100vw;
+  max-width: 100vw;
   min-height: 100vh;
   overflow: hidden;
+}
+
+html,
+body {
+  max-width: 100vw;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+@media (max-width: 1200px) and (orientation: landscape) {
+  html,
+  body {
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+}
+
+@media (max-width: 992px) {
+  html,
+  body {
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
 }
 
 #root {
@@ -22,33 +41,94 @@ body {
   height: 100vh;
 }
 
+p {
+  pointer-events: none;
+}
+
 .app {
   display: -ms-grid;
   display: grid;
   width: 100%;
   height: 100%;
-  -ms-grid-columns: minmax(300px, 1fr) 2fr 2fr;
-      grid-template-columns: minmax(300px, 1fr) 2fr 2fr;
+  -ms-grid-columns: minmax(340px, 1fr) 4fr;
+      grid-template-columns: minmax(340px, 1fr) 4fr;
   -ms-grid-rows: 1fr 1fr;
       grid-template-rows: 1fr 1fr;
+      grid-template-areas: "m p" "m d";
+}
+
+.app .rotate-device-info {
+  z-index: 1000;
+  background-color: black;
+  color: white;
+  font-size: 2em;
+  display: none;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 1200px) {
+  .app {
+    -ms-grid-columns: minmax(340px, 1fr) 4fr;
+        grid-template-columns: minmax(340px, 1fr) 4fr;
+    -ms-grid-rows: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        grid-template-areas: "p p" "m d";
+  }
+}
+
+@media (max-width: 992px) and (orientation: landscape) {
+  .app {
+    -ms-grid-rows: 100vh 100vh;
+        grid-template-rows: 100vh 100vh;
+  }
+}
+
+@media (max-width: 768px) and (orientation: portrait) {
+  .app {
+    -ms-grid-rows: 4fr 3fr;
+        grid-template-rows: 4fr 3fr;
+        grid-template-areas: "p p" "m m";
+  }
+}
+
+@media (max-width: 768px) and (orientation: landscape) {
+  .app {
+    border: 2px solid white;
+        grid-template-areas: "p p" "m m";
+  }
+}
+
+@media (max-width: 576px) and (orientation: portrait) {
+  .app .rotate-device-info {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
 }
 
 .player-container {
   -ms-grid-row: 1;
-  -ms-grid-row-span: 1;
   -ms-grid-column: 2;
-  -ms-grid-column-span: 2;
-  grid-area: 1/2/2/4;
+  grid-area: p;
   background-color: #5a5a5a;
   position: relative;
+  width: 100%;
   z-index: 1;
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 60px 1fr;
       grid-template-columns: 60px 1fr;
-  -ms-grid-rows: 50px 1fr 120px;
-      grid-template-rows: 50px 1fr 120px;
-      grid-template-areas: "empty beat-measure" "tracks-labels beat" "beat-order beat-order";
+  -ms-grid-rows: 50px 4fr clamp(10vh, 120px, 25vh);
+      grid-template-rows: 50px 4fr clamp(10vh, 120px, 25vh);
+      grid-template-areas: "empty beat-measure" "tracks-labels beat" "beat-order beat-order";
 }
 
 .player-container .progress-indicator {
@@ -207,7 +287,6 @@ body {
   -webkit-box-pack: unset;
       -ms-flex-pack: unset;
           justify-content: unset;
-  max-height: 40vh;
   position: absolute;
   width: 100%;
   height: 100%;
@@ -314,7 +393,8 @@ body {
   display: inline-block;
 }
 
-.player-container .change-order-section .bar-control-section .action-btn, .player-container .change-order-section .bar-control-section .action-label {
+.player-container .change-order-section .bar-control-section .action-btn,
+.player-container .change-order-section .bar-control-section .action-label {
   margin-right: 12px;
   padding: 4px 12px;
   border-radius: 4px;
@@ -323,17 +403,20 @@ body {
   overflow: hidden;
 }
 
-.player-container .change-order-section .bar-control-section .action-btn:hover::before, .player-container .change-order-section .bar-control-section .action-label:hover::before {
+.player-container .change-order-section .bar-control-section .action-btn:hover::before,
+.player-container .change-order-section .bar-control-section .action-label:hover::before {
   -webkit-transform: unset;
           transform: unset;
 }
 
-.player-container .change-order-section .bar-control-section .action-btn.disabled, .player-container .change-order-section .bar-control-section .action-label.disabled {
+.player-container .change-order-section .bar-control-section .action-btn.disabled,
+.player-container .change-order-section .bar-control-section .action-label.disabled {
   opacity: 0.5;
   pointer-events: none;
 }
 
-.player-container .change-order-section .bar-control-section .action-btn::before, .player-container .change-order-section .bar-control-section .action-label::before {
+.player-container .change-order-section .bar-control-section .action-btn::before,
+.player-container .change-order-section .bar-control-section .action-label::before {
   content: "";
   position: absolute;
   width: 100%;
@@ -347,15 +430,18 @@ body {
   transition: 0.15s;
 }
 
-.player-container .change-order-section .bar-control-section .action-btn.btn-rm::before, .player-container .change-order-section .bar-control-section .action-label.btn-rm::before {
+.player-container .change-order-section .bar-control-section .action-btn.btn-rm::before,
+.player-container .change-order-section .bar-control-section .action-label.btn-rm::before {
   background-color: #ff3d3d;
 }
 
-.player-container .change-order-section .bar-control-section .action-btn.btn-add::before, .player-container .change-order-section .bar-control-section .action-label.btn-add::before {
+.player-container .change-order-section .bar-control-section .action-btn.btn-add::before,
+.player-container .change-order-section .bar-control-section .action-label.btn-add::before {
   background-color: #00d741;
 }
 
-.player-container .change-order-section .bar-control-section .action-btn.btn-clear::before, .player-container .change-order-section .bar-control-section .action-label.btn-clear::before {
+.player-container .change-order-section .bar-control-section .action-btn.btn-clear::before,
+.player-container .change-order-section .bar-control-section .action-label.btn-clear::before {
   background-color: #3e72ff;
 }
 
@@ -501,6 +587,10 @@ body {
   opacity: 0.5;
 }
 
+.player-container.playing .note {
+  pointer-events: none;
+}
+
 .track {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -590,8 +680,7 @@ body {
   -ms-grid-row: 1;
   -ms-grid-row-span: 2;
   -ms-grid-column: 1;
-  -ms-grid-column-span: 1;
-  grid-area: 1/1/3/2;
+  grid-area: m;
   background-color: #464646;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -604,6 +693,12 @@ body {
           justify-content: space-evenly;
 }
 
+@media (max-width: 1200px) {
+  .menu-container {
+    overflow-y: scroll;
+  }
+}
+
 .input {
   background-color: rgba(43, 43, 43, 0.644);
   padding: 10px;
@@ -612,6 +707,7 @@ body {
   border-radius: 15px;
   -ms-flex-preferred-size: 100%;
       flex-basis: 100%;
+  max-width: 400px;
 }
 
 .select-wrapper .select-input {
@@ -737,12 +833,23 @@ body {
   border: 2px solid white;
 }
 
+.drumset-input .drumset-select {
+  outline: none;
+  margin-left: 20px;
+  font-size: 1em;
+  background: none;
+  border: none;
+  font-weight: bold;
+}
+
+.drumset-input .drumset-select .drumset-option {
+  background-color: #464646;
+}
+
 .drumset-container {
   -ms-grid-row: 2;
-  -ms-grid-row-span: 1;
   -ms-grid-column: 2;
-  -ms-grid-column-span: 2;
-  grid-area: 2/2/3/4;
+  grid-area: d;
   background-color: #363636;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -758,15 +865,28 @@ body {
 }
 
 .drumset-container .drumset {
-  min-width: 600px;
   width: 80%;
   height: 100%;
   position: relative;
+  min-height: 300px;
+}
+
+@media (max-width: 1200px) {
+  .drumset-container .drumset {
+    height: 60%;
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .drumset-container .drumset {
+    display: none;
+  }
 }
 
 .drumset-container .drumset-pad {
   position: absolute;
-  cursor: url("../cursor-big.png"), url("../cursor.png"), pointer;
+  cursor: url("../cursor-big.png"), pointer;
   opacity: 0.5;
   -webkit-user-select: none;
      -moz-user-select: none;

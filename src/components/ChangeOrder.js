@@ -11,10 +11,8 @@ function ChangeOrder({
   listRef,
   updateTrack,
   customableTrack,
-  activeBarIndex
+  activeBarIndex,
 }) {
-
-  
   const handleBarState = (action) => {
     let updatedBarsState = _.cloneDeep(customableTrack);
     switch (action) {
@@ -30,7 +28,9 @@ function ChangeOrder({
         updatedBarsState.splice(activeBarIndex, 1);
         break;
       case "clear":
-        updatedBarsState[activeBarIndex].value=updatedBarsState[activeBarIndex].value.map(path=>path.map(()=>0))
+        updatedBarsState[activeBarIndex].value = updatedBarsState[
+          activeBarIndex
+        ].value.map((path) => path.map(() => 0));
         break;
       default:
         break;
@@ -46,11 +46,36 @@ function ChangeOrder({
       <div className="wrapper control-wrapper">
         <div className="bar-control-section">
           <span className="action-label">Bar actions:</span>
-          <span className={`action-btn btn-rm ${customableTrack.length<=1?"disabled":null}`} onClick={()=>{handleBarState("remove")}}>remove <i className="fas fa-trash-alt"></i></span>
-          <span className={`action-btn btn-add ${customableTrack.length>=8?"disabled":null}`} onClick={()=>{handleBarState("multiply")}}>copy <i className="fas fa-plus-square"></i></span>
-          <span className="action-btn btn-clear" onClick={()=>{handleBarState("clear")}}>clear <i className="fas fa-eraser"></i></span>
+          <span
+            className={`action-btn btn-rm ${
+              customableTrack.length <= 1 ? "disabled" : null
+            }`}
+            onClick={() => {
+              handleBarState("remove");
+            }}
+          >
+            remove <i className="fas fa-trash-alt"></i>
+          </span>
+          <span
+            className={`action-btn btn-add ${
+              customableTrack.length >= 8 ? "disabled" : null
+            }`}
+            onClick={() => {
+              handleBarState("multiply");
+            }}
+          >
+            copy <i className="fas fa-plus-square"></i>
+          </span>
+          <span
+            className="action-btn btn-clear"
+            onClick={() => {
+              handleBarState("clear");
+            }}
+          >
+            clear <i className="fas fa-eraser"></i>
+          </span>
         </div>
-        <ul className="bars-order-list" ref={listRef} >
+        <ul className="bars-order-list" ref={listRef}>
           {orderedTrack
             .sort((a, b) => a.order - b.order)
             .map((bar, index) => {

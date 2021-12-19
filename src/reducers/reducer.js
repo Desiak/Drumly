@@ -1,4 +1,4 @@
-import { CHANGE_TEMPO, LOAD_DRUMPADS, SELECT_TRACK, PLAY_TOGGLE, LOAD_TRACK, UPDATE_TRACK, CHANGE_BARS_NUMBER} from "../actions/actions";
+import { CHANGE_TEMPO, LOAD_DRUMPADS, SELECT_TRACK, PLAY_TOGGLE, LOAD_TRACK, UPDATE_TRACK, CHANGE_BARS_NUMBER, CHANGE_DRUMSET} from "../actions/actions";
 
 const INITIAL_STATE={
     tempo:94,
@@ -6,9 +6,10 @@ const INITIAL_STATE={
     // note:1/8,
     numOfBars:3,
     timeSignature:"4/4",
-    drumset:"first",
+    drumset:"acoustic-1",
     drumPads:[],
     isPlaying:false,
+    audioContext: new AudioContext(),
     tracks:[
         {
             trackName:"test",
@@ -243,7 +244,7 @@ const INITIAL_STATE={
         ]
     },
     {
-        trackName:"16th triples",
+        trackName:"16th triplets",
         time:"4/4",
         measure:"16th triplets",
 
@@ -262,7 +263,7 @@ const INITIAL_STATE={
         
     },
     {
-        trackName:"16th triples chop",
+        trackName:"16th triplets chop",
         time:"4/4",
         measure:"16th triplets",
 
@@ -439,9 +440,13 @@ const state= (state=INITIAL_STATE,action)=>{
             drumPads:[...action.payload.drumpads]
         }
         break;
+        case CHANGE_DRUMSET:
+        return {
+            ...state,
+            drumset:action.payload.drumset
+        }
+        break;
         default:
-
-        console.log("co za akcja wariacie");
     }
 
      return state;

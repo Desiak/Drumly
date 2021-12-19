@@ -1,65 +1,73 @@
-.drumset-container{
-    grid-area: 2/2/3/4;
-    background-color: rgb(54, 54, 54);
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    .drumset{
-        min-width:600px;
-        width:80%;
-        height: 100%;
-        position: relative;
-    }
-    .drumset-pad{
-        position: absolute;
-        cursor: url("../cursor-big.png"), url("../cursor.png"), pointer;
-        opacity:0.5;
-        user-select: none;
-        &:hover{
-            filter: brightness(2);
-        }
-        &--hihat{
-            width:20%;
-            top:40%;
-            left:6%;
-        }
-        &--snare{
-            width:21%;
-            top:49%;
-            left:21%;
-        }
-        &--kick{
-            width:28%;
-            top: 60%;
-            left:38%;
-            cursor: url("../cursor-kick.png"), url("../cursor.png"), pointer;
+.drumset-container {
+  grid-area: d;
+  background-color: rgb(54, 54, 54);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  .drumset {
+    // min-width:600px;
+    width: 80%;
+    height: 100%;
+    position: relative;
+    min-height: 300px;
 
-        }
-        &--tom-1{
-            width:15%;
-            top:27%;
-            left:35%;
-        }
-        &--tom-2{
-            width:18%;
-            top:27%;
-            left:52%;
-        }
-        &--floor-tom{
-            width:27%;
-            top:45%;
-            left:66%;
-        }
-        &--crash{
-            width:29%;
-            top:7%;
-            left:8%;
-        }
-        &--ride{
-            width:32%;
-            top:10%;
-            left:67%;
-        }
+    @media (max-width: 1200px) {
+      height: 60%;
+      width: 100%;
     }
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+  .drumset-pad {
+    position: absolute;
+    cursor: url("../cursor-big.png"), pointer;
+    opacity: 0.5;
+    user-select: none;
+    &:hover {
+      filter: brightness(2);
+    }
+    &--hihat {
+      width: 20%;
+      top: 40%;
+      left: 6%;
+    }
+    &--snare {
+      width: 21%;
+      top: 49%;
+      left: 21%;
+    }
+    &--kick {
+      width: 28%;
+      top: 60%;
+      left: 38%;
+      cursor: url("../cursor-kick.png"), url("../cursor.png"), pointer;
+    }
+    &--tom-1 {
+      width: 15%;
+      top: 27%;
+      left: 35%;
+    }
+    &--tom-2 {
+      width: 18%;
+      top: 27%;
+      left: 52%;
+    }
+    &--floor-tom {
+      width: 27%;
+      top: 45%;
+      left: 66%;
+    }
+    &--crash {
+      width: 29%;
+      top: 7%;
+      left: 8%;
+    }
+    &--ride {
+      width: 32%;
+      top: 10%;
+      left: 67%;
+    }
+  }
 }
