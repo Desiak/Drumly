@@ -89,6 +89,14 @@ body {
   height: 100%;
 }
 
+.player-container .empty {
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
+  grid-area: empty;
+  background-color: #353535;
+  z-index: 10;
+}
+
 .player-container .bar-number-wrapper {
   grid-area: bar-number;
   display: -webkit-box;

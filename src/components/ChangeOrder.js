@@ -45,10 +45,10 @@ function ChangeOrder({
       </button>
       <div className="wrapper control-wrapper">
         <div className="bar-control-section">
-          <span class="action-label">Bar actions:</span>
-          <span class={`action-btn btn-rm ${customableTrack.length<=1?"disabled":null}`} onClick={()=>{handleBarState("remove")}}>remove <i class="fas fa-trash-alt"></i></span>
-          <span class={`action-btn btn-add ${customableTrack.length>=8?"disabled":null}`} onClick={()=>{handleBarState("multiply")}}>copy <i class="fas fa-plus-square"></i></span>
-          <span class="action-btn btn-clear" onClick={()=>{handleBarState("clear")}}>clear <i class="fas fa-eraser"></i></span>
+          <span className="action-label">Bar actions:</span>
+          <span className={`action-btn btn-rm ${customableTrack.length<=1?"disabled":null}`} onClick={()=>{handleBarState("remove")}}>remove <i className="fas fa-trash-alt"></i></span>
+          <span className={`action-btn btn-add ${customableTrack.length>=8?"disabled":null}`} onClick={()=>{handleBarState("multiply")}}>copy <i className="fas fa-plus-square"></i></span>
+          <span className="action-btn btn-clear" onClick={()=>{handleBarState("clear")}}>clear <i className="fas fa-eraser"></i></span>
         </div>
         <ul className="bars-order-list" ref={listRef} >
           {orderedTrack

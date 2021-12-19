@@ -463,7 +463,7 @@ const Player = (props) => {
         activeBarIndex={currentBarNumber}
       />
       <div className="progress-indicator" ref={progressBar}></div>
-
+      <div className="empty"></div>
       <div className="beat-measure-wrapper wrapper">{measure}</div>
       <div className="tracks-labels-wrapper wrapper">
         {tracksLabels.map((label) => (

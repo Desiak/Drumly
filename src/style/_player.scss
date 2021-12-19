@@ -41,6 +41,11 @@
             height: 100%;
         }
     }
+    .empty{
+        grid-area: empty;
+        background-color: rgb(53, 53, 53);
+        z-index: 10;
+    }
     .bar-number-wrapper{
         grid-area: bar-number;
         display: flex;
