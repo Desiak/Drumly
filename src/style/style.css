@@ -80,6 +80,15 @@ body {
       justify-content: space-around;
 }
 
+.player-container .wrapper.control-wrapper {
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  height: 100%;
+}
+
 .player-container .bar-number-wrapper {
   grid-area: bar-number;
   display: -webkit-box;
@@ -281,29 +290,88 @@ body {
   transition: 0.3s;
   bottom: 0;
   z-index: 5;
+  overflow: hidden;
 }
 
-.player-container .change-order-section .bars-order-list {
-  -ms-flex-preferred-size: 92%;
-      flex-basis: 92%;
-  height: 100%;
+.player-container .change-order-section .bar-control-section {
+  padding-top: 5px;
+  margin-top: 4px;
+}
+
+.player-container .change-order-section .bar-control-section span {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  display: inline-block;
+}
+
+.player-container .change-order-section .bar-control-section .action-btn, .player-container .change-order-section .bar-control-section .action-label {
+  margin-right: 12px;
+  padding: 4px 12px;
+  border-radius: 4px;
+  cursor: pointer;
   position: relative;
   overflow: hidden;
 }
 
+.player-container .change-order-section .bar-control-section .action-btn:hover::before, .player-container .change-order-section .bar-control-section .action-label:hover::before {
+  -webkit-transform: unset;
+          transform: unset;
+}
+
+.player-container .change-order-section .bar-control-section .action-btn.disabled, .player-container .change-order-section .bar-control-section .action-label.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.player-container .change-order-section .bar-control-section .action-btn::before, .player-container .change-order-section .bar-control-section .action-label::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  top: 0px;
+  left: 0;
+  -webkit-transform: translateY(101%);
+          transform: translateY(101%);
+  -webkit-transition: 0.15s;
+  transition: 0.15s;
+}
+
+.player-container .change-order-section .bar-control-section .action-btn.btn-rm::before, .player-container .change-order-section .bar-control-section .action-label.btn-rm::before {
+  background-color: #ff3d3d;
+}
+
+.player-container .change-order-section .bar-control-section .action-btn.btn-add::before, .player-container .change-order-section .bar-control-section .action-label.btn-add::before {
+  background-color: #00d741;
+}
+
+.player-container .change-order-section .bar-control-section .action-btn.btn-clear::before, .player-container .change-order-section .bar-control-section .action-label.btn-clear::before {
+  background-color: #3e72ff;
+}
+
+.player-container .change-order-section .bars-order-list {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
 .player-container .change-order-section .bars-order-list .bar-box {
-  width: 24%;
   height: 80%;
   top: 10%;
   position: absolute;
-  border-radius: 4px;
+  border-right: 2px solid white;
   list-style: none;
-  margin: 0 4px;
   background-color: #3b3b3b;
   cursor: pointer;
   -webkit-transition: 0s;
   transition: 0s;
   position: absolute;
+}
+
+.player-container .change-order-section .bars-order-list .bar-box:last-child {
+  border: none;
 }
 
 .player-container .change-order-section .bars-order-list .bar-box .box-btn {
@@ -414,13 +482,15 @@ body {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+  z-index: 10;
 }
 
-.player-container.playing .change-order-section .bars-order-list .bar-box.active {
-  -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
+.player-container.playing .change-order-section {
   pointer-events: none;
+}
+
+.player-container.playing .change-order-section .bar-control-section {
+  opacity: 0.5;
 }
 
 .track {

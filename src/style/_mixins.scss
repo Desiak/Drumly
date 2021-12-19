@@ -1,0 +1,7 @@
+@mixin setColor ($color){
+    color:$color;
+    i{
+        color:$color;
+    }
+  
+}
