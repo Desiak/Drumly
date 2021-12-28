@@ -26,3 +26,4 @@ const mapStateToProps = (store) => ({
 const BarsConsumer = connect(mapStateToProps)(Bars);
 
 export default BarsConsumer;
+

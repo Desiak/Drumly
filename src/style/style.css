@@ -541,6 +541,10 @@ p {
   pointer-events: none;
 }
 
+.player-container .change-order-section .bars-order-list .bar-box.active {
+  background-color: rgba(255, 255, 255, 0.411);
+}
+
 .player-container .change-order-section .bars-order-list .bar-box.active .number {
   font-size: 250%;
   color: white;

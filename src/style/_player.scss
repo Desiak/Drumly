@@ -333,6 +333,7 @@
         }
         &.active {
           // flex-grow: 4;
+          background-color:rgba(255, 255, 255, 0.411) ;
           .number {
             font-size: 250%;
             color: white;
