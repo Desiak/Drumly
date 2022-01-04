@@ -1,7 +1,7 @@
 .player-container {
   grid-area: p;
-  background-color: rgb(90, 90, 90);
-  position: relative;
+      background-color: rgb(66, 66, 66);
+      position: relative;
   width: 100%;
   z-index: 1;
 
@@ -139,7 +139,7 @@
       }
     }
     .bar {
-      background-color: rgb(66, 66, 66);
+      // background-color: rgb(66, 66, 66);
       position: absolute;
       width: 100%;
       height: 100%;

@@ -77,72 +77,19 @@ const Player = (props) => {
   }, [tracksToRender]);
 
   const handleBarsPosition = () => {
-    const previousIndex =
-      currentBarNumber > 0 ? currentBarNumber - 1 : orderedTrack.length - 1;
-    const nextIndex =
-      currentBarNumber < orderedTrack.length - 1 ? currentBarNumber + 1 : 0;
+    
     const barsNodes = beatWrapper.current.childNodes;
-
-    if (barsNodes.length === 0) return;
-    let animDuration = props.isPlaying ? 0 : 0.5;
-    if (barsNodes.length === 1) {
-      gsap.to(barsNodes[0], { x: "0%", opacity: 1, duration: animDuration });
-    } else if (barsNodes.length === 2) {
-      if (currentBarNumber === 0) {
-        gsap.to(barsNodes[0], {
-          x: "0%",
-          opacity: 1,
-          duration: animDuration,
-          pointerEvents: "all",
-        });
-        gsap.to(barsNodes[1], {
-          x: "100%",
-          opacity: 0,
-          duration: animDuration,
-          pointerEvents: "none",
-        });
-      } else {
-        gsap.to(barsNodes[0], {
-          x: "-100%",
-          opacity: 0,
-          duration: animDuration,
-          pointerEvents: "none",
-        });
-        gsap.to(barsNodes[1], {
-          x: "0%",
-          opacity: 1,
-          duration: animDuration,
-          pointerEvents: "all",
-        });
-      }
-    } else {
+    const animDuration = props.isPlaying ? 0 : 0.5;
+   
       barsNodes.forEach((bar, index) => {
-        switch (index) {
-          case previousIndex:
-            gsap.to(bar, { x: "-100%", opacity: 0, duration: animDuration });
-            break;
-          case currentBarNumber:
+        const transformMultiplier= index-currentBarNumber>0?1:index-currentBarNumber<0?-1:0;
             gsap.to(bar, {
-              x: "0%",
-              opacity: 1,
+              x: `${(transformMultiplier)*100}%`,
               duration: animDuration,
-              pointerEvents: "all",
-            });
-            break;
-          case nextIndex:
-            gsap.to(bar, { x: "100%", opacity: 0, duration: animDuration });
-            break;
-          default:
-            gsap.to(bar, {
-              x: "0%",
-              opacity: 0,
-              duration: animDuration,
+              opacity:index===currentBarNumber?1:0,
               pointerEvents: "none",
-            });
-            break;
-        }
-      });
-    }
+            });    
+      })
   };
 
   const renderMeasureContent = () => {
@@ -403,16 +350,18 @@ const Player = (props) => {
       boxDrop.isActive = false;
 
       barBoxesList.current.childNodes.forEach((barBox, index) => {
+        if(barBox.classList.contains("active")){
+          barBox.classList.remove("active");
+        }
         gsap.to(barBox, 0.3, { x: `${orderedTrack[index].order * 100}%` });
       });
 
+      const newOrder = orderedTrack.sort((a, b) => a.order - b.order);
       setTimeout(() => {
-        const newOrder = orderedTrack.sort((a, b) => a.order - b.order);
         setCurrentBarNumber(boxDrag.order);
-        setOrderedTrack(newOrder);
-        updateBeat(newOrder);
-        props.updateTrack(newOrder);
+        props.updateTrack(newOrder);    
       }, 330);
+  
     };
 
     window.addEventListener("mousemove", handleMouseMove);

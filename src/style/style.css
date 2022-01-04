@@ -118,7 +118,7 @@ p {
   -ms-grid-row: 1;
   -ms-grid-column: 2;
   grid-area: p;
-  background-color: #5a5a5a;
+  background-color: #424242;
   position: relative;
   width: 100%;
   z-index: 1;
@@ -302,7 +302,6 @@ p {
 }
 
 .player-container .beat-wrapper .bar {
-  background-color: #424242;
   position: absolute;
   width: 100%;
   height: 100%;
