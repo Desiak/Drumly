@@ -377,6 +377,7 @@ p {
   bottom: 0;
   z-index: 5;
   overflow: hidden;
+  padding-inline: 5%;
 }
 
 .player-container .change-order-section .bar-control-section {

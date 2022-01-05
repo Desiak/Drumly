@@ -40,9 +40,9 @@ function ChangeOrder({
 
   return (
     <div className="change-order-section" ref={innerRef}>
-      <button className="arrow arrow-prev" onClick={() => navToBar("-")}>
+      {/* <button className="arrow arrow-prev" onClick={() => navToBar("-")}>
         &#8249;
-      </button>
+      </button> */}
       <div className="wrapper control-wrapper">
         <div className="bar-control-section">
           <span className="action-label">Bar actions:</span>
@@ -92,9 +92,9 @@ function ChangeOrder({
             })}
         </ul>
       </div>
-      <button className="arrow arrow-next" onClick={() => navToBar("+")}>
+      {/* <button className="arrow arrow-next" onClick={() => navToBar("+")}>
         &#8250;
-      </button>
+      </button> */}
     </div>
   );
 }
