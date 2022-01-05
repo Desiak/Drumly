@@ -66,7 +66,7 @@ const Player = (props) => {
   const barBoxesList = useRef(null);
 
   useEffect(() => {
-    updateBeat(orderedTrack, "effect");
+    updateBeat(orderedTrack);
     barBoxesList.current.childNodes.forEach((barBox, index) => {
       gsap.set(barBox, { x: `${index * 100}%` });
     });
@@ -74,20 +74,20 @@ const Player = (props) => {
 
   useEffect(() => {
     handleBarsPosition();
-  }, [tracksToRender]);
+  }, [tracksToRender, currentBarNumber]);
 
   const handleBarsPosition = () => {
     
+    console.log("handle bars position");
     const barsNodes = beatWrapper.current.childNodes;
     const animDuration = props.isPlaying ? 0 : 0.5;
-   
       barsNodes.forEach((bar, index) => {
         const transformMultiplier= index-currentBarNumber>0?1:index-currentBarNumber<0?-1:0;
             gsap.to(bar, {
               x: `${(transformMultiplier)*100}%`,
               duration: animDuration,
               opacity:index===currentBarNumber?1:0,
-              pointerEvents: "none",
+              pointerEvents: index===currentBarNumber?"all":"none",
             });    
       })
   };
@@ -174,14 +174,24 @@ const Player = (props) => {
     source.start(time);
   };
 
-  const scheduleSounds = async (barInd = 0, noteInd = 0) => {
+  const scheduleSounds = (barInd = 0, noteInd = 0) => {
     const track = orderedTrack;
     currentTime =
       currentTime === 0
         ? props.audioContext.currentTime
         : currentTime + progressBarSpeed / barLength;
     if (props.audioContext.state === "suspended") {
-      await props.audioContext.resume();
+      console.log("resuming!");
+       props.audioContext.resume().then(()=>{
+        track[barInd].value.forEach((path, i) => {
+          path.forEach((note, index) => {
+            if (index === noteInd) {
+              if (note !== 0) playSound(note, currentTime, i);
+            }
+          });
+        });
+       });
+       return
     }
     track[barInd].value.forEach((path, i) => {
       path.forEach((note, index) => {
@@ -191,10 +201,6 @@ const Player = (props) => {
       });
     });
   };
-
-  useEffect(() => {
-    handleBarsPosition();
-  }, [currentBarNumber]);
 
   useEffect(() => {
     setMeasure(renderMeasureContent());
@@ -229,7 +235,6 @@ const Player = (props) => {
   }, []);
 
   const restartProgressBar = (barIndex) => {
-    handleBarsPosition(barIndex);
     setCurrentBarNumber(barIndex);
     progressBarAnimation.current.time(0);
     progressBarAnimation.current.play();
@@ -265,14 +270,6 @@ const Player = (props) => {
   };
 
   useEffect(() => {
-    updateBeat(orderedTrack, "effect");
-  }, [orderedTrack]);
-
-  useEffect(() => {
-    handleBarsPosition();
-  }, [tracksToRender]);
-
-  useEffect(() => {
     if (!progressBarAnimation.current) {
       progressBarAnimation.current = gsap.fromTo(
         progressBar.current,
@@ -294,9 +291,6 @@ const Player = (props) => {
     };
   }, [props.isPlaying]);
 
-  useEffect(() => {
-    handleBarsPosition();
-  }, [currentBarNumber]);
 
   useEffect(() => {
     const handleDragElem = (e) => {

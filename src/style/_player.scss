@@ -130,7 +130,8 @@
     &.smooth {
       // transition: 0.5s ease-in-out;
       .bar {
-        // transition: opacity 0.5s;
+        // transition: opacity 0.5s
+
         pointer-events: none;
         &.active {
           // transition-delay: .15s;
@@ -333,7 +334,7 @@
         }
         &.active {
           // flex-grow: 4;
-          background-color:rgba(255, 255, 255, 0.411) ;
+          background-color:rgba(255, 255, 255, 0.2) ;
           .number {
             font-size: 250%;
             color: white;
@@ -418,6 +419,7 @@
       transform: scale(1.1);
     }
   }
+ 
 }
 
 @keyframes dragIcon {

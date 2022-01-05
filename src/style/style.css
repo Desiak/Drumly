@@ -541,7 +541,7 @@ p {
 }
 
 .player-container .change-order-section .bars-order-list .bar-box.active {
-  background-color: rgba(255, 255, 255, 0.411);
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 .player-container .change-order-section .bars-order-list .bar-box.active .number {
