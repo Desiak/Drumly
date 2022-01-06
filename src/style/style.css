@@ -397,7 +397,6 @@ p {
 .player-container .change-order-section .bar-control-section .action-label {
   margin-right: 12px;
   padding: 4px 12px;
-  border-radius: 4px;
   cursor: pointer;
   position: relative;
   overflow: hidden;
@@ -420,12 +419,12 @@ p {
   content: "";
   position: absolute;
   width: 100%;
-  height: 100%;
+  height: 5%;
   z-index: -1;
-  top: 0px;
+  bottom: 0px;
   left: 0;
-  -webkit-transform: translateY(101%);
-          transform: translateY(101%);
+  -webkit-transform: translateX(-101%);
+          transform: translateX(-101%);
   -webkit-transition: 0.15s;
   transition: 0.15s;
 }
@@ -870,8 +869,8 @@ p {
 
 .drumset-container .drumset {
   width: 80%;
-  height: 100%;
   position: relative;
+  aspect-ratio: 2.55/1;
   min-height: 300px;
 }
 
@@ -891,64 +890,126 @@ p {
 .drumset-container .drumset-pad {
   position: absolute;
   cursor: url("../cursor-big.png"), pointer;
-  opacity: 0.5;
+  opacity: 0.6;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+  background-color: white;
+  color: black;
+  border-radius: 50%;
+  aspect-ratio: 1/1;
 }
 
-.drumset-container .drumset-pad:hover {
-  -webkit-filter: brightness(2);
-          filter: brightness(2);
+.drumset-container .drumset-pad::before {
+  position: absolute;
+  font-size: 0.9em;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  color: black;
+  font-weight: bold;
+  text-align: center;
+  opacity: 0;
+  -webkit-transition: 0.15s;
+  transition: 0.15s;
+}
+
+.drumset-container .drumset-pad:hover::before {
+  opacity: 1;
 }
 
 .drumset-container .drumset-pad--hihat {
-  width: 20%;
-  top: 40%;
-  left: 6%;
+  width: 11%;
+  top: 50%;
+  left: 16%;
+  background-color: black;
+}
+
+.drumset-container .drumset-pad--hihat::before {
+  content: "Hihat (HH)";
+  color: white;
 }
 
 .drumset-container .drumset-pad--snare {
-  width: 21%;
-  top: 49%;
-  left: 21%;
+  width: 14%;
+  top: 55%;
+  left: 30%;
+}
+
+.drumset-container .drumset-pad--snare::before {
+  content: "Snare (SN)";
 }
 
 .drumset-container .drumset-pad--kick {
-  width: 28%;
+  width: 5%;
   top: 60%;
-  left: 38%;
-  cursor: url("../cursor-kick.png"), url("../cursor.png"), pointer;
+  left: 47%;
+  cursor: url("../cursor-kick.png"), pointer;
+  aspect-ratio: 1/2;
+  -webkit-clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);
+          clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);
+  border-radius: 25%;
+  background-color: black;
+}
+
+.drumset-container .drumset-pad--kick::before {
+  content: "Kick (K)";
+  color: white;
 }
 
 .drumset-container .drumset-pad--tom-1 {
-  width: 15%;
-  top: 27%;
-  left: 35%;
+  width: 10%;
+  top: 24%;
+  left: 28%;
+}
+
+.drumset-container .drumset-pad--tom-1::before {
+  content: "Tom 1 (T-1)";
 }
 
 .drumset-container .drumset-pad--tom-2 {
-  width: 18%;
-  top: 27%;
-  left: 52%;
+  width: 12%;
+  top: 20%;
+  left: 43%;
+}
+
+.drumset-container .drumset-pad--tom-2::before {
+  content: "Tom 2 (T-2)";
 }
 
 .drumset-container .drumset-pad--floor-tom {
-  width: 27%;
+  width: 18%;
   top: 45%;
-  left: 66%;
+  left: 56%;
+}
+
+.drumset-container .drumset-pad--floor-tom::before {
+  content: "Floor Tom (F-T)";
 }
 
 .drumset-container .drumset-pad--crash {
-  width: 29%;
-  top: 7%;
-  left: 8%;
+  width: 16%;
+  top: 2%;
+  left: 10%;
+  background-color: black;
+}
+
+.drumset-container .drumset-pad--crash::before {
+  content: "Crash (CR)";
+  color: white;
 }
 
 .drumset-container .drumset-pad--ride {
-  width: 32%;
-  top: 10%;
-  left: 67%;
+  width: 16%;
+  top: 1%;
+  left: 61%;
+  background-color: black;
+}
+
+.drumset-container .drumset-pad--ride::before {
+  content: "Ride (RD)";
+  color: white;
 }
 /*# sourceMappingURL=style.css.map */

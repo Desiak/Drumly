@@ -8,10 +8,9 @@
   .drumset {
     // min-width:600px;
     width: 80%;
-    height: 100%;
     position: relative;
+    aspect-ratio: 2.55/1;
     min-height: 300px;
-
     @media (max-width: 1200px) {
       height: 60%;
       width: 100%;
@@ -23,51 +22,108 @@
   .drumset-pad {
     position: absolute;
     cursor: url("../cursor-big.png"), pointer;
-    opacity: 0.5;
+    opacity: 0.6;
     user-select: none;
+    background-color: white;
+    color:black;
+    border-radius: 50%;
+    aspect-ratio: 1/1;
+    &::before{
+      position: absolute;
+      font-size: 0.9em;
+      left:50%;
+      top:50%;
+      transform: translate(-50%,-50%);
+      color:black;
+      font-weight: bold;
+      text-align: center;
+      opacity:0;
+      transition:0.15s;
+    }
     &:hover {
-      filter: brightness(2);
+      &::before{
+        opacity:1;
+      }
     }
     &--hihat {
-      width: 20%;
-      top: 40%;
-      left: 6%;
+      width: 11%;
+      top: 50%;
+      left: 16%;
+      background-color: black;
+
+      &::before{
+        content:"Hihat (HH)";
+        color:white;
+      }
     }
     &--snare {
-      width: 21%;
-      top: 49%;
-      left: 21%;
+      width: 14%;
+      top: 55%;
+      left: 30%;
+      &::before{
+        content:"Snare (SN)";
+      }
     }
     &--kick {
-      width: 28%;
+      width: 5%;
       top: 60%;
-      left: 38%;
-      cursor: url("../cursor-kick.png"), url("../cursor.png"), pointer;
+      left: 47%;
+      cursor: url("../cursor-kick.png"), pointer;
+      aspect-ratio: 1/2;
+      clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);
+      border-radius: 25%;
+      background-color: black;
+
+      &::before{
+        content:"Kick (K)";
+        color:white;
+      }
     }
     &--tom-1 {
-      width: 15%;
-      top: 27%;
-      left: 35%;
+      width: 10%;
+      top: 24%;
+      left: 28%;
+      &::before{
+        content:"Tom 1 (T-1)";
+      }
     }
     &--tom-2 {
-      width: 18%;
-      top: 27%;
-      left: 52%;
+      width: 12%;
+      top: 20%;
+      left: 43%;
+      &::before{
+        content:"Tom 2 (T-2)";
+      }
     }
     &--floor-tom {
-      width: 27%;
+      width: 18%;
       top: 45%;
-      left: 66%;
+      left: 56%;
+      &::before{
+        content:"Floor Tom (F-T)";
+      }
     }
     &--crash {
-      width: 29%;
-      top: 7%;
-      left: 8%;
+      width: 16%;
+      top: 2%;
+      left: 10%;
+      background-color: black;
+
+      &::before{
+        content:"Crash (CR)";
+        color:white;
+      }
     }
     &--ride {
-      width: 32%;
-      top: 10%;
-      left: 67%;
+      width: 16%;
+      top: 1%;
+      left: 61%;
+      background-color: black;
+
+      &::before{
+        content:"Ride (RD)";
+        color:white;
+      }
     }
   }
 }

@@ -19,54 +19,47 @@ const Drumset = (props) => {
   return (
     <div className="container drumset-container">
       <div className="drumset" ref={drumset}>
-        <img
+        <dic
           alt="drum pad"
           onClick={() => playSound("kick")}
-          src="./assets/imgs/kick-pad.svg"
           className="drumset-pad drumset-pad--kick"
-        ></img>
-        <img
+        ></dic>
+        <dic
           alt="drum pad"
           onClick={() => playSound("floor")}
-          src="./assets/imgs/floor-tom-pad.svg"
           className="drumset-pad drumset-pad--floor-tom"
-        ></img>
-        <img
+        ></dic>
+        <dic
           alt="drum pad"
           onClick={() => playSound("tom2")}
-          src="./assets/imgs/tom-2-pad.svg"
           className="drumset-pad drumset-pad--tom-2"
-        ></img>
-        <img
+        ></dic>
+        <dic
           alt="drum pad"
           onClick={() => playSound("tom1")}
-          src="./assets/imgs/tom-1-pad.svg"
           className="drumset-pad drumset-pad--tom-1"
-        ></img>
-        <img
+        ></dic>
+        <dic
           alt="drum pad"
           onClick={() => playSound("snare")}
-          src="./assets/imgs/snare-pad.svg"
           className="drumset-pad drumset-pad--snare"
-        ></img>
-        <img
+        ></dic>
+        <dic
           alt="drum pad"
           onClick={() => playSound("hihat")}
-          src="./assets/imgs/hihat-pad.svg"
           className="drumset-pad drumset-pad--hihat"
-        ></img>
-        <img
+        ></dic>
+        <dic
           alt="drum pad"
           onClick={() => playSound("ride")}
-          src="./assets/imgs/ride-pad.svg"
+          src="./assets/dics/ride-pad.svg"
           className="drumset-pad drumset-pad--ride"
-        ></img>
-        <img
+        ></dic>
+        <dic
           alt="drum pad"
           onClick={() => playSound("crash")}
-          src="./assets/imgs/crash-pad.svg"
           className="drumset-pad drumset-pad--crash"
-        ></img>
+        ></dic>
       </div>
     </div>
   );
