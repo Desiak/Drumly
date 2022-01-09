@@ -637,7 +637,7 @@ p {
 
 .tempo-input .tempo-info {
   text-align: center;
-  margin: 20px 0;
+  margin-bottom: 10px;
 }
 
 .tempo-input .slider-wrapper {

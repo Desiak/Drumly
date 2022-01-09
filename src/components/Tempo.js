@@ -16,13 +16,7 @@ const Tempo = (props) => {
     <div className="input tempo-input">
       <p>TEMPO</p>
       <div class="tempo tempo-info">
-        <span className="change-btn" onClick={() => handleSpeedChange("-")}>
-          -
-        </span>
-        <span class="tempo-value"> {props.tempo} bpm</span>
-        <span className="change-btn" onClick={() => handleSpeedChange("+")}>
-          +
-        </span>
+        <span class="tempo-value"> {props.tempo} bpm</span> 
       </div>
       <div class="slider-wrapper">
         <input
