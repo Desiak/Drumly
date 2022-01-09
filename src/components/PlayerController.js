@@ -4,7 +4,6 @@ import { play, clear } from "../actions/actions";
 const PlayerController = (props) => {
   return (
     <div className="input player-controller-input">
-      Player Controller
       <button
         onClick={() => props.play()}
         className={`controller-btn btn-play ${
