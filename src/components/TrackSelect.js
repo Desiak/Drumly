@@ -41,7 +41,7 @@ const TrackSelect = (props) => {
 
   return (
     <div className="input beat-select-section">
-      Select track
+      SELECT TRACK
       <div className="list-wrapper">
         <ul className="tracks-list" ref={tracksList}>
           {trackListItems}

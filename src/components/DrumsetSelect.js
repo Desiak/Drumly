@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 const DrumsetSelect = (props) => {
   return (
     <div className="input drumset-input">
-      Drumset:
+      <span>DRUMSET</span>
       <select
         class="drumset-select"
         onChange={(e) => {

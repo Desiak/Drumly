@@ -1,10 +1,11 @@
 .drumset-container {
   grid-area: d;
-  background-color: rgb(54, 54, 54);
+  background-color: $background-color;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  
   .drumset {
     // min-width:600px;
     width: 80%;
@@ -22,10 +23,10 @@
   .drumset-pad {
     position: absolute;
     cursor: url("../cursor-big.png"), pointer;
-    opacity: 0.6;
+    opacity: 0.5;
     user-select: none;
-    background-color: white;
-    color:black;
+    background-color: rgb(34, 34, 34);
+    box-shadow:  4px 8px 12px $primary-color;
     border-radius: 50%;
     aspect-ratio: 1/1;
     &::before{
@@ -34,7 +35,7 @@
       left:50%;
       top:50%;
       transform: translate(-50%,-50%);
-      color:black;
+      color:white;
       font-weight: bold;
       text-align: center;
       opacity:0;
@@ -49,11 +50,8 @@
       width: 11%;
       top: 50%;
       left: 16%;
-      background-color: black;
-
       &::before{
         content:"Hihat (HH)";
-        color:white;
       }
     }
     &--snare {
@@ -66,17 +64,18 @@
     }
     &--kick {
       width: 5%;
-      top: 60%;
-      left: 47%;
+      top: 62%;
+      left: 48%;
       cursor: url("../cursor-kick.png"), pointer;
       aspect-ratio: 1/2;
       clip-path: polygon(0 0, 100% 0, 90% 100%, 10% 100%);
       border-radius: 25%;
-      background-color: black;
+      background-color: $primary-color;
+      box-shadow: unset;
 
       &::before{
         content:"Kick (K)";
-        color:white;
+        color:black
       }
     }
     &--tom-1 {
@@ -90,39 +89,33 @@
     &--tom-2 {
       width: 12%;
       top: 20%;
-      left: 43%;
+      left: 44%;
       &::before{
         content:"Tom 2 (T-2)";
       }
     }
     &--floor-tom {
-      width: 18%;
-      top: 45%;
-      left: 56%;
+      width: 17%;
+      top: 50%;
+      left: 58%;
       &::before{
         content:"Floor Tom (F-T)";
       }
     }
     &--crash {
       width: 16%;
-      top: 2%;
-      left: 10%;
-      background-color: black;
-
+      top: 5%;
+      left: 8%;
       &::before{
         content:"Crash (CR)";
-        color:white;
       }
     }
     &--ride {
       width: 16%;
-      top: 1%;
+      top: 3%;
       left: 61%;
-      background-color: black;
-
       &::before{
         content:"Ride (RD)";
-        color:white;
       }
     }
   }

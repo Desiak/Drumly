@@ -155,16 +155,16 @@ const Player = (props) => {
       const tl = gsap.timeline({ autoAlpha: 0, ease: "ease" });
       switch (note) {
         case 1:
-          tl.to(padToAnimate, 0.1, { opacity: 0.7, scale: 1.02 });
-          tl.to(padToAnimate, 0.1, { opacity: 0.6, scale: 1 });
+          tl.to(padToAnimate, 0.1, { opacity: 0.65, scale: 1.02 });
+          tl.to(padToAnimate, 0.1, { opacity: 0.5, scale: 1 });
           break;
         case 2:
           tl.to(padToAnimate, 0.1, { opacity: 0.8, scale: 1.05 });
-          tl.to(padToAnimate, 0.1, { opacity: 0.6, scale: 1 });
+          tl.to(padToAnimate, 0.1, { opacity: 0.5, scale: 1 });
           break;
         case 3:
           tl.to(padToAnimate, 0.1, { opacity: 1, scale: 1.1 });
-          tl.to(padToAnimate, 0.1, { opacity: 0.6, scale: 1 });
+          tl.to(padToAnimate, 0.1, { opacity: 0.5, scale: 1 });
           break;
         default:
           break;

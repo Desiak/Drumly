@@ -1,6 +1,6 @@
 .menu-container {
   grid-area: m;
-  background-color: rgb(70, 70, 70);
+  background-color: $background-color;
   display: flex;
   // flex-direction: column;
   flex-wrap: wrap;
@@ -11,8 +11,8 @@
   }
 }
 .input {
-  background-color: rgba(43, 43, 43, 0.644);
-  padding: 10px;
+  background-color: rgb(33, 33, 33);
+  padding: 15px 10px;
   margin: 10px 20px;
   font-size: 1.2em;
   border-radius: 15px;
@@ -107,19 +107,19 @@
     .list-element {
       padding: 10px;
       margin: 10px;
-      background-color: $primary-color;
       transition: 0.3s;
+      box-shadow: inset 0px 0px 6px $primary-color;
       cursor: pointer;
       border-radius: 4px;
-
-      &:nth-child(even) {
-        background-color: $secondary-color;
-      }
       &:hover {
         filter: brightness(1.08);
       }
       &.active {
-        border: 2px solid white;
+        box-shadow: 0px 0px 6px $primary-color;
+        background-color: $primary-color;
+        p{
+          color:black
+        }
       }
     }
   }
