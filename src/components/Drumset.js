@@ -19,47 +19,46 @@ const Drumset = (props) => {
   return (
     <div className="container drumset-container">
       <div className="drumset" ref={drumset}>
-        <dic
+        <div
           alt="drum pad"
           onClick={() => playSound("kick")}
           className="drumset-pad drumset-pad--kick"
-        ></dic>
-        <dic
+        ></div>
+        <div
           alt="drum pad"
           onClick={() => playSound("floor")}
           className="drumset-pad drumset-pad--floor-tom"
-        ></dic>
-        <dic
+        ></div>
+        <div
           alt="drum pad"
           onClick={() => playSound("tom2")}
           className="drumset-pad drumset-pad--tom-2"
-        ></dic>
-        <dic
+        ></div>
+        <div
           alt="drum pad"
           onClick={() => playSound("tom1")}
           className="drumset-pad drumset-pad--tom-1"
-        ></dic>
-        <dic
+        ></div>
+        <div
           alt="drum pad"
           onClick={() => playSound("snare")}
           className="drumset-pad drumset-pad--snare"
-        ></dic>
-        <dic
+        ></div>
+        <div
           alt="drum pad"
           onClick={() => playSound("hihat")}
           className="drumset-pad drumset-pad--hihat"
-        ></dic>
-        <dic
+        ></div>
+        <div
           alt="drum pad"
           onClick={() => playSound("ride")}
-          src="./assets/dics/ride-pad.svg"
           className="drumset-pad drumset-pad--ride"
-        ></dic>
-        <dic
+        ></div>
+        <div
           alt="drum pad"
           onClick={() => playSound("crash")}
           className="drumset-pad drumset-pad--crash"
-        ></dic>
+        ></div>
       </div>
     </div>
   );

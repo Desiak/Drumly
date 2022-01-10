@@ -27,7 +27,7 @@
 
 .player-controller-input {
   background: none;
-
+  padding-bottom:0;
   .controller-btn {
     display: block;
     height: 80px;
@@ -35,16 +35,18 @@
     margin:0 auto;
     background-color: $success-color;
     box-shadow: 0 0 12px $success-color;
-    color: rgb(66, 66, 66);
+    color: $background-color;
     border: none;
     border-radius: 25%;
     transition: 0.15s;
     font-weight: bold;
     cursor: pointer;
+    border: 2px solid $success-color;
     &.playing {
       background-color: $alert-color;
+      border:2px solid $alert-color;
       color: white;
-      box-shadow: 0 0 12px $alert-color;
+      box-shadow: 0 0 12px $alert-color, inset 0 0 12px $alert-color;
     }
   }
 }

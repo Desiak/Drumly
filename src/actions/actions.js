@@ -13,9 +13,6 @@ export const LOAD_DRUMPADS = "LOAD_DRUMPADS";
 export const CHANGE_BAR = "CHANGE_BAR";
 export const CHANGE_DRUMSET = "CHANGE_DRUMSET";
 
-// payload-ładunek -> to co wnosimy nowego do stanu
-// type jest obowiązkowy, payload opcjonalny.
-
 //actions
 export const changeTempo = (value, direction = "change") => {
   let updatedValue;
@@ -97,13 +94,14 @@ export const loadDrumPads = (drumpads) => {
     },
   };
 };
-export const handleBarMod = () => {};
 
-export const changeDrumset = (drumset) => {
+
+export const changeDrumset = (drumset, buffers) => {
   return {
     type: "CHANGE_DRUMSET",
     payload: {
       drumset,
+      buffers
     },
   };
 };

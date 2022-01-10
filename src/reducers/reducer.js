@@ -10,6 +10,7 @@ const INITIAL_STATE={
     drumPads:[],
     isPlaying:false,
     audioContext: new AudioContext(),
+    buffers:[],
     tracks:[
         {
             trackName:"test",
@@ -406,7 +407,6 @@ const INITIAL_STATE={
 }
 
 const state= (state=INITIAL_STATE,action)=>{
-
     switch(action.type){
         case CHANGE_TEMPO:
     
@@ -443,13 +443,12 @@ const state= (state=INITIAL_STATE,action)=>{
         case CHANGE_DRUMSET:
         return {
             ...state,
-            drumset:action.payload.drumset
+            drumset:action.payload.drumset,
+            buffers:action.payload.buffers
         }
         break;
         default:
     }
-
      return state;
-
 }
 export default state;

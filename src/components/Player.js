@@ -77,8 +77,6 @@ const Player = (props) => {
   }, [tracksToRender, currentBarNumber]);
 
   const handleBarsPosition = () => {
-    
-    console.log("handle bars position");
     const barsNodes = beatWrapper.current.childNodes;
     const animDuration = props.isPlaying ? 0 : 0.5;
       barsNodes.forEach((bar, index) => {
@@ -138,13 +136,10 @@ const Player = (props) => {
   };
 
   const playSound = async (note, time, idx) => {
-    const url = `./assets/${props.drumset}/${pathSelectors[idx]}.mp3`;
     const volume = note === 1 ? 0.05 : note === 2 ? 0.5 : 1.5;
     const source = props.audioContext.createBufferSource();
     const gainNode = props.audioContext.createGain();
-    const audioBuffer = await fetch(url)
-      .then((res) => res.arrayBuffer())
-      .then((arrayBuffer) => props.audioContext.decodeAudioData(arrayBuffer));
+    const audioBuffer = props.buffers[idx];
 
     source.buffer = audioBuffer;
     gainNode.gain.setValueAtTime(volume, props.audioContext.currentTime);
@@ -181,7 +176,6 @@ const Player = (props) => {
         ? props.audioContext.currentTime
         : currentTime + progressBarSpeed / barLength;
     if (props.audioContext.state === "suspended") {
-      console.log("resuming!");
        props.audioContext.resume().then(()=>{
         track[barInd].value.forEach((path, i) => {
           path.forEach((note, index) => {
@@ -407,17 +401,18 @@ const Player = (props) => {
   );
 };
 
-const mapStateToProps = (store) => ({
-  customableTrack: store.state.customableTrack,
-  tracks: store.state.tracks,
-  trackIndex: store.state.trackIndex,
-  beatMeasures: store.state.beatMeasures,
-  numOfBars: store.state.numOfBars,
-  isPlaying: store.state.isPlaying,
-  tempo: store.state.tempo,
-  drumPads: store.state.drumPads,
-  drumset: store.state.drumset,
-  audioContext: store.state.audioContext,
+const mapStateToProps = ({state}) => ({
+  customableTrack: state.customableTrack,
+  tracks: state.tracks,
+  trackIndex: state.trackIndex,
+  beatMeasures: state.beatMeasures,
+  numOfBars: state.numOfBars,
+  isPlaying: state.isPlaying,
+  tempo: state.tempo,
+  drumPads: state.drumPads,
+  drumset: state.drumset,
+  audioContext: state.audioContext,
+  buffers:state.buffers
 });
 
 const mapDispatchToProps = {

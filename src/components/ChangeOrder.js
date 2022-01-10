@@ -1,7 +1,7 @@
 import React from "react";
 import NumberBox from "./NumberBox";
 import { connect } from "react-redux";
-import { handleBarMod, updateTrack } from "../actions/actions";
+import { updateTrack } from "../actions/actions";
 import _ from "lodash";
 
 function ChangeOrder({
@@ -104,7 +104,6 @@ const mapStateToProps = (store) => ({
 });
 
 const mapDispatchToProps = {
-  handleBarMod,
   updateTrack,
 };
 
