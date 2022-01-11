@@ -155,10 +155,6 @@
             transform: translateX(-50%);
           }
         }
-        &.disabled {
-          opacity: 0.5;
-          pointer-events: none;
-        }
 
         &::before {
           content: "";

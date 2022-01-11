@@ -46,6 +46,8 @@ const DrumsetSelect = (props) => {
       <select
         class="drumset-select"
         onChange={(e) => handleDrumsetChange(e.target.value)}
+        disabled={props.isPlaying}
+
       >
         <option class="drumset-option" value="acoustic-1">
           Acoustic 1
@@ -64,7 +66,7 @@ const DrumsetSelect = (props) => {
 const mapStateToProps = (store) => ({
   drumset: store.state.drumset,
   audioContext: store.state.audioContext,
-
+  isPlaying:store.state.isPlaying
 });
 
 const mapDispatchToProps = {

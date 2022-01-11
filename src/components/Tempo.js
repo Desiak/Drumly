@@ -3,10 +3,6 @@ import { connect } from "react-redux";
 import { changeTempo } from "../actions/actions";
 
 const Tempo = (props) => {
-  const handleSpeedChange = (direction) => {
-    if (props.tempo >= 170 || props.tempo <= 40) return;
-    props.changeTempo(props.tempo, direction);
-  };
 
   const handleTempoChange = (e) => {
     props.changeTempo(e.target.value);
@@ -25,6 +21,7 @@ const Tempo = (props) => {
           value={props.tempo}
           max="170"
           step="1"
+          disabled={props.isPlaying}
           id="tempo-slider"
           onChange={(e) => handleTempoChange(e)}
         />
@@ -35,6 +32,7 @@ const Tempo = (props) => {
 
 const numberFromReduxStore = (store) => ({
   tempo: store.state.tempo,
+  isPlaying:store.state.isPlaying,
 });
 
 const connectActionsToProps = {

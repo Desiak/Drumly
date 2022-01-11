@@ -40,7 +40,7 @@ const TrackSelect = (props) => {
   }, []);
 
   return (
-    <div className="input beat-select-section">
+    <div className={`input beat-select-section ${props.isPlaying?"disabled":""}`}>
       SELECT TRACK
       <div className="list-wrapper">
         <ul className="tracks-list" ref={tracksList}>
@@ -54,6 +54,7 @@ const TrackSelect = (props) => {
 const mapStateToProps = (store) => ({
   tracks: store.state.tracks,
   trackIndex: store.state.trackIndex,
+  isPlaying:store.state.isPlaying
 });
 
 //DOBRY PRZYKŁAD

@@ -75,6 +75,11 @@ p {
   height: 100%;
 }
 
+.app .disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
 @media (max-width: 1200px) {
   .app {
     -ms-grid-columns: minmax(340px, 1fr) 4fr;
@@ -373,12 +378,6 @@ p {
 .player-container .change-order-section .bar-control-section .action-label:hover::before {
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
-}
-
-.player-container .change-order-section .bar-control-section .action-btn.disabled,
-.player-container .change-order-section .bar-control-section .action-label.disabled {
-  opacity: 0.5;
-  pointer-events: none;
 }
 
 .player-container .change-order-section .bar-control-section .action-btn::before,

@@ -70,6 +70,10 @@ p {
     height: 100%;
   }
 
+  .disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
   
   @media (max-width: 1200px) {
     grid-template-columns: minmax(340px, 1fr) 4fr;
