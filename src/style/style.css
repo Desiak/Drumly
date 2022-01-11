@@ -115,6 +115,21 @@ p {
   }
 }
 
+::-webkit-scrollbar {
+  width: .8em;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 1em;
+  background: #494949;
+  margin-block: 0.5em;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #00c3c9;
+  border-radius: 1em;
+}
+
 .player-container {
   -ms-grid-row: 1;
   -ms-grid-column: 2;

@@ -7,16 +7,6 @@ import Bar from "./Bar";
 
 const Player = (props) => {
   const tracksLabels = ["CR", "RD", "HH", "SN", "T-1", "T-2", "F-T", "K"];
-  const pathSelectors = [
-    "crash",
-    "ride",
-    "hihat",
-    "snare",
-    "tom1",
-    "tom2",
-    "floor",
-    "kick",
-  ];
   let barLength = props.tracks[props.trackIndex].track[0][0].length;
   const setTrackOrder = (unorderedTrack) => {
     const orderedTrack = unorderedTrack.map((bar, index) => {
