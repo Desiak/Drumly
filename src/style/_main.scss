@@ -116,6 +116,12 @@ p {
   margin-block: 0.5em;
 }
 ::-webkit-scrollbar-thumb{
-  background: darken($primary-color,30%);
+  background: darken($primary-color,30%) ;
   border-radius: 1em;
+}
+
+@supports(scrollbar-color: red blue){
+  *{
+    scrollbar-color: darken($primary-color,30%) lighten($background-color,20%);
+  }
 }
