@@ -23,9 +23,9 @@
   .drumset-pad {
     position: absolute;
     cursor: url("../cursor-big.png"), pointer;
-    opacity: 0.5;
+    opacity: 0.4;
     user-select: none;
-    background-color: rgb(34, 34, 34);
+    background-color: lighten($background-color, 10%);
     box-shadow:  4px 8px 12px $primary-color;
     border-radius: 50%;
     aspect-ratio: 1/1;

@@ -141,15 +141,15 @@ const Player = (props) => {
       switch (note) {
         case 1:
           tl.to(padToAnimate, 0.1, { opacity: 0.65, scale: 1.02 });
-          tl.to(padToAnimate, 0.1, { opacity: 0.5, scale: 1 });
+          tl.to(padToAnimate, 0.1, { opacity: 0.4, scale: 1 });
           break;
         case 2:
           tl.to(padToAnimate, 0.1, { opacity: 0.8, scale: 1.05 });
-          tl.to(padToAnimate, 0.1, { opacity: 0.5, scale: 1 });
+          tl.to(padToAnimate, 0.1, { opacity: 0.4, scale: 1 });
           break;
         case 3:
           tl.to(padToAnimate, 0.1, { opacity: 1, scale: 1.1 });
-          tl.to(padToAnimate, 0.1, { opacity: 0.5, scale: 1 });
+          tl.to(padToAnimate, 0.1, { opacity: 0.4, scale: 1 });
           break;
         default:
           break;
@@ -164,22 +164,14 @@ const Player = (props) => {
     currentTime =
       currentTime === 0
         ? props.audioContext.currentTime
-        : currentTime + progressBarSpeed / barLength;
-    if (props.audioContext.state === "suspended") {
-       props.audioContext.resume().then(()=>{
-        track[barInd].value.forEach((path, i) => {
-          path.forEach((note, index) => {
-            if (index === noteInd) {
-              if (note !== 0) playSound(note, currentTime, i);
-            }
-          });
-        });
-       });
-       return
-    }
+        : props.audioContext.currentTime + progressBarSpeed / barLength;
     track[barInd].value.forEach((path, i) => {
       path.forEach((note, index) => {
         if (index === noteInd) {
+          if(noteInd === 0 && i === 0){
+              restartProgressBar(barInd);
+          }
+
           if (note !== 0) playSound(note, currentTime, i);
         }
       });
@@ -236,9 +228,7 @@ const Player = (props) => {
 
     scheduleInterval = setInterval(() => {
       noteInd = noteInd >= barLength - 1 ? 0 : noteInd + 1;
-      if (noteInd === 0) {
-        restartProgressBar(barInd);
-      }
+    
       scheduleSounds(barInd, noteInd);
 
       if (noteInd === barLength - 1) {

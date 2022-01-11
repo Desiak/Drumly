@@ -40,10 +40,10 @@ const TrackSelect = (props) => {
   }, []);
 
   return (
-    <div className={`input beat-select-section ${props.isPlaying?"disabled":""}`}>
+    <div className={`input beat-select-section`}>
       SELECT TRACK
       <div className="list-wrapper">
-        <ul className="tracks-list" ref={tracksList}>
+        <ul className={`tracks-list ${props.isPlaying?"disabled":""}`} ref={tracksList}>
           {trackListItems}
         </ul>
       </div>

@@ -80,6 +80,27 @@ p {
   pointer-events: none;
 }
 
+.app ::-webkit-scrollbar {
+  width: .8em;
+}
+
+.app ::-webkit-scrollbar-track {
+  border-radius: 1em;
+  background: #494949;
+  margin-block: 0.5em;
+}
+
+.app ::-webkit-scrollbar-thumb {
+  background: #00c3c9;
+  border-radius: 1em;
+}
+
+@supports (scrollbar-color: red blue) {
+  .app * {
+    scrollbar-color: #00c3c9 #494949;
+  }
+}
+
 @media (max-width: 1200px) {
   .app {
     -ms-grid-columns: minmax(340px, 1fr) 4fr;
@@ -117,27 +138,6 @@ p {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-  }
-}
-
-::-webkit-scrollbar {
-  width: .8em;
-}
-
-::-webkit-scrollbar-track {
-  border-radius: 1em;
-  background: #494949;
-  margin-block: 0.5em;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #00c3c9;
-  border-radius: 1em;
-}
-
-@supports (scrollbar-color: red blue) {
-  * {
-    scrollbar-color: #00c3c9 #494949;
   }
 }
 
@@ -818,12 +818,12 @@ p {
 .drumset-container .drumset-pad {
   position: absolute;
   cursor: url("../cursor-big.png"), pointer;
-  opacity: 0.5;
+  opacity: 0.4;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
-  background-color: #222222;
+  background-color: #303030;
   -webkit-box-shadow: 4px 8px 12px #63faff;
           box-shadow: 4px 8px 12px #63faff;
   border-radius: 50%;
