@@ -38,6 +38,7 @@ const Player = (props) => {
 
   let scheduleInterval;
   let currentTime = 0;
+  let timeoutId;
   const [currentBarNumber, setCurrentBarNumber] = useState(0);
   const [orderedTrack, setOrderedTrack] = useState(
     setTrackOrder(props.customableTrack)
@@ -55,10 +56,14 @@ const Player = (props) => {
   const changeOrderSection = useRef(null);
   const barBoxesList = useRef(null);
 
+  let moveEvent="mousemove";
+  let upEvent="mouseup";
+  let downEvent="mousedown";
+
   useEffect(() => {
     updateBeat(orderedTrack);
     barBoxesList.current.childNodes.forEach((barBox, index) => {
-      gsap.set(barBox, { x: `${index * 100}%` });
+      gsap.set(barBox, { x: `${index * 112}%` });
     });
   }, [orderedTrack]);
 
@@ -157,6 +162,7 @@ const Player = (props) => {
     }
 
     source.start(time);
+    
   };
 
   const scheduleSounds = (barInd = 0, noteInd = 0) => {
@@ -169,9 +175,11 @@ const Player = (props) => {
       path.forEach((note, index) => {
         if (index === noteInd) {
           if(noteInd === 0 && i === 0){
-              restartProgressBar(barInd);
+            let timeoutValue= Math.floor(((currentTime- props.audioContext.currentTime)*1000)/2);
+              timeoutId=setTimeout(() => {
+                restartProgressBar(barInd);
+              }, timeoutValue);
           }
-
           if (note !== 0) playSound(note, currentTime, i);
         }
       });
@@ -206,7 +214,7 @@ const Player = (props) => {
     progressBarAnimation.current = gsap.fromTo(
       progressBar.current,
       { x: "-100%" },
-      { x: "0%", ease: "linear", repeat: 1, paused: true }
+      { x: "0%", ease: "linear", repeat: 0, paused: true }
     );
   }, []);
 
@@ -238,6 +246,7 @@ const Player = (props) => {
   };
   const stopPlaying = () => {
     clearInterval(scheduleInterval);
+    clearTimeout(timeoutId);
     beatWrapper.current.style.transform = "unset";
     setCurrentBarNumber(0);
     progressBarAnimation.current.pause(0);
@@ -299,7 +308,7 @@ const Player = (props) => {
           switchBoxes(e.target, draggedBox);
         } else {
           barBoxesList.current.childNodes.forEach((barBox, index) => {
-            gsap.to(barBox, 0.3, { x: `${orderedTrack[index].order * 100}%` });
+            gsap.to(barBox, 0.3, { x: `${orderedTrack[index].order * 112}%` });
           });
         }
       }
@@ -321,7 +330,7 @@ const Player = (props) => {
         if(barBox.classList.contains("active")){
           barBox.classList.remove("active");
         }
-        gsap.to(barBox, 0.3, { x: `${orderedTrack[index].order * 100}%` });
+        gsap.to(barBox, 0.3, { x: `${orderedTrack[index].order * 112}%` });
       });
 
       const newOrder = orderedTrack.sort((a, b) => a.order - b.order);
@@ -332,14 +341,14 @@ const Player = (props) => {
   
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("mousedown", handleMouseDown);
-    window.addEventListener("mouseup", handleMouseUp);
+    window.addEventListener(moveEvent, handleMouseMove);
+    window.addEventListener(downEvent, handleMouseDown);
+    window.addEventListener(upEvent, handleMouseUp);
 
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mousedown", handleMouseDown);
-      window.removeEventListener("mouseup", handleMouseUp);
+      window.removeEventListener(moveEvent, handleMouseMove);
+      window.removeEventListener(downEvent, handleMouseDown);
+      window.removeEventListener(upEvent, handleMouseUp);
     };
   }, [isMouseDown, draggedBox]);
 
@@ -364,7 +373,7 @@ const Player = (props) => {
         activeBarIndex={currentBarNumber}
       />
       <div className="progress-indicator" ref={progressBar}></div>
-      <div className="empty"></div>
+      <div className="empty">Menu</div>
       <div className="beat-measure-wrapper wrapper">{measure}</div>
       <div className="tracks-labels-wrapper wrapper">
         {tracksLabels.map((label) => (

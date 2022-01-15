@@ -17,7 +17,7 @@ export default function NumberBox({
         }
         navToBar(bar.order);
       }}
-      style={{ width: 100 / trackLength + "%" }}
+      style={{ width: 100 / 9 + "%" }}
     >
       <p className="number" draggable={false}>
         {barIndex + 1}

@@ -41,6 +41,9 @@
     grid-area: empty;
     background-color: $background-color;
     z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items:center;
   }
 
   .beat-measure-wrapper {
