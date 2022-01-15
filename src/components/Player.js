@@ -45,6 +45,7 @@ const Player = (props) => {
   );
   const [measure, setMeasure] = useState(null);
   const [progressBarSpeed, setProgressBarSpeed] = useState(80);
+  const [animationDelay, setAnimationDelay] = useState(0);
   const [tracksToRender, setTracksToRender] = useState(null);
   const [measureCount, setMeasureCount] = useState(props.beatMeasures[0]);
   const progressBarAnimation = useRef(null);
@@ -141,7 +142,8 @@ const Player = (props) => {
     source.connect(gainNode).connect(props.audioContext.destination);
 
     if (!isMobile) {
-      const padToAnimate = props.drumPads[idx];
+      setTimeout(() => {
+        const padToAnimate = props.drumPads[idx];
       const tl = gsap.timeline({ autoAlpha: 0, ease: "ease" });
       switch (note) {
         case 1:
@@ -159,26 +161,25 @@ const Player = (props) => {
         default:
           break;
       }
+      }, animationDelay);
+      
     }
 
     source.start(time);
-    
   };
 
   const scheduleSounds = (barInd = 0, noteInd = 0) => {
     const track = orderedTrack;
-    currentTime =
-      currentTime === 0
-        ? props.audioContext.currentTime
-        : props.audioContext.currentTime + progressBarSpeed / barLength;
+    currentTime = props.audioContext.currentTime + progressBarSpeed / barLength;
+
     track[barInd].value.forEach((path, i) => {
       path.forEach((note, index) => {
         if (index === noteInd) {
           if(noteInd === 0 && i === 0){
-            let timeoutValue= Math.floor(((currentTime- props.audioContext.currentTime)*1000)/2);
+            setAnimationDelay(Math.floor(((currentTime- props.audioContext.currentTime)*1000)/2));
               timeoutId=setTimeout(() => {
                 restartProgressBar(barInd);
-              }, timeoutValue);
+              }, animationDelay);
           }
           if (note !== 0) playSound(note, currentTime, i);
         }
@@ -214,7 +215,7 @@ const Player = (props) => {
     progressBarAnimation.current = gsap.fromTo(
       progressBar.current,
       { x: "-100%" },
-      { x: "0%", ease: "linear", repeat: 0, paused: true }
+      { x: "0%", ease: "linear", paused: true }
     );
   }, []);
 
@@ -230,7 +231,6 @@ const Player = (props) => {
     progressBarAnimation.current.duration(
       isFirefox ? progressBarSpeed * 1.05 : progressBarSpeed
     );
-    progressBarAnimation.current.play();
 
     scheduleSounds(0, noteInd);
 
