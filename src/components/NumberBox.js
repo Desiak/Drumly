@@ -5,18 +5,12 @@ export default function NumberBox({
   navToBar,
   activeBarIndex,
   barIndex,
-  trackLength,
 }) {
   return (
     <li
       className={`bar-box ${activeBarIndex === barIndex ? "active" : ""}`}
       id={bar.id}
-      onMouseDown={(e) => {
-        if (e.target.classList.contains("active")) {
-          e.target.classList.remove("active");
-        }
-        navToBar(bar.order);
-      }}
+      onMouseDown={() => {navToBar(bar.order);}}
       style={{ width: 100 / 9 + "%" }}
     >
       <p className="number" draggable={false}>
