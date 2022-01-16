@@ -57,9 +57,9 @@ const Player = (props) => {
   const changeOrderSection = useRef(null);
   const barBoxesList = useRef(null);
 
-  let moveEvent="mousemove";
-  let upEvent="mouseup";
-  let downEvent="mousedown";
+  let moveEvent= !isMobile?"mousemove":"touchmove";
+  let upEvent= !isMobile?"mouseup":"touchend";
+  let downEvent= !isMobile?"mousedown":"touchstart";
 
   useEffect(() => {
     updateBeat(orderedTrack);
@@ -278,7 +278,7 @@ const Player = (props) => {
   useEffect(() => {
     const handleDragElem = (e) => {
       const transformXValue =
-        e.clientX -
+        (!isMobile?e.clientX:e.changedTouches[0].clientX) -
         barBoxesList.current.getBoundingClientRect().x -
         draggedBox.getBoundingClientRect().width / 2;
       gsap.to(draggedBox, 0, { x: `${transformXValue}px` });
@@ -304,8 +304,15 @@ const Player = (props) => {
       if (draggedBox) {
         draggedBox.classList.remove("dragged");
         setDraggedBox(null);
-        if (e.target.classList.contains("bar-box")) {
-          switchBoxes(e.target, draggedBox);
+
+        const xCoord= isMobile?e.changedTouches[0].clientX:e.clientX;
+        const yCoord= isMobile?e.changedTouches[0].clientY:e.clientY;
+        const barBoxes=document.elementsFromPoint(xCoord, yCoord).filter(elem=>elem.classList.contains("bar-box"));
+      
+        const dropBox=draggedBox===barBoxes[0]?barBoxes[1]:barBoxes[0];
+
+        if (dropBox) {
+          switchBoxes(dropBox, draggedBox);
         } else {
           barBoxesList.current.childNodes.forEach((barBox, index) => {
             gsap.to(barBox, 0.3, { x: `${orderedTrack[index].order * 112}%` });

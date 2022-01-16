@@ -488,6 +488,8 @@ p {
   opacity: 0.8;
   z-index: 100;
   pointer-events: none;
+  -ms-touch-action: none;
+      touch-action: none;
 }
 
 .player-container .change-order-section .arrow {
