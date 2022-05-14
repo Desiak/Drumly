@@ -2,6 +2,7 @@
   grid-area: p;
   position: relative;
   width: 100%;
+  max-width: 100vw;
   z-index: 1;
 
   .progress-indicator {
@@ -273,43 +274,63 @@
       pointer-events: none;
     }
   }
+
+  .track {
+    display: flex;
+    justify-content: space-around;
+    z-index: 1;
+    // height: 7%;
+    // padding:5px 0;
+    flex-basis:100%;
+    &:nth-child(odd){
+      background-color: rgba(255, 255, 255, 0.01);
+    }
+
+    .track-label {
+      text-align: center;
+    }
+    .note {
+      background-color: rgba(90, 90, 90, 0.1);
+      // aspect-ratio: 1/1;
+      height: 100%; 
+      flex-basis: 100%;
+      // border-radius: 50%;
+      transition: 0.15s;
+      cursor: pointer;
+      position: relative;
+      border-right:1px solid rgba(0, 0, 0, 0.4);
+      &::before{
+        content:"";
+        border-radius: 50%;
+        height: 60%;
+        aspect-ratio: 1/1;
+        position: absolute;
+        top:50%;
+        left:50%;
+        transform: translate(-50%,-50%);
+      }
+      &.ghost-note {
+        &::before{
+        box-shadow: inset 0 0 8px $primary-color;
+        transform: scale(0.8) translate(-50%,-50%);
+      }}
+      &.regular {
+        &::before{
+        box-shadow: inset 0 0 16px $primary-color, 0 0 4px $primary-color;
+      }}
+      &.accent {
+        &::before{
+        background-color: $primary-color;
+        box-shadow: 0 0 8px $primary-color;
+        transform: scale(1.1) translate(-50%,-50%);
+      }}
+    }
+   
+  }
+
 }
 
-.track {
-  display: flex;
-  // border: 2px solid brown;
-  justify-content: space-around;
-  z-index: 1;
-  .track-label {
-    text-align: center;
-  }
-  .note {
-    background-color: rgba(90, 90, 90, 0.1);
-    height: 24px;
-    margin: 0 10px;
-    // width:30px;
-    flex-grow: 1;
-    max-width: 24px;
-    border-radius: 50%;
-    transition: 0.15s;
-    cursor: pointer;
-    &.ghost-note {
-      box-shadow: inset 0 0 8px $primary-color;
-      transform: scale(0.8);
-    }
-    &.regular {
-      // background-color: $success-color;
-      box-shadow: inset 0 0 16px $primary-color, 0 0 4px $primary-color;
-    }
-    &.accent {
-      background-color: $primary-color;
-      box-shadow: 0 0 8px $primary-color;
-      // transform: scale(0.5)
-      transform: scale(1.1);
-    }
-  }
- 
-}
+
 
 @keyframes dragIcon {
   0% {
