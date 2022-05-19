@@ -111,29 +111,30 @@ p {
   }
 }
 
-@media (max-width: 992px) and (orientation: landscape) {
+@media (max-width: 992px) {
   .app {
+    -ms-grid-columns: 100vh 100vh;
+        grid-template-columns: 100vh 100vh;
     -ms-grid-rows: 100vh 100vh;
         grid-template-rows: 100vh 100vh;
+        grid-template-areas: "p p" "m m";
+  }
+  .app .container {
+    width: 100vw;
+  }
+  .app .drumset-container {
+    display: none;
   }
 }
 
-@media (max-width: 768px) and (orientation: portrait) {
+@media (max-width: 768px) {
   .app {
     -ms-grid-rows: 4fr 3fr;
         grid-template-rows: 4fr 3fr;
-        grid-template-areas: "p p" "m m";
   }
 }
 
-@media (max-width: 768px) and (orientation: landscape) {
-  .app {
-    border: 2px solid white;
-        grid-template-areas: "p p" "m m";
-  }
-}
-
-@media (max-width: 576px) and (orientation: portrait) {
+@media (orientation: portrait) {
   .app .rotate-device-info {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -147,6 +148,7 @@ p {
   grid-area: p;
   position: relative;
   width: 100%;
+  max-width: 100vw;
   z-index: 1;
   display: -ms-grid;
   display: grid;
@@ -519,51 +521,74 @@ p {
   pointer-events: none;
 }
 
-.track {
+.player-container .track {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-pack: distribute;
       justify-content: space-around;
   z-index: 1;
+  -ms-flex-preferred-size: 100%;
+      flex-basis: 100%;
 }
 
-.track .track-label {
+.player-container .track:nth-child(odd) {
+  background-color: rgba(255, 255, 255, 0.01);
+}
+
+.player-container .track .track-label {
   text-align: center;
 }
 
-.track .note {
+.player-container .track .note {
   background-color: rgba(90, 90, 90, 0.1);
-  height: 24px;
-  margin: 0 10px;
-  -webkit-box-flex: 1;
-      -ms-flex-positive: 1;
-          flex-grow: 1;
-  max-width: 24px;
-  border-radius: 50%;
+  height: 100%;
+  -ms-flex-preferred-size: 100%;
+      flex-basis: 100%;
   -webkit-transition: 0.15s;
   transition: 0.15s;
   cursor: pointer;
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
-.track .note.ghost-note {
+.player-container .track .note::before {
+  content: "";
+  border-radius: 50%;
+  height: 65%;
+  aspect-ratio: 1/1;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.player-container .track .note.ghost-note::before {
   -webkit-box-shadow: inset 0 0 8px #63faff;
           box-shadow: inset 0 0 8px #63faff;
-  -webkit-transform: scale(0.8);
-          transform: scale(0.8);
+  -webkit-transform: scale(0.5);
+          transform: scale(0.5);
 }
 
-.track .note.regular {
+.player-container .track .note.regular::before {
+  -webkit-transform: scale(0.7);
+          transform: scale(0.7);
   -webkit-box-shadow: inset 0 0 16px #63faff, 0 0 4px #63faff;
           box-shadow: inset 0 0 16px #63faff, 0 0 4px #63faff;
 }
 
-.track .note.accent {
+.player-container .track .note.accent::before {
   background-color: #63faff;
   -webkit-box-shadow: 0 0 8px #63faff;
           box-shadow: 0 0 8px #63faff;
-  -webkit-transform: scale(1.1);
-          transform: scale(1.1);
+  -webkit-transform: scale(1);
+          transform: scale(1);
 }
 
 @-webkit-keyframes dragIcon {
@@ -610,6 +635,7 @@ p {
   -ms-grid-column: 1;
   grid-area: m;
   background-color: #161616;
+  width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
