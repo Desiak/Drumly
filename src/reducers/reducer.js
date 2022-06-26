@@ -23,6 +23,7 @@ const INITIAL_STATE = {
   buffers: [],
   tracks: [],
   customableTrack: [],
+  tracksLabels: ["CR", "RD", "HH", "SN", "T-1", "T-2", "F-T", "K"],
   beatMeasures: [
     {
       time: "4/4",
