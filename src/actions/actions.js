@@ -12,6 +12,7 @@ export const CHANGE_BARS_NUMBER = "CHANGE_BARS_NUMBER";
 export const LOAD_DRUMPADS = "LOAD_DRUMPADS";
 export const CHANGE_BAR = "CHANGE_BAR";
 export const CHANGE_DRUMSET = "CHANGE_DRUMSET";
+export const LOAD_DEFAULT_TRACKS = "LOAD_DEFAULT_TRACKS";
 
 //actions
 export const changeTempo = (value, direction = "change") => {
@@ -55,7 +56,7 @@ export const clear = () => {
   };
 };
 
-export const loadCustomableTrack = (track, qty) => {
+export const loadCurrentTrack = (track, qty) => {
   let updatedTrack = [];
 
   track.track.forEach((bar) => {
@@ -95,13 +96,21 @@ export const loadDrumPads = (drumpads) => {
   };
 };
 
-
 export const changeDrumset = (drumset, buffers) => {
   return {
     type: "CHANGE_DRUMSET",
     payload: {
       drumset,
-      buffers
+      buffers,
+    },
+  };
+};
+
+export const loadDefaultTracks = (data) => {
+  return {
+    type: "LOAD_DEFAULT_TRACKS",
+    payload: {
+      tracks: data,
     },
   };
 };

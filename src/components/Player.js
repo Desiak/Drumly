@@ -1,13 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
 import { connect } from "react-redux";
-import { loadCustomableTrack, updateTrack } from "../actions/actions";
+import { loadCurrentTrack, updateTrack } from "../actions/actions";
 import ChangeOrder from "./ChangeOrder";
 import { gsap } from "gsap";
 import Bar from "./Bar";
 
 const Player = (props) => {
-  const tracksLabels = ["CR", "RD", "HH", "SN", "T-1", "T-2", "F-T", "K"];
-  let barLength = props.tracks[props.trackIndex].track[0][0].length;
   const setTrackOrder = (unorderedTrack) => {
     const orderedTrack = unorderedTrack.map((bar, index) => {
       return {
@@ -40,6 +38,7 @@ const Player = (props) => {
   let currentTime = 0;
   let timeoutId;
   const [currentBarNumber, setCurrentBarNumber] = useState(0);
+  const [barLength, setBarLength] = useState(0);
   const [orderedTrack, setOrderedTrack] = useState(
     setTrackOrder(props.customableTrack)
   );
@@ -57,9 +56,9 @@ const Player = (props) => {
   const changeOrderSection = useRef(null);
   const barBoxesList = useRef(null);
 
-  let moveEvent= !isMobile?"mousemove":"touchmove";
-  let upEvent= !isMobile?"mouseup":"touchend";
-  let downEvent= !isMobile?"mousedown":"touchstart";
+  let moveEvent = !isMobile ? "mousemove" : "touchmove";
+  let upEvent = !isMobile ? "mouseup" : "touchend";
+  let downEvent = !isMobile ? "mousedown" : "touchstart";
 
   useEffect(() => {
     updateBeat(orderedTrack);
@@ -75,15 +74,20 @@ const Player = (props) => {
   const handleBarsPosition = () => {
     const barsNodes = beatWrapper.current.childNodes;
     const animDuration = props.isPlaying ? 0 : 0.5;
-      barsNodes.forEach((bar, index) => {
-        const transformMultiplier= index-currentBarNumber>0?1:index-currentBarNumber<0?-1:0;
-            gsap.to(bar, {
-              x: `${(transformMultiplier)*100}%`,
-              duration: animDuration,
-              opacity:index===currentBarNumber?1:0,
-              pointerEvents: index===currentBarNumber?"all":"none",
-            });    
-      })
+    barsNodes.forEach((bar, index) => {
+      const transformMultiplier =
+        index - currentBarNumber > 0
+          ? 1
+          : index - currentBarNumber < 0
+          ? -1
+          : 0;
+      gsap.to(bar, {
+        x: `${transformMultiplier * 100}%`,
+        duration: animDuration,
+        opacity: index === currentBarNumber ? 1 : 0,
+        pointerEvents: index === currentBarNumber ? "all" : "none",
+      });
+    });
   };
 
   const renderMeasureContent = () => {
@@ -144,25 +148,24 @@ const Player = (props) => {
     if (!isMobile) {
       setTimeout(() => {
         const padToAnimate = props.drumPads[idx];
-      const tl = gsap.timeline({ autoAlpha: 0, ease: "ease" });
-      switch (note) {
-        case 1:
-          tl.to(padToAnimate, 0.1, { opacity: 0.65, scale: 1.02 });
-          tl.to(padToAnimate, 0.1, { opacity: 0.4, scale: 1 });
-          break;
-        case 2:
-          tl.to(padToAnimate, 0.1, { opacity: 0.8, scale: 1.05 });
-          tl.to(padToAnimate, 0.1, { opacity: 0.4, scale: 1 });
-          break;
-        case 3:
-          tl.to(padToAnimate, 0.1, { opacity: 1, scale: 1.1 });
-          tl.to(padToAnimate, 0.1, { opacity: 0.4, scale: 1 });
-          break;
-        default:
-          break;
-      }
+        const tl = gsap.timeline({ autoAlpha: 0, ease: "ease" });
+        switch (note) {
+          case 1:
+            tl.to(padToAnimate, 0.1, { opacity: 0.65, scale: 1.02 });
+            tl.to(padToAnimate, 0.1, { opacity: 0.4, scale: 1 });
+            break;
+          case 2:
+            tl.to(padToAnimate, 0.1, { opacity: 0.8, scale: 1.05 });
+            tl.to(padToAnimate, 0.1, { opacity: 0.4, scale: 1 });
+            break;
+          case 3:
+            tl.to(padToAnimate, 0.1, { opacity: 1, scale: 1.1 });
+            tl.to(padToAnimate, 0.1, { opacity: 0.4, scale: 1 });
+            break;
+          default:
+            break;
+        }
       }, animationDelay);
-      
     }
 
     source.start(time);
@@ -170,16 +173,25 @@ const Player = (props) => {
 
   const scheduleSounds = (barInd = 0, noteInd = 0) => {
     const track = orderedTrack;
-    currentTime = props.audioContext.currentTime + progressBarSpeed / barLength;
+    const updatedTime = (
+      props.audioContext.currentTime +
+      progressBarSpeed / barLength
+    ).toFixed(3);
+
+    currentTime = updatedTime;
 
     track[barInd].value.forEach((path, i) => {
       path.forEach((note, index) => {
         if (index === noteInd) {
-          if(noteInd === 0 && i === 0){
-            setAnimationDelay(Math.floor(((currentTime- props.audioContext.currentTime)*1000)/2));
-              timeoutId=setTimeout(() => {
-                restartProgressBar(barInd);
-              }, animationDelay);
+          if (noteInd === 0 && i === 0) {
+            setAnimationDelay(
+              Math.floor(
+                ((currentTime - props.audioContext.currentTime) * 1000) / 2
+              )
+            );
+            timeoutId = setTimeout(() => {
+              restartProgressBar(barInd);
+            }, animationDelay);
           }
           if (note !== 0) playSound(note, currentTime, i);
         }
@@ -197,7 +209,7 @@ const Player = (props) => {
   }, [props.tempo]);
 
   useEffect(() => {
-    props.loadCustomableTrack(props.tracks[props.trackIndex], props.numOfBars);
+    props.loadCurrentTrack(props.tracks[props.trackIndex], props.numOfBars);
     const currentMeasure = props.beatMeasures.find((measure) => {
       const customTrack = props.tracks[props.trackIndex];
 
@@ -209,6 +221,7 @@ const Player = (props) => {
 
     setMeasureCount(currentMeasure);
     setCurrentBarNumber(0);
+    setBarLength(props.tracks[props.trackIndex].track[0][0].length);
   }, [props.trackIndex]);
 
   useEffect(() => {
@@ -236,7 +249,7 @@ const Player = (props) => {
 
     scheduleInterval = setInterval(() => {
       noteInd = noteInd >= barLength - 1 ? 0 : noteInd + 1;
-    
+
       scheduleSounds(barInd, noteInd);
 
       if (noteInd === barLength - 1) {
@@ -274,11 +287,10 @@ const Player = (props) => {
     };
   }, [props.isPlaying]);
 
-
   useEffect(() => {
     const handleDragElem = (e) => {
       const transformXValue =
-        (!isMobile?e.clientX:e.changedTouches[0].clientX) -
+        (!isMobile ? e.clientX : e.changedTouches[0].clientX) -
         barBoxesList.current.getBoundingClientRect().x -
         draggedBox.getBoundingClientRect().width / 2;
       gsap.to(draggedBox, 0, { x: `${transformXValue}px` });
@@ -305,11 +317,13 @@ const Player = (props) => {
         draggedBox.classList.remove("dragged");
         setDraggedBox(null);
 
-        const xCoord= isMobile?e.changedTouches[0].clientX:e.clientX;
-        const yCoord= isMobile?e.changedTouches[0].clientY:e.clientY;
-        const barBoxes=document.elementsFromPoint(xCoord, yCoord).filter(elem=>elem.classList.contains("bar-box"));
-      
-        const dropBox=draggedBox===barBoxes[0]?barBoxes[1]:barBoxes[0];
+        const xCoord = isMobile ? e.changedTouches[0].clientX : e.clientX;
+        const yCoord = isMobile ? e.changedTouches[0].clientY : e.clientY;
+        const barBoxes = document
+          .elementsFromPoint(xCoord, yCoord)
+          .filter((elem) => elem.classList.contains("bar-box"));
+
+        const dropBox = draggedBox === barBoxes[0] ? barBoxes[1] : barBoxes[0];
 
         if (dropBox) {
           switchBoxes(dropBox, draggedBox);
@@ -334,7 +348,7 @@ const Player = (props) => {
       boxDrop.isActive = false;
 
       barBoxesList.current.childNodes.forEach((barBox, index) => {
-        if(barBox.classList.contains("active")){
+        if (barBox.classList.contains("active")) {
           barBox.classList.remove("active");
         }
         gsap.to(barBox, 0.3, { x: `${orderedTrack[index].order * 112}%` });
@@ -343,9 +357,8 @@ const Player = (props) => {
       const newOrder = orderedTrack.sort((a, b) => a.order - b.order);
       setTimeout(() => {
         setCurrentBarNumber(boxDrag.order);
-        props.updateTrack(newOrder);    
+        props.updateTrack(newOrder);
       }, 330);
-  
     };
 
     window.addEventListener(moveEvent, handleMouseMove);
@@ -383,7 +396,7 @@ const Player = (props) => {
       <div className="empty">Menu</div>
       <div className="beat-measure-wrapper wrapper">{measure}</div>
       <div className="tracks-labels-wrapper wrapper">
-        {tracksLabels.map((label) => (
+        {props.tracksLabels.map((label) => (
           <p className="track-label">{label}</p>
         ))}
       </div>
@@ -397,9 +410,8 @@ const Player = (props) => {
   );
 };
 
-const mapStateToProps = ({state}) => ({
+const mapStateToProps = ({ state }) => ({
   customableTrack: state.customableTrack,
-  tracks: state.tracks,
   trackIndex: state.trackIndex,
   beatMeasures: state.beatMeasures,
   numOfBars: state.numOfBars,
@@ -408,13 +420,15 @@ const mapStateToProps = ({state}) => ({
   drumPads: state.drumPads,
   drumset: state.drumset,
   audioContext: state.audioContext,
-  buffers:state.buffers
+  buffers: state.buffers,
+  tracksLabels: state.tracksLabels,
 });
 
 const mapDispatchToProps = {
-  loadCustomableTrack,
+  loadCurrentTrack,
   updateTrack,
 };
+
 const PlayerConsumer = connect(mapStateToProps, mapDispatchToProps)(Player);
 
 export default PlayerConsumer;

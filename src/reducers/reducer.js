@@ -7,7 +7,7 @@ import {
   UPDATE_TRACK,
   CHANGE_BARS_NUMBER,
   CHANGE_DRUMSET,
-  LOAD_DEFAULT_TRACKS
+  LOAD_DEFAULT_TRACKS,
 } from "../actions/actions";
 
 const INITIAL_STATE = {
@@ -175,10 +175,11 @@ const state = (state = INITIAL_STATE, action) => {
       };
       break;
     case LOAD_DEFAULT_TRACKS:
-        return {
-            ...state,
-            tracks: action.payload.tracks
-            }
+      return {
+        ...state,
+        tracks:[...action.payload.tracks],
+      };
+      break;
     default:
   }
   return state;
