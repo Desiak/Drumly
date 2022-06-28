@@ -2,12 +2,11 @@ import "./style/style.css";
 import Menu from "./components/Menu";
 import Drumset from "./components/Drumset";
 import Player from "./components/Player";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { connect } from "react-redux";
 import { loadDefaultTracks } from "./actions/actions";
 
 function App(props) {
-  const [tracks, setTracks] = useState([]);
 
   const fetchTracks = async () => {
     const response = await fetch(
@@ -15,7 +14,6 @@ function App(props) {
     );
     const data = await response.json();
 
-    setTracks(data);
     props.loadDefaultTracks(data);
   };
 
@@ -31,7 +29,7 @@ function App(props) {
             <p class="rotate-txt">Rotate device!</p>
           </div>
           <Menu></Menu>
-          <Player tracks={tracks}></Player>
+          <Player tracks={props.tracks}></Player>
           <Drumset></Drumset>
         </div>
       ) : (
