@@ -39,13 +39,14 @@ body {
 #root {
   width: 100vw;
   height: 100vh;
+  background-color: #161616;
 }
 
 p {
   pointer-events: none;
 }
 
-.app {
+.app__main {
   display: -ms-grid;
   display: grid;
   width: 100%;
@@ -54,11 +55,10 @@ p {
       grid-template-columns: minmax(340px, 1fr) 4fr;
   -ms-grid-rows: 1fr 1fr;
       grid-template-rows: 1fr 1fr;
-  background-color: #161616;
       grid-template-areas: "m p" "m d";
 }
 
-.app .rotate-device-info {
+.app__main .rotate-device-info {
   z-index: 1000;
   background-color: black;
   color: white;
@@ -75,34 +75,34 @@ p {
   height: 100%;
 }
 
-.app .disabled {
+.app__main .disabled {
   opacity: 0.5;
   pointer-events: none;
 }
 
-.app ::-webkit-scrollbar {
+.app__main ::-webkit-scrollbar {
   width: .8em;
 }
 
-.app ::-webkit-scrollbar-track {
+.app__main ::-webkit-scrollbar-track {
   border-radius: 1em;
   background: #494949;
   margin-block: 0.5em;
 }
 
-.app ::-webkit-scrollbar-thumb {
+.app__main ::-webkit-scrollbar-thumb {
   background: #00c3c9;
   border-radius: 1em;
 }
 
 @supports (scrollbar-color: red blue) {
-  .app * {
+  .app__main * {
     scrollbar-color: #00c3c9 #494949;
   }
 }
 
 @media (max-width: 1200px) {
-  .app {
+  .app__main {
     -ms-grid-columns: minmax(340px, 1fr) 4fr;
         grid-template-columns: minmax(340px, 1fr) 4fr;
     -ms-grid-rows: 1fr 1fr;
@@ -112,30 +112,30 @@ p {
 }
 
 @media (max-width: 992px) {
-  .app {
+  .app__main {
     -ms-grid-columns: 100vh 100vh;
         grid-template-columns: 100vh 100vh;
     -ms-grid-rows: 100vh 100vh;
         grid-template-rows: 100vh 100vh;
         grid-template-areas: "p p" "m m";
   }
-  .app .container {
+  .app__main .container {
     width: 100vw;
   }
-  .app .drumset-container {
+  .app__main .drumset-container {
     display: none;
   }
 }
 
 @media (max-width: 768px) {
-  .app {
+  .app__main {
     -ms-grid-rows: 4fr 3fr;
         grid-template-rows: 4fr 3fr;
   }
 }
 
 @media (orientation: portrait) {
-  .app .rotate-device-info {
+  .app__main .rotate-device-info {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -635,7 +635,6 @@ p {
   -ms-grid-column: 1;
   grid-area: m;
   background-color: #161616;
-  width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

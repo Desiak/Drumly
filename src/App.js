@@ -24,9 +24,9 @@ function App(props) {
   }, []);
 
   return (
-    <div>
+    <div className="app">
       {props.tracks.length > 0 ? (
-        <div className="app">
+        <div className="app__main">
           <div class="rotate-device-info">
             <p class="rotate-txt">Rotate device!</p>
           </div>
