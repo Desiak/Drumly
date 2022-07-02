@@ -8,12 +8,14 @@ import {
   CHANGE_BARS_NUMBER,
   CHANGE_DRUMSET,
   LOAD_DEFAULT_TRACKS,
+  CHANGE_ACTIVE_BAR_INDEX,
+  DETECT_CHANGES_IN_TRACK,
+  HANDLE_TRACK_SAVE_MODAL_STATE
 } from "../actions/actions";
 
 const INITIAL_STATE = {
   tempo: 94,
   length: 8,
-  // note:1/8,
   numOfBars: 3,
   timeSignature: "4/4",
   drumset: "acoustic-1",
@@ -117,6 +119,9 @@ const INITIAL_STATE = {
     },
   ],
   trackIndex: 0,
+  activeBarIndex: 0,
+  isTrackModified: false,
+  isTrackSaveModalOpen: false,
 };
 
 const state = (state = INITIAL_STATE, action) => {
@@ -177,9 +182,24 @@ const state = (state = INITIAL_STATE, action) => {
     case LOAD_DEFAULT_TRACKS:
       return {
         ...state,
-        tracks:[...action.payload.tracks],
+        tracks: [...action.payload.tracks],
       };
       break;
+    case CHANGE_ACTIVE_BAR_INDEX:
+      return {
+        ...state,
+        activeBarIndex: action.payload.index,
+      };
+    case DETECT_CHANGES_IN_TRACK:
+      return {
+        ...state,
+        isTrackModified: action.payload.isChanged,
+      };
+    case HANDLE_TRACK_SAVE_MODAL_STATE:
+      return {
+        ...state,
+        isTrackSaveModalOpen: action.payload.shouldOpenModal,
+      };
     default:
   }
   return state;

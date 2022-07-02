@@ -27,12 +27,12 @@
 
 .player-controller-input {
   background: none;
-  padding-bottom:0;
+  padding-bottom: 0;
   .controller-btn {
     display: block;
     height: 80px;
     width: 80px;
-    margin:0 auto;
+    margin: 0 auto;
     background-color: $success-color;
     box-shadow: 0 0 12px $success-color;
     color: $background-color;
@@ -44,7 +44,7 @@
     border: 2px solid $success-color;
     &.playing {
       background-color: $alert-color;
-      border:2px solid $alert-color;
+      border: 2px solid $alert-color;
       color: white;
       box-shadow: 0 0 12px $alert-color, inset 0 0 12px $alert-color;
     }
@@ -123,8 +123,20 @@
       &.active {
         box-shadow: 0px 0px 6px $primary-color;
         background-color: $primary-color;
-        p{
-          color:black
+        .element-wrapper {
+          * {
+            color: black;
+          }
+        }
+      }
+      .element-wrapper {
+        display: flex;
+        justify-content: space-between;
+        * {
+          color: white;
+        }
+        .save-icon {
+          padding-right:10px;
         }
       }
     }

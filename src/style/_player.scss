@@ -45,6 +45,9 @@
     display: flex;
     justify-content: center;
     align-items:center;
+    .save-icon {
+      font-size: 1.5em;
+    }
   }
 
   .beat-measure-wrapper {
@@ -84,20 +87,27 @@
     height: 100%;
     display: block;
     overflow: hidden;
-    &.smooth {
-      .bar {
-        pointer-events: none;
-        &.active {
-          pointer-events: all;
-        }
-      }
-    }
+    background: repeating-linear-gradient(lighten($background-color, 6%), 12.5%, lighten($background-color, 6%) 12.5%, lighten($background-color, 3%) 12.5%,lighten($background-color, 3%) 25%);
+    // &.smooth {
+    //   .bar {
+    //     pointer-events: none;
+    //     // transition: opacity 0.3s ease 0.15s;
+    //     &.active {
+    //       pointer-events: all;
+    //     }
+    //   }
+    // }
     .bar {
-      background-color: rgb(33, 33, 33);
       position: absolute;
       width: 100%;
       height: 100%;
       opacity: 0;
+
+      &.active{
+        // transition-delay: 0s;
+        opacity:1;
+      }
+      
     }
   }
   .bar {
@@ -282,15 +292,15 @@
     // height: 7%;
     // padding:5px 0;
     flex-basis:100%;
-    &:nth-child(odd){
-      background-color: rgba(255, 255, 255, 0.01);
-    }
+    // &:nth-child(odd){
+    //   background-color: rgba(255, 255, 255, 0.01);
+    // }
 
     .track-label {
       text-align: center;
     }
     .note {
-      background-color: rgba(90, 90, 90, 0.1);
+      // background-color: rgba(90, 90, 90, 0.1);
       height: 100%; 
       flex-basis: 100%;
       transition: 0.15s;

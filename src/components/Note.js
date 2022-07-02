@@ -3,7 +3,12 @@ import _ from "lodash";
 import { updateTrack } from "../actions/actions";
 import { connect } from "react-redux";
 
-function Note({ value, indicator, updateTrack, customableTrack }) {
+function Note({
+  value,
+  indicator,
+  updateTrack,
+  customableTrack,
+}) {
   const editNote = (e) => {
     const noteLocation = e.target.id.split("-");
     const barIndex = noteLocation[0];

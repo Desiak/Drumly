@@ -13,6 +13,9 @@ export const LOAD_DRUMPADS = "LOAD_DRUMPADS";
 export const CHANGE_BAR = "CHANGE_BAR";
 export const CHANGE_DRUMSET = "CHANGE_DRUMSET";
 export const LOAD_DEFAULT_TRACKS = "LOAD_DEFAULT_TRACKS";
+export const CHANGE_ACTIVE_BAR_INDEX = "CHANGE_ACTIVE_BAR_INDEX";
+export const DETECT_CHANGES_IN_TRACK = "DETECT_CHANGES_IN_TRACK";
+export const HANDLE_TRACK_SAVE_MODAL_STATE = "HANDLE_TRACK_SAVE_MODAL_STATE";
 
 //actions
 export const changeTempo = (value, direction = "change") => {
@@ -114,3 +117,30 @@ export const loadDefaultTracks = (data) => {
     },
   };
 };
+
+export const changeActiveBarIndex = (data) => {
+  return {
+    type: "CHANGE_ACTIVE_BAR_INDEX",
+    payload: {
+      index: data
+    }
+  }
+}
+
+export const detectTrackChanges = (data) => {
+  return {
+    type: "DETECT_CHANGES_IN_TRACK",
+    payload: {
+      isChanged: data
+    }
+  }
+}
+
+export const handleTrackSaveModalState = (data) => {
+  return {
+    type: "HANDLE_TRACK_SAVE_MODAL_STATE",
+    payload: {
+      shouldOpenModal: data
+    }
+  }
+}

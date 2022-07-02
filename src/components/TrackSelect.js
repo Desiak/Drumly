@@ -28,7 +28,7 @@ const TrackSelect = (props) => {
             onClick={() => props.trackSelect(index)}
           >
             <div className="element-wrapper">
-              <p>{track.trackName}</p>
+              <span>{track.trackName}</span>
             </div>
           </li>
         );
@@ -36,7 +36,7 @@ const TrackSelect = (props) => {
       return list;
     });
 
-    props.trackSelect(0);
+    // props.trackSelect(0);
   }, []);
 
   return (
@@ -54,7 +54,7 @@ const TrackSelect = (props) => {
 const mapStateToProps = (store) => ({
   tracks: store.state.tracks,
   trackIndex: store.state.trackIndex,
-  isPlaying:store.state.isPlaying
+  isPlaying:store.state.isPlaying,
 });
 
 //DOBRY PRZYKŁAD

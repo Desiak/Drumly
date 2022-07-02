@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { connect } from "react-redux";
-import { loadCurrentTrack, updateTrack } from "../actions/actions";
+import { loadCurrentTrack, updateTrack, changeActiveBarIndex, detectTrackChanges, handleTrackSaveModalState } from "../actions/actions";
 import ChangeOrder from "./ChangeOrder";
 import { gsap } from "gsap";
 import Bar from "./Bar";
@@ -12,7 +12,7 @@ const Player = (props) => {
         id: `${bar.id}`,
         order: index,
         value: bar.value,
-        isActive: index === currentBarNumber ? true : false,
+        isActive: index === activeBarIndex ? true : false,
       };
     });
     return orderedTrack;
@@ -37,7 +37,7 @@ const Player = (props) => {
   let scheduleInterval;
   let currentTime = 0;
   let timeoutId;
-  const [currentBarNumber, setCurrentBarNumber] = useState(0);
+  const [activeBarIndex, setActiveBarIndex] = useState(0);
   const [barLength, setBarLength] = useState(0);
   const [orderedTrack, setOrderedTrack] = useState(
     setTrackOrder(props.customableTrack)
@@ -69,25 +69,11 @@ const Player = (props) => {
 
   useEffect(() => {
     handleBarsPosition();
-  }, [tracksToRender, currentBarNumber]);
+    props.changeActiveBarIndex(activeBarIndex);
+  }, [activeBarIndex]);
 
   const handleBarsPosition = () => {
-    const barsNodes = beatWrapper.current.childNodes;
-    const animDuration = props.isPlaying ? 0 : 0.5;
-    barsNodes.forEach((bar, index) => {
-      const transformMultiplier =
-        index - currentBarNumber > 0
-          ? 1
-          : index - currentBarNumber < 0
-          ? -1
-          : 0;
-      gsap.to(bar, {
-        x: `${transformMultiplier * 100}%`,
-        duration: animDuration,
-        opacity: index === currentBarNumber ? 1 : 0,
-        pointerEvents: index === currentBarNumber ? "all" : "none",
-      });
-    });
+    updateBeat(orderedTrack);
   };
 
   const renderMeasureContent = () => {
@@ -114,16 +100,16 @@ const Player = (props) => {
     if (!props.isPlaying) {
       if (typeof dest !== "number") {
         if (dest === "+") {
-          setCurrentBarNumber(
-            currentBarNumber === props.numOfBars - 1 ? 0 : currentBarNumber + 1
+          setActiveBarIndex(
+            activeBarIndex === props.numOfBars - 1 ? 0 : activeBarIndex + 1
           );
         } else {
-          setCurrentBarNumber(
-            currentBarNumber === 0 ? props.numOfBars - 1 : currentBarNumber - 1
+          setActiveBarIndex(
+            activeBarIndex === 0 ? props.numOfBars - 1 : activeBarIndex - 1
           );
         }
       } else {
-        setCurrentBarNumber(dest);
+        setActiveBarIndex(dest);
       }
     }
   };
@@ -131,7 +117,7 @@ const Player = (props) => {
   const updateBeat = (changedBeat) => {
     let updatedTracks = changedBeat
       .sort((a, b) => a.order - b.order)
-      .map((bar, barIndex) => <Bar bar={bar} barIndex={barIndex} />);
+      .map((bar, barIndex) => <Bar bar={bar} barIndex={barIndex} isActive={barIndex === activeBarIndex}/>);
     setTracksToRender(updatedTracks);
   };
 
@@ -199,9 +185,26 @@ const Player = (props) => {
     });
   };
 
+  const checkIfTrackIsModified = () => {
+
+    if(props.customableTrack.length === 0) return;
+    const didLengthChange = props.customableTrack.length !== props.tracks[props.trackIndex].track.length;
+    if(didLengthChange) {
+      props.detectTrackChanges(didLengthChange);
+      return;
+    }
+    const modifiedTrack = props.customableTrack.map(bar => bar.value);
+    const notModifiedTrack = props.tracks[props.trackIndex].track;
+    const didTrackChange = (JSON.stringify(modifiedTrack) !== JSON.stringify(notModifiedTrack)) || didLengthChange;
+
+    props.detectTrackChanges(didTrackChange);
+  };
+
   useEffect(() => {
     setMeasure(renderMeasureContent());
     setOrderedTrack(setTrackOrder(props.customableTrack));
+    checkIfTrackIsModified();
+
   }, [props.customableTrack]);
 
   useEffect(() => {
@@ -220,7 +223,7 @@ const Player = (props) => {
     });
 
     setMeasureCount(currentMeasure);
-    setCurrentBarNumber(0);
+    setActiveBarIndex(0);
     setBarLength(props.tracks[props.trackIndex].track[0][0].length);
   }, [props.trackIndex]);
 
@@ -233,14 +236,14 @@ const Player = (props) => {
   }, []);
 
   const restartProgressBar = (barIndex) => {
-    setCurrentBarNumber(barIndex);
+    setActiveBarIndex(barIndex);
     progressBarAnimation.current.time(0);
     progressBarAnimation.current.play();
   };
 
   const startPlaying = (noteInd, barInd) => {
     const isFirefox = !(window.mozInnerScreenX == null);
-    setCurrentBarNumber(0);
+    setActiveBarIndex(0);
     progressBarAnimation.current.duration(
       isFirefox ? progressBarSpeed * 1.05 : progressBarSpeed
     );
@@ -261,7 +264,7 @@ const Player = (props) => {
     clearInterval(scheduleInterval);
     clearTimeout(timeoutId);
     beatWrapper.current.style.transform = "unset";
-    setCurrentBarNumber(0);
+    setActiveBarIndex(0);
     progressBarAnimation.current.pause(0);
   };
 
@@ -356,7 +359,7 @@ const Player = (props) => {
 
       const newOrder = orderedTrack.sort((a, b) => a.order - b.order);
       setTimeout(() => {
-        setCurrentBarNumber(boxDrag.order);
+        setActiveBarIndex(boxDrag.order);
         props.updateTrack(newOrder);
       }, 330);
     };
@@ -374,8 +377,8 @@ const Player = (props) => {
 
   useEffect(() => {
     //if last bar gets removed, step back to previous one
-    if (props.numOfBars === currentBarNumber) {
-      setCurrentBarNumber(props.numOfBars - 1);
+    if (props.numOfBars === activeBarIndex) {
+      setActiveBarIndex(props.numOfBars - 1);
     }
   }, [props.numOfBars]);
 
@@ -390,10 +393,12 @@ const Player = (props) => {
         innerRef={changeOrderSection}
         orderedTrack={orderedTrack}
         navToBar={navToBar}
-        activeBarIndex={currentBarNumber}
+        activeBarIndex={activeBarIndex}
       />
       <div className="progress-indicator" ref={progressBar}></div>
-      <div className="empty">Menu</div>
+      <div className="empty">
+        {props.isTrackModified ? <i className="fa-solid fa-floppy-disk save-icon" onClick={ ()=>{props.handleTrackSaveModalState(true)} }></i> : null}
+      </div>
       <div className="beat-measure-wrapper wrapper">{measure}</div>
       <div className="tracks-labels-wrapper wrapper">
         {props.tracksLabels.map((label) => (
@@ -401,7 +406,7 @@ const Player = (props) => {
         ))}
       </div>
       <div
-        className={`beat-wrapper wrapper ${props.isPlaying ? "" : "smooth"}`}
+        className='beat-wrapper wrapper'
         ref={beatWrapper}
       >
         {tracksToRender}
@@ -422,11 +427,17 @@ const mapStateToProps = ({ state }) => ({
   audioContext: state.audioContext,
   buffers: state.buffers,
   tracksLabels: state.tracksLabels,
+  activeBarIndex: state.activeBarIndex,
+  tracks: state.tracks,
+  isTrackModified: state.isTrackModified
 });
 
 const mapDispatchToProps = {
   loadCurrentTrack,
   updateTrack,
+  changeActiveBarIndex,
+  detectTrackChanges,
+  handleTrackSaveModalState
 };
 
 const PlayerConsumer = connect(mapStateToProps, mapDispatchToProps)(Player);

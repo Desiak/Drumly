@@ -5,16 +5,17 @@ import Player from "./components/Player";
 import { useEffect } from "react";
 import { connect } from "react-redux";
 import { loadDefaultTracks } from "./actions/actions";
+import SaveTrackModal from "./components/SaveTrackModal/SaveTrackModal";
 
 function App(props) {
-
   const fetchTracks = async () => {
     const response = await fetch(
       "https://drumly-dev-default-rtdb.europe-west1.firebasedatabase.app/tracks.json"
     );
     const data = await response.json();
+    const dataObjToArray = Object.values(data);
 
-    props.loadDefaultTracks(data);
+    props.loadDefaultTracks(dataObjToArray);
   };
 
   useEffect(() => {
@@ -31,6 +32,9 @@ function App(props) {
           <Menu></Menu>
           <Player tracks={props.tracks}></Player>
           <Drumset></Drumset>
+          {props.isTrackSaveModalOpen ? (
+            <SaveTrackModal></SaveTrackModal>
+          ) : null}
         </div>
       ) : (
         <span>wrong data bro!</span>
@@ -41,6 +45,7 @@ function App(props) {
 
 const mapStateToProps = ({ state }) => ({
   tracks: state.tracks,
+  isTrackSaveModalOpen: state.isTrackSaveModalOpen,
 });
 
 const mapDispatchToProps = {
